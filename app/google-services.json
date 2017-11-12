@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "115645579815",
+    "firebase_url": "https://meetyourfriends-8666d.firebaseio.com",
+    "project_id": "meetyourfriends-8666d",
+    "storage_bucket": "meetyourfriends-8666d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115645579815:android:ffff772ab96e6203",
+        "android_client_info": {
+          "package_name": "com.example.marcin.meetfriends"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115645579815-h1fbl3fge25elv2vkjas9gjcj5464vtt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.marcin.meetfriends",
+            "certificate_hash": "4141f57fded60a47818527fe1c070e0a88024b0e"
+          }
+        },
+        {
+          "client_id": "115645579815-4hnr5ho1au8d5pksv4uoe9gij81f02ia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSduchQQv2t1Zsp1VTwFtM4ec-IjqfdjA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115645579815-4hnr5ho1au8d5pksv4uoe9gij81f02ia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
