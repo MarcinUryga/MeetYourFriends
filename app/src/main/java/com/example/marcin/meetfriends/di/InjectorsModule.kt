@@ -1,5 +1,7 @@
 package com.example.marcin.meetfriends.di
 
+import com.example.marcin.meetfriends.ui.friends.FriendsFragment
+import com.example.marcin.meetfriends.ui.friends.FriendsModule
 import com.example.marcin.meetfriends.ui.launch.LaunchActivity
 import com.example.marcin.meetfriends.ui.launch.LaunchModule
 import com.example.marcin.meetfriends.ui.login.LoginActivity
@@ -10,6 +12,8 @@ import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.ConfirmedE
 import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.ConfirmedEventsModule
 import com.example.marcin.meetfriends.ui.my_schedule.planned_event.PlannedEventsFragment
 import com.example.marcin.meetfriends.ui.my_schedule.planned_event.PlannedEventsModule
+import com.example.marcin.meetfriends.ui.venues.VenuesFragment
+import com.example.marcin.meetfriends.ui.venues.VenuesModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -39,4 +43,12 @@ abstract class InjectorsModule {
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(PlannedEventsModule::class))
   abstract fun plannedEventsFragment(): PlannedEventsFragment
+
+  @ScreenScope
+  @ContributesAndroidInjector(modules = arrayOf(FriendsModule::class))
+  abstract fun friendsFragment(): FriendsFragment
+
+  @ScreenScope
+  @ContributesAndroidInjector(modules = arrayOf(VenuesModule::class))
+  abstract fun venuesFragment(): VenuesFragment
 }

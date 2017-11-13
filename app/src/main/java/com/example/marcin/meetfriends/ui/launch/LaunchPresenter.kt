@@ -26,7 +26,7 @@ class LaunchPresenter @Inject constructor(
 
   override fun resume() {
     super.resume()
-    if (auth.currentUser != null) {
+    if (auth.currentUser == null) {
       view.startLoginAcivity()
     } else {
       view.startMainActivity()

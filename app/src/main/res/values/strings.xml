@@ -4,4 +4,7 @@
     <string name="fb_login_protocol_scheme">fb1502871996463931</string>
     <string name="confirmed_event">Confirmed Events</string>
     <string name="planned_events">Planned Events</string>
+    <string name="schedule">Schedule</string>
+    <string name="friends">Friends</string>
+    <string name="venues">Venues</string>
 </resources>

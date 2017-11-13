@@ -45,8 +45,8 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
   }
 
   override fun startMainActivity() {
-    startActivity(MainActivity.newIntent(this))
     finish()
+    startActivity(MainActivity.newIntent(this))
   }
 
   companion object {
