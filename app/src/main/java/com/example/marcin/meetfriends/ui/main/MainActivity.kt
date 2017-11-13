@@ -1,5 +1,6 @@
 package com.example.marcin.meetfriends.ui.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,7 @@ import com.example.marcin.meetfriends.mvp.BaseActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 
+@SuppressLint("CheckResult")
 class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
 
   override fun onCreate(savedInstanceState: Bundle?) {

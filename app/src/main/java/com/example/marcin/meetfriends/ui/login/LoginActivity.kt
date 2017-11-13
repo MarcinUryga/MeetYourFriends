@@ -1,5 +1,6 @@
 package com.example.marcin.meetfriends.ui.login
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -11,7 +12,7 @@ import com.example.marcin.meetfriends.ui.main.MainActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_login.*
 
-
+@SuppressLint("CheckResult")
 class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.View {
 /*  public override fun onStart() {
     super.onStart()
@@ -45,5 +46,6 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
 
   override fun startMainActivity() {
     startActivity(MainActivity.newIntent(this))
+    finish()
   }
 }

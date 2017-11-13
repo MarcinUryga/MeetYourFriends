@@ -1,5 +1,6 @@
 package com.example.marcin.meetfriends.mvp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import javax.inject.Inject
