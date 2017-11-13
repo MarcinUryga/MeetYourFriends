@@ -8,7 +8,12 @@ import com.example.marcin.meetfriends.mvp.MvpView
  */
 interface LaunchContract {
 
-  interface View : MvpView
+  interface View : MvpView {
+
+    fun startLoginAcivity()
+
+    fun startMainActivity()
+  }
 
   interface Presenter : MvpPresenter {
   }

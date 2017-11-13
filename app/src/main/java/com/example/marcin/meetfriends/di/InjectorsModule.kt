@@ -6,6 +6,10 @@ import com.example.marcin.meetfriends.ui.login.LoginActivity
 import com.example.marcin.meetfriends.ui.login.LoginModule
 import com.example.marcin.meetfriends.ui.main.MainActivity
 import com.example.marcin.meetfriends.ui.main.MainModule
+import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.ConfirmedEventsFragment
+import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.ConfirmedEventsModule
+import com.example.marcin.meetfriends.ui.my_schedule.planned_event.PlannedEventsFragment
+import com.example.marcin.meetfriends.ui.my_schedule.planned_event.PlannedEventsModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -27,4 +31,12 @@ abstract class InjectorsModule {
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(LaunchModule::class))
   abstract fun launchActivity(): LaunchActivity
+
+  @ScreenScope
+  @ContributesAndroidInjector(modules = arrayOf(ConfirmedEventsModule::class))
+  abstract fun confirmedEventsFragment(): ConfirmedEventsFragment
+
+  @ScreenScope
+  @ContributesAndroidInjector(modules = arrayOf(PlannedEventsModule::class))
+  abstract fun plannedEventsFragment(): PlannedEventsFragment
 }

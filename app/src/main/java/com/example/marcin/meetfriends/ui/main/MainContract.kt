@@ -9,8 +9,6 @@ import com.example.marcin.meetfriends.mvp.MvpView
 interface MainContract {
 
   interface View : MvpView {
-
-    fun showWelcomeText(email: String?)
   }
 
   interface Presenter : MvpPresenter {

@@ -1,6 +1,7 @@
 package com.example.marcin.meetfriends.ui.login
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -32,7 +33,6 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
     super.onActivityResult(requestCode, resultCode, data)
-    // Pass the activity result back to the Facebook SDK
     ReactiveLogin.onActivityResult(requestCode, resultCode, data);
   }
 
@@ -47,5 +47,11 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
   override fun startMainActivity() {
     startActivity(MainActivity.newIntent(this))
     finish()
+  }
+
+  companion object {
+    fun newIntent(context: Context): Intent {
+      return Intent(context, LoginActivity::class.java)
+    }
   }
 }

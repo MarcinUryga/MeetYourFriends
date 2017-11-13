@@ -13,8 +13,4 @@ class MainPresenter @Inject constructor(
     private val auth: FirebaseAuth
 ) : BasePresenter<MainContract.View>(), MainContract.Presenter {
 
-  override fun onViewCreated() {
-    super.onViewCreated()
-    view.showWelcomeText(auth.currentUser?.email)
-  }
 }

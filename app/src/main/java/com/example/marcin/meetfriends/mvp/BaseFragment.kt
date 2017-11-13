@@ -2,21 +2,18 @@ package com.example.marcin.meetfriends.mvp
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import android.view.View
 import javax.inject.Inject
 
 /**
- * Created by marci on 2017-11-09.
+ * Created by MARCIN on 2017-11-13.
  */
-abstract class BaseActivity<P : MvpPresenter> : AppCompatActivity(), HasSupportFragmentInjector {
+abstract class BaseFragment<P : MvpPresenter> : Fragment() {
 
   @Inject lateinit var presenter: P
-  @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
-  override fun onPostCreate(savedInstanceState: Bundle?) {
-    super.onPostCreate(savedInstanceState)
+  override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     presenter.onViewCreated()
   }
 
@@ -44,6 +41,4 @@ abstract class BaseActivity<P : MvpPresenter> : AppCompatActivity(), HasSupportF
     super.onDestroy()
     presenter.destroy()
   }
-
-  override fun supportFragmentInjector() = fragmentInjector
 }

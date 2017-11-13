@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseActivity
+import com.example.marcin.meetfriends.ui.my_schedule.MyScheduleFragment
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_main.*
 
 @SuppressLint("CheckResult")
 class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
@@ -16,10 +18,15 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+    switchFragment(MyScheduleFragment())
   }
 
-  override fun showWelcomeText(email: String?) {
-    welcomeTextView.text = "Hello $email"
+  private fun switchFragment(currentFragment: Fragment) {
+    supportFragmentManager
+        .beginTransaction()
+        .replace(R.id.container, currentFragment)
+        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        .commit()
   }
 
   companion object {
