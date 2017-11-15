@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.beltaief.reactivefb.actions.ReactiveLogin
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.extensions.reactiveLoginWithButton
@@ -33,7 +34,7 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
     super.onActivityResult(requestCode, resultCode, data)
-    ReactiveLogin.onActivityResult(requestCode, resultCode, data);
+    ReactiveLogin.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun showProgressBar() {
@@ -47,6 +48,10 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
   override fun startMainActivity() {
     finish()
     startActivity(MainActivity.newIntent(this))
+  }
+
+  override fun showToast(msg: String) {
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
   }
 
   companion object {

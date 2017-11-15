@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.friends.FriendsFragment
+import com.example.marcin.meetfriends.ui.menu_navigation.MainNavigationActivity
 import com.example.marcin.meetfriends.ui.my_schedule.MyScheduleFragment
 import com.example.marcin.meetfriends.ui.venues.VenuesFragment
 import dagger.android.AndroidInjection
@@ -24,6 +25,9 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     bottomNavigationView.selectedItemId = R.id.schedule
     switchFragment(MyScheduleFragment())
     navigateWithBottomView()
+    drawrMenuButton.setOnClickListener {
+      startActivity(MainNavigationActivity.newIntent(this))
+    }
   }
 
   private fun navigateWithBottomView() {

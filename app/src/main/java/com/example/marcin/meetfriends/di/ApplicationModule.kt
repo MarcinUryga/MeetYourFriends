@@ -7,6 +7,7 @@ import com.example.marcin.meetfriends.MeetFriendsApplication
 import com.example.marcin.meetfriends.R
 import com.facebook.login.DefaultAudience
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -62,5 +63,11 @@ class ApplicationModule {
   @Singleton
   fun provideFirebaseAuth(): FirebaseAuth {
     return FirebaseAuth.getInstance()
+  }
+
+  @Provides
+  @Singleton
+  fun provideFirebaseDatabase(): FirebaseDatabase {
+    return FirebaseDatabase.getInstance()
   }
 }

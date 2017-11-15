@@ -7,4 +7,10 @@
     <string name="schedule">Schedule</string>
     <string name="friends">Friends</string>
     <string name="venues">Venues</string>
+    <string name="home">home</string>
+    <string name="menu_item">Menu Item</string>
+    <string name="options">Options</string>
+    <string name="logout">Logout</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

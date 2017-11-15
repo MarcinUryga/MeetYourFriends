@@ -1,12 +1,16 @@
 package com.example.marcin.meetfriends.ui.login
 
 import com.example.marcin.meetfriends.di.ScreenScope
+import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BasePresenter
+import com.example.marcin.meetfriends.utils.Commons
 import com.facebook.AccessToken
 import com.facebook.login.LoginResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseAuth
+import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -18,7 +22,8 @@ import javax.inject.Inject
  */
 @ScreenScope
 class LoginPresenter @Inject constructor(
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
+    private val firebaseDatabase: FirebaseDatabase
 ) : BasePresenter<LoginContract.View>(), LoginContract.Presenter {
 
   override fun registerlogin(observableLoginResult: Observable<LoginResult>) {
@@ -31,8 +36,8 @@ class LoginPresenter @Inject constructor(
     disposables?.add(disposableObserver)
   }
 
-  private fun handleFacebookAccessToken(token: AccessToken) {
-    val credential = FacebookAuthProvider.getCredential(token.token)
+  private fun handleFacebookAccessToken(accesToken: AccessToken) {
+    val credential = FacebookAuthProvider.getCredential(accesToken.token)
     RxFirebaseAuth.signInWithCredential(auth, credential)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -40,8 +45,23 @@ class LoginPresenter @Inject constructor(
         .doFinally { view.hideProgressBar() }
         .subscribe({ result ->
           view.startMainActivity()
+          val user = User(
+              uid = result.user.uid,
+              name = result.user.displayName,
+              phoneNumber = result.user.phoneNumber,
+              photoUrl = result.user.photoUrl.toString(),
+              email = result.user.email,
+              firebaseToken = accesToken.token
+          )
+          saveUser(user)
         }, { error ->
 
         })
+  }
+
+  private fun saveUser(user: User) {
+    RxFirebaseDatabase
+        .setValue(firebaseDatabase.reference.child(Commons.FIREBASE_USERS).child(user.uid), user)
+        .doFinally { view.showToast("Data saved!") }.subscribe()
   }
 }

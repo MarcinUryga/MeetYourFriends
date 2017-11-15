@@ -43,6 +43,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     //firebase
     implementation "com.google.firebase:firebase-auth:$firebase_version"
+    implementation "com.google.firebase:firebase-database:$firebase_version"
     implementation "com.github.frangsierra:rx2firebase:$rx_firebase_version"
     //facebook
     implementation "com.beltaief.reactivefb:reactivefb:$reactivefb_version"
