@@ -1,5 +1,6 @@
 package com.example.marcin.meetfriends.ui.friends
 
+import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
 
@@ -8,7 +9,10 @@ import com.example.marcin.meetfriends.mvp.MvpView
  */
 interface FriendsContract {
 
-  interface View : MvpView
+  interface View : MvpView {
+
+    fun showFriendsList(friendsList: List<User>)
+  }
 
   interface Presenter : MvpPresenter
 }

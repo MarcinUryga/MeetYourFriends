@@ -47,9 +47,10 @@ class LoginPresenter @Inject constructor(
           view.startMainActivity()
           val user = User(
               uid = result.user.uid,
-              name = result.user.displayName,
+              firstName = result.user.displayName,
+              lastName = result.user.displayName,
               phoneNumber = result.user.phoneNumber,
-              photoUrl = result.user.photoUrl.toString(),
+              photoUrl = result.user.photoUrl,
               email = result.user.email,
               firebaseToken = accesToken.token
           )

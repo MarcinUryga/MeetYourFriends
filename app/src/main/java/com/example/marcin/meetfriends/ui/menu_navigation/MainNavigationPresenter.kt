@@ -1,6 +1,7 @@
 package com.example.marcin.meetfriends.ui.menu_navigation
 
 import com.example.marcin.meetfriends.di.ScreenScope
+import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -17,6 +18,14 @@ class MainNavigationPresenter @Inject constructor(
 
   override fun onViewCreated() {
     super.onViewCreated()
-    view.setNavigationHeader(auth.currentUser)
+    val user = User(
+        uid = auth.currentUser?.uid,
+        firstName = auth.currentUser?.displayName,
+        lastName = auth.currentUser?.displayName,
+        phoneNumber = auth.currentUser?.phoneNumber,
+        photoUrl = auth.currentUser?.photoUrl,
+        email = auth.currentUser?.email
+    )
+    view.setNavigationHeader(user)
   }
 }

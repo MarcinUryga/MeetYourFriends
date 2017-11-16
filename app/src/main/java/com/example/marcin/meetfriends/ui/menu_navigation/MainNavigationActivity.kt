@@ -8,20 +8,23 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
+import android.view.View
 import com.example.marcin.meetfriends.R
+import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.friends.FriendsFragment
 import com.example.marcin.meetfriends.ui.my_schedule.MyScheduleFragment
 import com.example.marcin.meetfriends.ui.venues.VenuesFragment
-import com.google.firebase.auth.FirebaseUser
+import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main_navigation.*
-import kotlinx.android.synthetic.main.nav_header_main.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(), MainNavigationContract.View {
 
   lateinit var drawerToggle: ActionBarDrawerToggle
+  lateinit var headerView: View
 
   override fun onCreate(savedInstanceState: Bundle?) {
     AndroidInjection.inject(this)
@@ -32,6 +35,7 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
     drawerLayout.addDrawerListener(drawerToggle)
     setupNavigationDrawer()
     switchFragment(MyScheduleFragment())
+    headerView = navigationView.getHeaderView(0)
   }
 
   override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -50,8 +54,10 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
     } else super.onOptionsItemSelected(item)
   }
 
-  override fun setNavigationHeader(user: FirebaseUser?) {
-
+  override fun setNavigationHeader(user: User) {
+    Picasso.with(this).load(user.photoUrl).into(headerView.userPhoto)
+//    headerView.userName.text = user.appDisplayName
+    headerView.userEmail.text = user.email
   }
 
   private fun setupDrawerToggle(): ActionBarDrawerToggle {

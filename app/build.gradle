@@ -47,8 +47,10 @@ dependencies {
     implementation "com.github.frangsierra:rx2firebase:$rx_firebase_version"
     //facebook
     implementation "com.beltaief.reactivefb:reactivefb:$reactivefb_version"
-    //
+    //picasso
     implementation "com.squareup.picasso:picasso:$picasso_version"
+    //gson
+    implementation "com.google.code.gson:gson:2.8.1"
     //timber
     implementation "com.jakewharton.timber:timber:$timber_version"
     //tests
