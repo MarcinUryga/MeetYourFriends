@@ -20,10 +20,9 @@ class MainNavigationPresenter @Inject constructor(
     super.onViewCreated()
     val user = User(
         uid = auth.currentUser?.uid,
-        firstName = auth.currentUser?.displayName,
-        lastName = auth.currentUser?.displayName,
+        displayName = auth.currentUser?.displayName,
         phoneNumber = auth.currentUser?.phoneNumber,
-        photoUrl = auth.currentUser?.photoUrl,
+        photoUrl = auth.currentUser?.photoUrl.toString(),
         email = auth.currentUser?.email
     )
     view.setNavigationHeader(user)

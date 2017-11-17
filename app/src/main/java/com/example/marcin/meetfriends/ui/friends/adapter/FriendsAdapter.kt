@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.User
+import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.friends_item.view.*
 
@@ -32,7 +33,7 @@ class FriendsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
   }
 
   fun bind(friend: User) {
-    itemView.friendDisplayName.text = "${friend.firstName} ${friend.lastName}"
-    Picasso.with(itemView.context).load(friend.photoUrl).into(itemView.friendImage)
+    itemView.friendDisplayName.text = friend.displayName
+    Picasso.with(itemView.context).load(friend.photoUrl).transform(CircleTransform()).into(itemView.friendImage)
   }
 }

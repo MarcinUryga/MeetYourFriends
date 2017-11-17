@@ -3,7 +3,7 @@ package com.example.marcin.meetfriends.ui.login
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.utils.Commons
+import com.example.marcin.meetfriends.utils.Constants
 import com.facebook.AccessToken
 import com.facebook.login.LoginResult
 import com.google.firebase.auth.FacebookAuthProvider
@@ -47,10 +47,10 @@ class LoginPresenter @Inject constructor(
           view.startMainActivity()
           val user = User(
               uid = result.user.uid,
-              firstName = result.user.displayName,
-              lastName = result.user.displayName,
+              facebookId = result.additionalUserInfo.profile["id"].toString(),
+              displayName = result.user.displayName,
+              photoUrl = result.user.photoUrl.toString(),
               phoneNumber = result.user.phoneNumber,
-              photoUrl = result.user.photoUrl,
               email = result.user.email,
               firebaseToken = accesToken.token
           )
@@ -62,7 +62,7 @@ class LoginPresenter @Inject constructor(
 
   private fun saveUser(user: User) {
     RxFirebaseDatabase
-        .setValue(firebaseDatabase.reference.child(Commons.FIREBASE_USERS).child(user.uid), user)
+        .setValue(firebaseDatabase.reference.child(Constants.FIREBASE_USERS).child(user.uid), user)
         .doFinally { view.showToast("Data saved!") }.subscribe()
   }
 }

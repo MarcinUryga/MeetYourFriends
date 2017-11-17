@@ -8,11 +8,10 @@ import android.net.Uri
 
 data class User(
     val uid: String? = null,
-    val firstName: String? = null,
-    val lastName: String? = null,
+    val facebookId: String? = null,
+    val displayName: String? = null,
     val phoneNumber: String? = null,
-    val photoUrl: Uri? = null,
+    val photoUrl: String? = null,
     val email: String? = null,
-    val password: String? = null,
     val firebaseToken: String? = null
 )

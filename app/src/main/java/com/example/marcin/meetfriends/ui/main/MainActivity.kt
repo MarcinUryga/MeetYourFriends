@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
+import android.view.Menu
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.friends.FriendsFragment
@@ -51,11 +52,11 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
         .commit()
   }
 
-  /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
+ /* override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.main_menu, menu)
     return super.onCreateOptionsMenu(menu)
-  }*/
-
+  }
+*/
   companion object {
     fun newIntent(context: Context): Intent {
       return Intent(context, MainActivity::class.java)

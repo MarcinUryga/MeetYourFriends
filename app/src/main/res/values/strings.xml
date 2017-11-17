@@ -13,4 +13,5 @@
     <string name="logout">Logout</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="invite_me">Invite me!</string>
 </resources>
