@@ -14,6 +14,11 @@ class MainPresenter @Inject constructor(
     private val auth: FirebaseAuth
 ) : BasePresenter<MainContract.View>(), MainContract.Presenter {
 
+  override fun onViewCreated() {
+    super.onViewCreated()
+    view.setUpActionBar(auth.currentUser?.photoUrl.toString())
+  }
+
   override fun logout() {
     LoginManager.getInstance().logOut()
     auth.signOut()

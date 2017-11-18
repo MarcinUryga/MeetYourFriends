@@ -10,6 +10,8 @@ interface MainContract {
 
   interface View : MvpView {
 
+    fun setUpActionBar(uri: String)
+
     fun startLoginActivity()
   }
 

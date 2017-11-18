@@ -1,6 +1,5 @@
 package com.example.marcin.meetfriends.ui.main
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +8,7 @@ import android.support.v4.app.FragmentTransaction
 import android.view.Menu
 import android.view.MenuItem
 import com.example.marcin.meetfriends.R
+import com.example.marcin.meetfriends.extensions.PicassoExtension
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.friends.FriendsFragment
 import com.example.marcin.meetfriends.ui.login.LoginActivity
@@ -17,7 +17,6 @@ import com.example.marcin.meetfriends.ui.venues.VenuesFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 
-@SuppressLint("CheckResult")
 class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +38,10 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
       R.id.logout -> presenter.logout()
     }
     return super.onOptionsItemSelected(item)
+  }
+
+  override fun setUpActionBar(uri: String) {
+    PicassoExtension.loadImageToActionBar(this, supportActionBar, uri)
   }
 
   override fun startLoginActivity() {

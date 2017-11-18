@@ -21,9 +21,11 @@
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigationView"
+        style="@style/AppTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
         app:itemIconTint="@color/bottomview_selector"
         app:itemTextColor="@color/bottomview_selector"
         app:menu="@menu/menu_navigation_item" />
