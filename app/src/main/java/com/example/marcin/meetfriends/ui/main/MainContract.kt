@@ -13,9 +13,13 @@ interface MainContract {
     fun setUpActionBar(uri: String)
 
     fun startLoginActivity()
+
+    fun confirmLogoutDialog()
   }
 
   interface Presenter : MvpPresenter {
+
+    fun tryLogout()
 
     fun logout()
   }

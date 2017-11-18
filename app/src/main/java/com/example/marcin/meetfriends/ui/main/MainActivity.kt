@@ -1,5 +1,6 @@
 package com.example.marcin.meetfriends.ui.main
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.example.marcin.meetfriends.ui.my_schedule.MyScheduleFragment
 import com.example.marcin.meetfriends.ui.venues.VenuesFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
 
@@ -35,7 +37,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.logout -> presenter.logout()
+      R.id.logout -> presenter.tryLogout()
     }
     return super.onOptionsItemSelected(item)
   }
@@ -47,6 +49,17 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
   override fun startLoginActivity() {
     finish()
     startActivity(LoginActivity.newIntent(this))
+  }
+
+  override fun confirmLogoutDialog() {
+    AlertDialog.Builder(this)
+        .setTitle(getString(R.string.logout))
+        .setMessage(getString(R.string.do_you_really_want_to_logout))
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setPositiveButton(android.R.string.yes) { _, _ ->
+          presenter.logout()
+        }
+        .setNegativeButton(android.R.string.no, null).show()
   }
 
   private fun navigateWithBottomView() {

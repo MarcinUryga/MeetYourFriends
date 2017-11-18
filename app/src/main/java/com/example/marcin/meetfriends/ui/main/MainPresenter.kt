@@ -19,6 +19,10 @@ class MainPresenter @Inject constructor(
     view.setUpActionBar(auth.currentUser?.photoUrl.toString())
   }
 
+  override fun tryLogout() {
+    view.confirmLogoutDialog()
+  }
+
   override fun logout() {
     LoginManager.getInstance().logOut()
     auth.signOut()
