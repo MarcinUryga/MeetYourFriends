@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentTransaction
 import android.view.Menu
 import android.view.MenuItem
 import com.example.marcin.meetfriends.R
-import com.example.marcin.meetfriends.extensions.PicassoExtension
+import com.example.marcin.meetfriends.extensions.ActionBarExtensions
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.friends.FriendsFragment
 import com.example.marcin.meetfriends.ui.login.LoginActivity
@@ -41,7 +41,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
   }
 
   override fun setUpActionBar(uri: String) {
-    PicassoExtension.loadImageToActionBar(this, supportActionBar, uri)
+    ActionBarExtensions.loadUserIcon(this, supportActionBar, uri)
   }
 
   override fun startLoginActivity() {

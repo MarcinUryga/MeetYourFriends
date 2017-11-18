@@ -14,9 +14,9 @@ import com.squareup.picasso.Target;
  * Created by marci on 2017-11-18.
  */
 
-public class PicassoExtension {
+public class ActionBarExtensions {
 
-    public static void loadImageToActionBar(final Context context, final ActionBar actionBar, String uri) {
+    public static void loadUserIcon(final Context context, final ActionBar actionBar, String uri) {
         Picasso.with(context)
                 .load(uri)
                 .resize(64, 64)
@@ -27,7 +27,6 @@ public class PicassoExtension {
                         Drawable d = new BitmapDrawable(context.getResources(), bitmap);
                         actionBar.setIcon(d);
                         actionBar.setDisplayShowHomeEnabled(true);
-//                        actionBar.setDisplayHomeAsUpEnabled(true);
                     }
 
                     @Override
