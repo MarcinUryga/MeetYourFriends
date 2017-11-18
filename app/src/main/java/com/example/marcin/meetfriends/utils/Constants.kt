@@ -6,4 +6,5 @@ package com.example.marcin.meetfriends.utils
 object Constants {
 
   const val FIREBASE_USERS = "users"
+  const val FIREBASE_EVENTS: String = "events"
 }

@@ -1,13 +1,11 @@
 package com.example.marcin.meetfriends.ui.friends.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.example.marcin.meetfriends.R
+import android.widget.Toast
 import com.example.marcin.meetfriends.models.User
-import com.example.marcin.meetfriends.utils.CircleTransform
-import com.squareup.picasso.Picasso
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.friends_item.view.*
 
 /**
@@ -17,23 +15,22 @@ class FriendsAdapter(
     private val friendsList: List<User>
 ) : RecyclerView.Adapter<FriendsViewHolder>() {
 
+  private val publishSubject = PublishSubject.create<User>()
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = FriendsViewHolder.create(parent)
 
-  override fun onBindViewHolder(holder: FriendsViewHolder, position: Int) = holder.bind(friendsList[position])
-
-  override fun getItemCount() = friendsList.size
-}
-
-class FriendsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-  companion object {
-    fun create(parent: ViewGroup): FriendsViewHolder {
-      return FriendsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.friends_item, parent, false))
+  override fun onBindViewHolder(holder: FriendsViewHolder, position: Int) {
+    holder.bind(friendsList[position])
+    holder.itemView.inviteButton.setOnClickListener {
+      publishSubject.onNext(friendsList[position])
     }
   }
 
-  fun bind(friend: User) {
-    itemView.friendDisplayName.text = friend.displayName
-    Picasso.with(itemView.context).load(friend.photoUrl).transform(CircleTransform()).into(itemView.friendImage)
+  override fun getItemCount() = friendsList.size
+
+  fun getClickEvent(): Observable<User> {
+    return publishSubject
   }
+
 }
+

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BaseFragment
@@ -34,8 +35,18 @@ class FriendsFragment : BaseFragment<FriendsContract.Presenter>(), FriendsContra
   }
 
   override fun showFriendsList(friendsList: List<User>) {
-    friendsAdapter = FriendsAdapter(friendsList)
+    friendsAdapter = setUpFriendsAdapter(friendsList)
     friendsRecyclerView.layoutManager = LinearLayoutManager(context)
     friendsRecyclerView.adapter = friendsAdapter
+  }
+
+  override fun showToast(friendName: String) {
+    Toast.makeText(context, "Yeah " + friendName, Toast.LENGTH_SHORT).show()
+  }
+
+  private fun setUpFriendsAdapter(friendsList: List<User>): FriendsAdapter {
+    val adapter = FriendsAdapter(friendsList)
+    presenter.handleEvent(adapter.getClickEvent())
+    return adapter
   }
 }
