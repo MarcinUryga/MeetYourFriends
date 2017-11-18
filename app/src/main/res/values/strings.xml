@@ -15,4 +15,6 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="invite_me">Invite me!</string>
     <string name="create_new_event">Create new Event!</string>
+    <string name="inite_friends">Invite friends to event!</string>
+    <string name="find_place">Find place for your event!</string>
 </resources>

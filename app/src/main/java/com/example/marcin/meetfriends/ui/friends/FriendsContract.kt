@@ -11,6 +11,8 @@ interface FriendsContract {
 
   interface View : MvpView {
 
+    fun showInviteFriendsTitle()
+
     fun showFriendsList(friendsList: List<User>)
   }
 

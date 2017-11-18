@@ -29,6 +29,10 @@ class FriendsFragment : BaseFragment<FriendsContract.Presenter>(), FriendsContra
     return inflater.inflate(R.layout.fragment_friends, container, false)
   }
 
+  override fun showInviteFriendsTitle() {
+    setActionBarTitle(getString(R.string.inite_friends))
+  }
+
   override fun showFriendsList(friendsList: List<User>) {
     friendsAdapter = FriendsAdapter(friendsList)
     friendsRecyclerView.layoutManager = LinearLayoutManager(context)

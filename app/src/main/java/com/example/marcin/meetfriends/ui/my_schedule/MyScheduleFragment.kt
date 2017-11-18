@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.ConfirmedEventsFragment
 import com.example.marcin.meetfriends.ui.my_schedule.planned_event.PlannedEventsFragment
 import kotlinx.android.synthetic.main.fragment_my_schedule.*
+
 
 /**
  * Created by MARCIN on 2017-11-13.
@@ -23,6 +25,7 @@ class MyScheduleFragment : Fragment() {
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    (activity as AppCompatActivity).supportActionBar?.title = " ${getString(R.string.create_new_event)}"
     eventsViewPager.adapter = PageAdapter(childFragmentManager)
     tabs.setupWithViewPager(eventsViewPager)
   }

@@ -24,4 +24,9 @@ class VenuesFragment : BaseFragment<VenuesContract.Presenter>(), VenuesContract.
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     return inflater.inflate(R.layout.fragment_venues, container, false)
   }
+
+  override fun showFindPlaceTitle() {
+    setActionBarTitle(getString(R.string.find_place))
+  }
+
 }

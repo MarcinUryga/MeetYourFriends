@@ -12,5 +12,8 @@ class VenuesPresenter @Inject constructor(
 
 ) : BasePresenter<VenuesContract.View>(), VenuesContract.Presenter {
 
-
+  override fun onViewCreated() {
+    super.onViewCreated()
+    view.showFindPlaceTitle()
+  }
 }

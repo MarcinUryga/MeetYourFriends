@@ -8,7 +8,10 @@ import com.example.marcin.meetfriends.mvp.MvpView
  */
 interface VenuesContract {
 
-  interface View : MvpView
+  interface View : MvpView {
+
+    fun showFindPlaceTitle()
+  }
 
   interface Presenter : MvpPresenter
 }

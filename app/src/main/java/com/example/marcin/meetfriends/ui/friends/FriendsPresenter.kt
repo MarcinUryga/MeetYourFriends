@@ -16,6 +16,7 @@ class FriendsPresenter @Inject constructor(
 
   override fun onViewCreated() {
     super.onViewCreated()
+    view.showInviteFriendsTitle()
     /*getFriendsDromFirebase.get()
         .mergeWith { getFriendsFromFacebook.getFriends() }
         .subscribe({ users, profiles ->
@@ -35,6 +36,7 @@ class FriendsPresenter @Inject constructor(
           }
           view.showFriendsList(friendsList)
         })
+
   }
 
 }

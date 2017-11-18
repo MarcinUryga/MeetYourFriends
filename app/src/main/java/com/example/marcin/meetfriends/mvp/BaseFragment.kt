@@ -2,6 +2,7 @@ package com.example.marcin.meetfriends.mvp
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import javax.inject.Inject
 
@@ -40,5 +41,9 @@ abstract class BaseFragment<P : MvpPresenter> : Fragment() {
   override fun onDestroy() {
     super.onDestroy()
     presenter.destroy()
+  }
+
+  fun setActionBarTitle(title: String) {
+    (activity as AppCompatActivity).supportActionBar?.title = " $title"
   }
 }
