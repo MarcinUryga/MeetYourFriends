@@ -2,8 +2,14 @@ package com.example.marcin.meetfriends.ui.main
 
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
+import com.example.marcin.meetfriends.utils.Constants
+import com.example.marcin.meetfriends.utils.Constants.FIREBASE_EVENTS
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import durdinapps.rxfirebase2.RxFirebaseDatabase
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -11,7 +17,8 @@ import javax.inject.Inject
  */
 @ScreenScope
 class MainPresenter @Inject constructor(
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
+    private val firebaseDatabase: FirebaseDatabase
 ) : BasePresenter<MainContract.View>(), MainContract.Presenter {
 
   override fun onViewCreated() {
@@ -20,11 +27,30 @@ class MainPresenter @Inject constructor(
   }
 
   override fun addNewEvent() {
-    view.showBoxToCreateEvent()
+    view.showCreateEventDialog()
+  }
+
+  override fun createEvent(eventName: String) {
+    val eventId = firebaseDatabase.reference.push().key
+    val disposable = RxFirebaseDatabase
+        .setValue(
+            firebaseDatabase.reference
+                .child(FIREBASE_EVENTS)
+                .child(eventId)
+                .child(Constants.FIREBASE_NAME), eventName
+        ).subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doFinally { view.showCreatedEventSnackBar(eventId) }
+        .subscribe()
+    disposables?.add(disposable)
+  }
+
+  override fun removeEvent(eventId: String) {
+    firebaseDatabase.reference.child(FIREBASE_EVENTS).child(eventId).removeValue()
   }
 
   override fun tryLogout() {
-    view.confirmLogoutDialog()
+    view.showConfirmLogoutDialog()
   }
 
   override fun logout() {

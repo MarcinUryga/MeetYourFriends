@@ -3,6 +3,7 @@ package com.example.marcin.meetfriends.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AlertDialog
@@ -57,7 +58,36 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     startActivity(LoginActivity.newIntent(this))
   }
 
-  override fun confirmLogoutDialog() {
+  override fun showCreateEventDialog() {
+    val eventNameEditText = EditText(this)
+    val parentLayout = LinearLayout(this)
+    parentLayout.addView(eventNameEditText.setMargins(45, 45, 10, 10).setEditTextHint(getString(R.string.event_name)))
+    AlertDialog.Builder(this)
+        .setTitle(getString(R.string.create_new_event))
+        .setMessage(getString(R.string.name_your_event))
+        .setView(parentLayout)
+        .setPositiveButton(android.R.string.yes, { _, _ ->
+          val eventName = eventNameEditText.text.toString()
+          if (eventName.isNotEmpty()) {
+            presenter.createEvent(eventNameEditText.text.toString())
+            Toast.makeText(this, eventNameEditText.text, Toast.LENGTH_SHORT).show()
+          }
+        })
+        .setNegativeButton(android.R.string.no, null)
+        .show()
+  }
+
+  override fun showCreatedEventSnackBar(eventId: String) {
+    val snackbar = Snackbar
+        .make(snackBarContainer, "Message is deleted", Snackbar.LENGTH_LONG)
+        .setAction("UNDO", {
+          presenter.removeEvent(eventId)
+        })
+
+    snackbar.show()
+  }
+
+  override fun showConfirmLogoutDialog() {
     AlertDialog.Builder(this)
         .setTitle(getString(R.string.logout))
         .setMessage(getString(R.string.do_you_really_want_to_logout))
@@ -67,29 +97,6 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
         }
         .setNegativeButton(android.R.string.no, null)
         .show()
-  }
-
-  fun convertPixelsToDp(px: Float, context: Context): Int {
-    val resources = context.resources
-    val metrics = resources.displayMetrics
-    return (px / (metrics.densityDpi / 160f)).toInt()
-  }
-
-
-  override fun showBoxToCreateEvent() {
-    val eventNameEditText = EditText(this)
-    val parentLayout = LinearLayout(this)
-    parentLayout.addView(eventNameEditText.setMargins(45, 45, 10, 10).setEditTextHint(getString(R.string.event_name)))
-    AlertDialog.Builder(this)
-        .setTitle(getString(R.string.create_new_event))
-        .setMessage(getString(R.string.name_your_event))
-        .setView(parentLayout)
-        .setPositiveButton(android.R.string.yes, { _, _ ->
-          Toast.makeText(this, eventNameEditText.text, Toast.LENGTH_SHORT).show()
-        })
-        .setNegativeButton(android.R.string.no, null)
-        .show()
-
   }
 
   private fun navigateWithBottomView() {

@@ -14,14 +14,20 @@ interface MainContract {
 
     fun startLoginActivity()
 
-    fun confirmLogoutDialog()
+    fun showCreateEventDialog()
 
-    fun showBoxToCreateEvent()
+    fun showCreatedEventSnackBar(eventId: String)
+
+    fun showConfirmLogoutDialog()
   }
 
   interface Presenter : MvpPresenter {
 
     fun addNewEvent()
+
+    fun createEvent(eventName: String)
+
+    fun removeEvent(eventId: String)
 
     fun tryLogout()
 
