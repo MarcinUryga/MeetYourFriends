@@ -23,8 +23,16 @@ class FriendsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
   fun bind(friend: User) {
     itemView.friendDisplayName.text = friend.displayName
-    itemView.friendPhoneNumber.text = itemView.context.getString(R.string.phone, friend.phoneNumber ?: "-")
-    itemView.friendEmail.text = itemView.context.getString(R.string.email, friend.email ?: "-")
     Picasso.with(itemView.context).load(friend.photoUrl).transform(CircleTransform()).into(itemView.friendImage)
+    if (friend.phoneNumber != null) {
+      itemView.friendPhoneNumber.text = itemView.context.getString(R.string.phone, friend.phoneNumber)
+    } else {
+      itemView.friendPhoneNumber.visibility = View.GONE
+    }
+    if (friend.email != null) {
+      itemView.friendEmail.text = itemView.context.getString(R.string.email, friend.email)
+    } else {
+      itemView.friendEmail.visibility = View.GONE
+    }
   }
 }

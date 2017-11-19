@@ -49,9 +49,9 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     return super.onOptionsItemSelected(item)
   }
 
-  override fun setUpActionBar(uri: String) {
-    ActionBarExtensions.loadUserIcon(this, supportActionBar, uri)
-  }
+   override fun setUpActionBar(uri: String) {
+     ActionBarExtensions.loadUserIcon(this, supportActionBar, uri)
+   }
 
   override fun startLoginActivity() {
     finish()

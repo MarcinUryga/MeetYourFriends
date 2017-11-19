@@ -7,7 +7,9 @@ import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -28,11 +30,23 @@ class FriendsPresenter @Inject constructor(
     val disposable = getFriendsFromFacebook.getFriends()
         .subscribe({ profiles ->
           val disposable = getFriendsFromFirebase.get()
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .doOnSubscribe { view.showLoading() }
               .subscribe({ users ->
+                val u = listOf<User>(
+                    users[0],
+                    users[0],
+                    users[0],
+                    users[0],
+                    users[0],
+                    users[0],
+                    users[0]
+                )
                 view.showFriendsList(
-                    users.filter { user ->
+                    u/*.filter { user ->
                       profiles.any { it.id == user.facebookId }
-                    }
+                    }*/
                 )
               })
           disposables?.add(disposable)

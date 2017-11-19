@@ -14,6 +14,8 @@ interface FriendsContract {
 
     fun showInviteFriendsTitle()
 
+    fun showLoading()
+
     fun showFriendsList(friendsList: List<User>)
 
     fun showToast(friendName: String)
