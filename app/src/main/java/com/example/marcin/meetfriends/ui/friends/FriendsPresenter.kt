@@ -34,19 +34,10 @@ class FriendsPresenter @Inject constructor(
               .observeOn(AndroidSchedulers.mainThread())
               .doOnSubscribe { view.showLoading() }
               .subscribe({ users ->
-                val u = listOf<User>(
-                    users[0],
-                    users[0],
-                    users[0],
-                    users[0],
-                    users[0],
-                    users[0],
-                    users[0]
-                )
                 view.showFriendsList(
-                    u/*.filter { user ->
+                    users.filter { user ->
                       profiles.any { it.id == user.facebookId }
-                    }*/
+                    }
                 )
               })
           disposables?.add(disposable)
