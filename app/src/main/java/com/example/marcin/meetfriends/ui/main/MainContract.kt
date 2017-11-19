@@ -15,9 +15,13 @@ interface MainContract {
     fun startLoginActivity()
 
     fun confirmLogoutDialog()
+
+    fun showBoxToCreateEvent()
   }
 
   interface Presenter : MvpPresenter {
+
+    fun addNewEvent()
 
     fun tryLogout()
 

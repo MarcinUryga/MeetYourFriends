@@ -1,15 +1,20 @@
 package com.example.marcin.meetfriends.ui.main
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
+import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.extensions.ActionBarExtensions
+import com.example.marcin.meetfriends.extensions.setEditTextHint
+import com.example.marcin.meetfriends.extensions.setMargins
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.friends.FriendsFragment
 import com.example.marcin.meetfriends.ui.login.LoginActivity
@@ -38,6 +43,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.logout -> presenter.tryLogout()
+      R.id.addEvent -> presenter.addNewEvent()
     }
     return super.onOptionsItemSelected(item)
   }
@@ -59,7 +65,31 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
         .setPositiveButton(android.R.string.yes) { _, _ ->
           presenter.logout()
         }
-        .setNegativeButton(android.R.string.no, null).show()
+        .setNegativeButton(android.R.string.no, null)
+        .show()
+  }
+
+  fun convertPixelsToDp(px: Float, context: Context): Int {
+    val resources = context.resources
+    val metrics = resources.displayMetrics
+    return (px / (metrics.densityDpi / 160f)).toInt()
+  }
+
+
+  override fun showBoxToCreateEvent() {
+    val eventNameEditText = EditText(this)
+    val parentLayout = LinearLayout(this)
+    parentLayout.addView(eventNameEditText.setMargins(45, 45, 10, 10).setEditTextHint(getString(R.string.event_name)))
+    AlertDialog.Builder(this)
+        .setTitle(getString(R.string.create_new_event))
+        .setMessage(getString(R.string.name_your_event))
+        .setView(parentLayout)
+        .setPositiveButton(android.R.string.yes, { _, _ ->
+          Toast.makeText(this, eventNameEditText.text, Toast.LENGTH_SHORT).show()
+        })
+        .setNegativeButton(android.R.string.no, null)
+        .show()
+
   }
 
   private fun navigateWithBottomView() {

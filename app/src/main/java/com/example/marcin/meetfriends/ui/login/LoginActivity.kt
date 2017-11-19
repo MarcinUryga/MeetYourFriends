@@ -51,7 +51,7 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
   }
 
   override fun showToast(msg: String) {
-    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+//    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
   }
 
   companion object {

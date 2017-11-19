@@ -18,4 +18,7 @@
     <string name="inite_friends">Invite friends to event!</string>
     <string name="find_place">Find place for your event!</string>
     <string name="do_you_really_want_to_logout">Do you really want to logout?</string>
+    <string name="add_event">Add Event</string>
+    <string name="name_your_event">Name your event</string>
+    <string name="event_name">Event name</string>
 </resources>
