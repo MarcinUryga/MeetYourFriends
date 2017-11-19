@@ -17,7 +17,7 @@ import javax.inject.Inject
 class FriendsPresenter @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
     private val getFriendsFromFacebook: GetFriendsFromFacebook,
-    private val getFriendsDromFirebase: GetFriendsFromFirebase
+    private val getFriendsFromFirebase: GetFriendsFromFirebase
 ) : BasePresenter<FriendsContract.View>(), FriendsContract.Presenter {
 
   private val compositeDisposable = CompositeDisposable()
@@ -25,26 +25,19 @@ class FriendsPresenter @Inject constructor(
   override fun onViewCreated() {
     super.onViewCreated()
     view.showInviteFriendsTitle()
-    /*getFriendsDromFirebase.get()
-        .mergeWith { getFriendsFromFacebook.getFriends() }
-        .subscribe({ users, profiles ->
-
-          Timber.d(users.toString())
-        }, { error ->
-          Timber.e(error.localizedMessage)
-        })*/
-    getFriendsFromFacebook.getFriends()
+    val disposable = getFriendsFromFacebook.getFriends()
         .subscribe({ profiles ->
-          val friendsList = profiles.map {
-            User(
-                uid = it.id,
-                displayName = it.name,
-                photoUrl = it.getProfilePictureUri(170, 170).toString()
-            )
-          }
-          view.showFriendsList(friendsList)
+          val disposable = getFriendsFromFirebase.get()
+              .subscribe({ users ->
+                view.showFriendsList(
+                    users.filter { user ->
+                      profiles.any { it.id == user.facebookId }
+                    }
+                )
+              })
+          disposables?.add(disposable)
         })
-
+    disposables?.add(disposable)
   }
 
   override fun handleEvent(observable: Observable<User>) {
@@ -58,5 +51,4 @@ class FriendsPresenter @Inject constructor(
     })
     compositeDisposable.add(disposable)
   }
-
 }

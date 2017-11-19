@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.example.marcin.meetfriends.models.User
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.friends_item.view.*
+import kotlinx.android.synthetic.main.item_friends.view.*
 
 /**
  * Created by marci on 2017-11-16.

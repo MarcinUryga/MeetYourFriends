@@ -21,4 +21,6 @@
     <string name="add_event">Add Event</string>
     <string name="name_your_event">Name your event</string>
     <string name="event_name">Event name</string>
+    <string name="phone">Phone: %s</string>
+    <string name="email">Email: %s</string>
 </resources>

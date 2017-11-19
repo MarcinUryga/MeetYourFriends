@@ -8,7 +8,7 @@ import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.friends_item.view.*
+import kotlinx.android.synthetic.main.item_friends.view.*
 
 /**
  * Created by marci on 2017-11-18.
@@ -17,12 +17,14 @@ class FriendsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
   companion object {
     fun create(parent: ViewGroup): FriendsViewHolder {
-      return FriendsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.friends_item, parent, false))
+      return FriendsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_friends, parent, false))
     }
   }
 
   fun bind(friend: User) {
     itemView.friendDisplayName.text = friend.displayName
+    itemView.friendPhoneNumber.text = itemView.context.getString(R.string.phone, friend.phoneNumber ?: "-")
+    itemView.friendEmail.text = itemView.context.getString(R.string.email, friend.email ?: "-")
     Picasso.with(itemView.context).load(friend.photoUrl).transform(CircleTransform()).into(itemView.friendImage)
   }
 }

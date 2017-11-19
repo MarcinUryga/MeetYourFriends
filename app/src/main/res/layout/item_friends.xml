@@ -26,10 +26,19 @@
             tools:text="name surname" />
 
         <TextView
+            android:id="@+id/friendPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            tools:text="Phone" />
+
+        <TextView
             android:id="@+id/friendEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
+            android:textStyle="italic"
             tools:text="E-mail" />
 
         <Button
