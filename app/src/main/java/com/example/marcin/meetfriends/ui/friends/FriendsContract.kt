@@ -18,11 +18,21 @@ interface FriendsContract {
 
     fun showFriendsList(friendsList: List<User>)
 
-    fun showToast(friendName: String)
+    fun showCreateEventDialog()
+
+    fun showCreatedEventSnackBar(eventId: String)
+
+    fun showInvitedFriendSnackBar(friend: User, eventId: String)
   }
 
   interface Presenter : MvpPresenter {
 
     fun handleEvent(observable: Observable<User>)
+
+    fun createEvent(eventName: String)
+
+    fun removeEvent(eventId: String)
+
+    fun removeFriendFromEvent(friendId: String, eventId: String)
   }
 }

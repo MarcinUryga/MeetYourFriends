@@ -8,4 +8,5 @@ object Constants {
   const val FIREBASE_USERS = "users"
   const val FIREBASE_EVENTS: String = "events"
   const val FIREBASE_NAME: String = "name"
+  const val EMPTY_VALUE: String = " "
 }

@@ -1,7 +1,9 @@
 package com.example.marcin.meetfriends.ui.main
 
+import android.content.SharedPreferences
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
+import com.example.marcin.meetfriends.storage.SharedPref
 import com.example.marcin.meetfriends.utils.Constants
 import com.example.marcin.meetfriends.utils.Constants.FIREBASE_EVENTS
 import com.facebook.login.LoginManager
@@ -18,8 +20,11 @@ import javax.inject.Inject
 @ScreenScope
 class MainPresenter @Inject constructor(
     private val auth: FirebaseAuth,
-    private val firebaseDatabase: FirebaseDatabase
+    private val firebaseDatabase: FirebaseDatabase,
+    private val sharedPreferences: SharedPreferences
 ) : BasePresenter<MainContract.View>(), MainContract.Presenter {
+
+  private val sharedPref = SharedPref(sharedPreferences)
 
   override fun onViewCreated() {
     super.onViewCreated()
@@ -40,7 +45,10 @@ class MainPresenter @Inject constructor(
                 .child(Constants.FIREBASE_NAME), eventName
         ).subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .doFinally { view.showCreatedEventSnackBar(eventId) }
+        .doFinally {
+          view.showCreatedEventSnackBar(eventId)
+          sharedPref.saveChosenEvent(eventId)
+        }
         .subscribe()
     disposables?.add(disposable)
   }

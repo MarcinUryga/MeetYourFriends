@@ -23,9 +23,7 @@ class GetFriendsFromFacebook @Inject constructor(
   }
 
   private fun transform(response: GraphResponse): List<Profile> {
-    val gson = GsonBuilder()
-//        .registerTypeAdapter(Date::class.java, GsonDateTypeAdapter())
-        .create()
+    val gson = GsonBuilder().create()
     var data: String? = null
     try {
       data = if (response.jsonObject.has("data"))

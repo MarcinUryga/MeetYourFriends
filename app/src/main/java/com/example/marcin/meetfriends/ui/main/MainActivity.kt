@@ -49,9 +49,9 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     return super.onOptionsItemSelected(item)
   }
 
-   override fun setUpActionBar(uri: String) {
-     ActionBarExtensions.loadUserIcon(this, supportActionBar, uri)
-   }
+  override fun setUpActionBar(uri: String) {
+    ActionBarExtensions.loadUserIcon(this, supportActionBar, uri)
+  }
 
   override fun startLoginActivity() {
     finish()
@@ -78,13 +78,10 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
   }
 
   override fun showCreatedEventSnackBar(eventId: String) {
-    val snackbar = Snackbar
-        .make(snackBarContainer, "Message is deleted", Snackbar.LENGTH_LONG)
-        .setAction("UNDO", {
+    Snackbar.make(snackBarContainer, getString(R.string.created_new_event), Snackbar.LENGTH_LONG)
+        .setAction(getString(R.string.undo), {
           presenter.removeEvent(eventId)
-        })
-
-    snackbar.show()
+        }).show()
   }
 
   override fun showConfirmLogoutDialog() {

@@ -1,6 +1,8 @@
 package com.example.marcin.meetfriends.di
 
 import android.content.Context
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import com.beltaief.reactivefb.SimpleFacebookConfiguration
 import com.beltaief.reactivefb.util.PermissionHelper
 import com.example.marcin.meetfriends.MeetFriendsApplication
@@ -69,5 +71,10 @@ class ApplicationModule {
   @Singleton
   fun provideFirebaseDatabase(): FirebaseDatabase {
     return FirebaseDatabase.getInstance()
+  }
+
+  @Provides
+  fun providesSharedPreferences(app: MeetFriendsApplication): SharedPreferences {
+    return PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
   }
 }

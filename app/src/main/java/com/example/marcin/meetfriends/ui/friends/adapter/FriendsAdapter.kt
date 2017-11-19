@@ -2,7 +2,6 @@ package com.example.marcin.meetfriends.ui.friends.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.marcin.meetfriends.models.User
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -23,6 +22,7 @@ class FriendsAdapter(
     holder.bind(friendsList[position])
     holder.itemView.inviteButton.setOnClickListener {
       publishSubject.onNext(friendsList[position])
+//      it.isEnabled = false
     }
   }
 
