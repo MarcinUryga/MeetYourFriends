@@ -2,6 +2,7 @@ package com.example.marcin.meetfriends.ui.main
 
 import android.content.SharedPreferences
 import com.example.marcin.meetfriends.di.ScreenScope
+import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.storage.SharedPref
 import com.example.marcin.meetfriends.utils.Constants
@@ -21,7 +22,7 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(
     private val auth: FirebaseAuth,
     private val firebaseDatabase: FirebaseDatabase,
-    private val sharedPreferences: SharedPreferences
+    sharedPreferences: SharedPreferences
 ) : BasePresenter<MainContract.View>(), MainContract.Presenter {
 
   private val sharedPref = SharedPref(sharedPreferences)
@@ -37,13 +38,17 @@ class MainPresenter @Inject constructor(
 
   override fun createEvent(eventName: String) {
     val eventId = firebaseDatabase.reference.push().key
+    val event = Event(
+        id = eventId,
+        organizerId = auth.uid,
+        name = eventName
+    )
     val disposable = RxFirebaseDatabase
         .setValue(
             firebaseDatabase.reference
-                .child(FIREBASE_EVENTS)
-                .child(eventId)
-                .child(Constants.FIREBASE_NAME), eventName
-        ).subscribeOn(Schedulers.io())
+                .child(Constants.FIREBASE_EVENTS)
+                .child(eventId), event)
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doFinally {
           view.showCreatedEventSnackBar(eventId)
@@ -63,6 +68,7 @@ class MainPresenter @Inject constructor(
 
   override fun logout() {
     LoginManager.getInstance().logOut()
+    sharedPref.clearSharedPref()
     auth.signOut()
     view.startLoginActivity()
   }

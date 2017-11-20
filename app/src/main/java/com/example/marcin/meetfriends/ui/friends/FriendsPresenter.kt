@@ -2,10 +2,12 @@ package com.example.marcin.meetfriends.ui.friends
 
 import android.content.SharedPreferences
 import com.example.marcin.meetfriends.di.ScreenScope
+import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.storage.SharedPref
 import com.example.marcin.meetfriends.utils.Constants
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
@@ -22,7 +24,8 @@ class FriendsPresenter @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
     private val getFriendsFromFacebook: GetFriendsFromFacebook,
     private val getFriendsFromFirebase: GetFriendsFromFirebase,
-    private val sharedPreferences: SharedPreferences
+    private val auth: FirebaseAuth,
+    sharedPreferences: SharedPreferences
 ) : BasePresenter<FriendsContract.View>(), FriendsContract.Presenter {
 
   private val compositeDisposable = CompositeDisposable()
@@ -49,7 +52,7 @@ class FriendsPresenter @Inject constructor(
     disposables?.add(disposable)
   }
 
-  override fun handleEvent(observable: Observable<User>) {
+  override fun handleInviteFriendEvent(observable: Observable<User>) {
     val disposable = observable.subscribe({ friend ->
       val chosenEventId = sharedPref.getChosenEvent()
       if (chosenEventId == Constants.EMPTY_VALUE) {
@@ -69,13 +72,17 @@ class FriendsPresenter @Inject constructor(
 
   override fun createEvent(eventName: String) {
     val eventId = firebaseDatabase.reference.push().key
+    val event = Event(
+        id = eventId,
+        organizerId = auth.uid,
+        name = eventName
+    )
     val disposable = RxFirebaseDatabase
         .setValue(
             firebaseDatabase.reference
                 .child(Constants.FIREBASE_EVENTS)
-                .child(eventId)
-                .child(Constants.FIREBASE_NAME), eventName
-        ).subscribeOn(Schedulers.io())
+                .child(eventId), event)
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doFinally {
           view.showCreatedEventSnackBar(eventId)

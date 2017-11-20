@@ -86,7 +86,7 @@ class FriendsFragment : BaseFragment<FriendsContract.Presenter>(), FriendsContra
 
   private fun setUpFriendsAdapter(friendsList: List<User>): FriendsAdapter {
     val adapter = FriendsAdapter(friendsList)
-    presenter.handleEvent(adapter.getClickEvent())
+    presenter.handleInviteFriendEvent(adapter.getClickEvent())
     return adapter
   }
 }

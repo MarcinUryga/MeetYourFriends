@@ -15,10 +15,6 @@ class GetFriendsFromFirebase @Inject constructor(
 ) {
 
   fun get(): Maybe<MutableList<User>> {
-    /*  RxFirebaseDatabase.observeSingleValueEvent(firebaseDatabase.reference.child(Constants.FIREBASE_USERS),
-          dataSnapshot->{
-
-      })*/
     return RxFirebaseDatabase.observeSingleValueEvent(
         firebaseDatabase.reference.child(Constants.FIREBASE_USERS))
     { dataSnapshot ->

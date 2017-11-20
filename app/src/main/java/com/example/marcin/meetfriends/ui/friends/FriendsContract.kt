@@ -27,7 +27,7 @@ interface FriendsContract {
 
   interface Presenter : MvpPresenter {
 
-    fun handleEvent(observable: Observable<User>)
+    fun handleInviteFriendEvent(observable: Observable<User>)
 
     fun createEvent(eventName: String)
 

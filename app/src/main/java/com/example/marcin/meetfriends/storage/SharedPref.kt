@@ -19,6 +19,10 @@ class SharedPref(
     return sharedPreferences.getString(CURRENT_EVENT_ID, " ")
   }
 
+  fun clearSharedPref() {
+    storage.clear().apply()
+  }
+
   companion object {
     const val CURRENT_EVENT_ID = "currentEvent"
   }
