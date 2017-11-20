@@ -17,6 +17,7 @@ import com.example.marcin.meetfriends.extensions.ActionBarExtensions
 import com.example.marcin.meetfriends.extensions.setEditTextHint
 import com.example.marcin.meetfriends.extensions.setMargins
 import com.example.marcin.meetfriends.mvp.BaseActivity
+import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsFragment
 import com.example.marcin.meetfriends.ui.friends.FriendsFragment
 import com.example.marcin.meetfriends.ui.login.LoginActivity
 import com.example.marcin.meetfriends.ui.my_schedule.MyScheduleFragment
@@ -103,6 +104,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
             R.id.schedule -> switchFragment(MyScheduleFragment())
             R.id.friends -> switchFragment(FriendsFragment())
             R.id.venues -> switchFragment(VenuesFragment())
+            R.id.chatRooms -> switchFragment(ChatRoomsFragment())
             else -> throw Exception("Illegal fragment")
           }
           true

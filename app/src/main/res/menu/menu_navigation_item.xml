@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_venues_white_24dp"
         android:title="@string/venues"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/chatRooms"
+        android:icon="@drawable/ic_chat_white_24dp"
+        android:title="@string/chats"
+        app:showAsAction="ifRoom" />
 </menu>
