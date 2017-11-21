@@ -32,6 +32,6 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_margin="10dp"
-        android:src="@drawable/com_facebook_profile_picture_blank_portrait" />
+        tools:src="@drawable/circle_chat_user_placeholder" />
 
 </LinearLayout>
