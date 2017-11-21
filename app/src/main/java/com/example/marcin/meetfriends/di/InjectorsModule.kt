@@ -1,5 +1,7 @@
 package com.example.marcin.meetfriends.di
 
+import com.example.marcin.meetfriends.ui.chat.ChatActivity
+import com.example.marcin.meetfriends.ui.chat.ChatModule
 import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsFragment
 import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsModule
 import com.example.marcin.meetfriends.ui.friends.FriendsFragment
@@ -63,4 +65,8 @@ abstract class InjectorsModule {
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(ChatRoomsModule::class))
   abstract fun chatRoomsFragment(): ChatRoomsFragment
+
+  @ScreenScope
+  @ContributesAndroidInjector(modules = arrayOf(ChatModule::class))
+  abstract fun chatActivity(): ChatActivity
 }

@@ -9,6 +9,7 @@ import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseDatabase
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -26,9 +27,9 @@ class ChatRoomsPresenter @Inject constructor(
 
   private val sharedPref = SharedPref(sharedPreferences)
 
-  override fun onViewCreated() {
-    super.onViewCreated()
-    getEventsUseCase.get()
+  override fun resume() {
+    super.resume()
+    val disposable = getEventsUseCase.get()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSubscribe { view.showLoading() }
@@ -40,6 +41,7 @@ class ChatRoomsPresenter @Inject constructor(
             view.showEvents(events)
           }
         })
+    disposables?.add(disposable)
   }
 
   override fun addNewEvent() {
@@ -70,5 +72,12 @@ class ChatRoomsPresenter @Inject constructor(
 
   override fun removeEvent(eventId: String) {
     firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(eventId).removeValue()
+  }
+
+  override fun handleChosenChatRoomdEvent(eventChatRoom: Observable<Event>) {
+    val disposable = eventChatRoom.subscribe({ event ->
+      view.startChatRoomActivity(event)
+    })
+    disposables?.add(disposable)
   }
 }

@@ -10,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.extensions.setEditTextHint
 import com.example.marcin.meetfriends.extensions.setMargins
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BaseFragment
-import com.example.marcin.meetfriends.ui.chat_rooms.adapter.EventsAdapter
+import com.example.marcin.meetfriends.ui.chat.ChatActivity
+import com.example.marcin.meetfriends.ui.chat_rooms.adapter.ChatRoomsAdapter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.empty_chat_rooms.*
@@ -26,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_chat_rooms.*
  */
 class ChatRoomsFragment : BaseFragment<ChatRoomsContract.Presenter>(), ChatRoomsContract.View {
 
-  private lateinit var eventsAdapter: EventsAdapter
+  private lateinit var chatRoomsAdapter: ChatRoomsAdapter
 
   override fun onAttach(context: Context?) {
     AndroidSupportInjection.inject(this)
@@ -82,14 +84,18 @@ class ChatRoomsFragment : BaseFragment<ChatRoomsContract.Presenter>(), ChatRooms
   }
 
   override fun showEvents(events: List<Event>) {
-    eventsAdapter = setUpEventsAdapter(events)
+    chatRoomsAdapter = setUpEventsAdapter(events)
     chatRoomsRecyclerView.layoutManager = LinearLayoutManager(context)
-    chatRoomsRecyclerView.adapter = eventsAdapter
+    chatRoomsRecyclerView.adapter = chatRoomsAdapter
   }
 
-  private fun setUpEventsAdapter(events: List<Event>): EventsAdapter {
-    val adapter = EventsAdapter(events)
-//    presenter.handleInviteFriendEvent(adapter.getClickEvent())
+  private fun setUpEventsAdapter(events: List<Event>): ChatRoomsAdapter {
+    val adapter = ChatRoomsAdapter(events)
+    presenter.handleChosenChatRoomdEvent(adapter.getClickEvent())
     return adapter
+  }
+
+  override fun startChatRoomActivity(event: Event) {
+    startActivity(ChatActivity.newIntent(context, event))
   }
 }

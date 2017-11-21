@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_chat_room.view.*
 /**
  * Created by marci on 2017-11-20.
  */
-class EventsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class ChatRoomsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
   fun bind(event: Event) {
     itemView.eventName.text = event.name
@@ -19,8 +19,8 @@ class EventsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
   }
 
   companion object {
-    fun create(parent: ViewGroup): EventsViewHolder {
-      return EventsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_chat_room, parent, false))
+    fun create(parent: ViewGroup): ChatRoomsViewHolder {
+      return ChatRoomsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_chat_room, parent, false))
     }
   }
 }

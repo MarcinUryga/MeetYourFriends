@@ -12,7 +12,6 @@ import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -28,7 +27,6 @@ class FriendsPresenter @Inject constructor(
     sharedPreferences: SharedPreferences
 ) : BasePresenter<FriendsContract.View>(), FriendsContract.Presenter {
 
-  private val compositeDisposable = CompositeDisposable()
   private val sharedPref = SharedPref(sharedPreferences)
 
   override fun onViewCreated() {
@@ -64,10 +62,10 @@ class FriendsPresenter @Inject constructor(
                 .child(friend.uid), friend)
             .doFinally { view.showInvitedFriendSnackBar(friend, chosenEventId) }
             .subscribe()
-        compositeDisposable.add(disposable)
+        disposables?.add(disposable)
       }
     })
-    compositeDisposable.add(disposable)
+    disposables?.add(disposable)
   }
 
   override fun createEvent(eventName: String) {

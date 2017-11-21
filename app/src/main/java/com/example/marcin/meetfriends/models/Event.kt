@@ -1,5 +1,7 @@
 package com.example.marcin.meetfriends.models
 
+import java.io.Serializable
+
 /**
  * Created by marci on 2017-11-20.
  */
@@ -8,4 +10,4 @@ data class Event(
     val organizerId: String? = null,
     val name: String? = null,
     val users: Map<String, User>? = emptyMap()
-)
+) : Serializable
