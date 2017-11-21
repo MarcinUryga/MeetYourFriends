@@ -46,15 +46,14 @@
             android:textStyle="bold"
             tools:text="Create new with " />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/createEventButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/ic_add_circle_light_blue_24dp" />
+            android:background="@drawable/ic_add_circle_light_blue_24dp"
+            android:scaleType="fitXY" />
     </LinearLayout>
 
 </RelativeLayout>
