@@ -1,5 +1,7 @@
 package com.example.marcin.meetfriends.ui.chat
 
+import com.example.marcin.meetfriends.models.Chat
+import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
 
@@ -8,7 +10,13 @@ import com.example.marcin.meetfriends.mvp.MvpView
  */
 interface ChatContract {
 
-  interface View : MvpView
+  interface View : MvpView {
 
-  interface Presenter : MvpPresenter
+    fun addMessage(chat: Chat)
+  }
+
+  interface Presenter : MvpPresenter {
+
+    fun sendMessage(event: Event, text: String)
+  }
 }
