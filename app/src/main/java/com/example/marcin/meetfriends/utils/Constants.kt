@@ -5,10 +5,11 @@ package com.example.marcin.meetfriends.utils
  */
 object Constants {
 
-  const val FIREBASE_USERS = "users"
-  const val FIREBASE_EVENTS = "events"
   const val FIREBASE_ORGANIZER_ID = "organizerId"
+  const val FIREBASE_EVENTS = "events"
+  const val FIREBASE_USERS = "users"
   const val FIREBASE_CHAT = "chat"
+  const val FIREBASE_ID = "id"
 
   const val CHAT_ROOM_EXTRA = "ChatRoom"
   const val EMPTY_VALUE = " "

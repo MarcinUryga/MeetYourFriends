@@ -17,7 +17,9 @@ import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BaseFragment
 import com.example.marcin.meetfriends.ui.chat.ChatActivity
 import com.example.marcin.meetfriends.ui.chat_rooms.adapter.ChatRoomsAdapter
+import com.google.firebase.database.DataSnapshot
 import dagger.android.support.AndroidSupportInjection
+import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.empty_chat_rooms.*
 import kotlinx.android.synthetic.main.fragment_chat_rooms.*
@@ -27,7 +29,7 @@ import kotlinx.android.synthetic.main.fragment_chat_rooms.*
  */
 class ChatRoomsFragment : BaseFragment<ChatRoomsContract.Presenter>(), ChatRoomsContract.View {
 
-  private lateinit var chatRoomsAdapter: ChatRoomsAdapter
+  private val postAdapter = ChatRoomsAdapter()
 
   override fun onAttach(context: Context?) {
     AndroidSupportInjection.inject(this)
@@ -43,6 +45,16 @@ class ChatRoomsFragment : BaseFragment<ChatRoomsContract.Presenter>(), ChatRooms
     createEventButton.setOnClickListener {
       presenter.addNewEvent()
     }
+    swipeRefreshLayout.setOnRefreshListener {
+      presenter.onRefresh()
+    }
+  }
+
+  override fun onResume() {
+    super.onResume()
+    chatRoomsRecyclerView.visibility = View.VISIBLE
+    chatRoomsRecyclerView.layoutManager = LinearLayoutManager(context)
+    chatRoomsRecyclerView.adapter = postAdapter
   }
 
   override fun showCreateEventDialog() {
@@ -78,16 +90,13 @@ class ChatRoomsFragment : BaseFragment<ChatRoomsContract.Presenter>(), ChatRooms
     emptyChatRooms.visibility = View.INVISIBLE
   }
 
-  override fun showEvents(events: List<Event>) {
-    chatRoomsAdapter = setUpEventsAdapter(events)
-    chatRoomsRecyclerView.layoutManager = LinearLayoutManager(context)
-    chatRoomsRecyclerView.adapter = chatRoomsAdapter
+  override fun hideRefresh() {
+    swipeRefreshLayout.isRefreshing = false
   }
 
-  private fun setUpEventsAdapter(events: List<Event>): ChatRoomsAdapter {
-    val adapter = ChatRoomsAdapter(events)
-    presenter.handleChosenChatRoomdEvent(adapter.getClickEvent())
-    return adapter
+  override fun manageEvent(post: RxFirebaseChildEvent<DataSnapshot>) {
+    postAdapter.manageChildItem(post)
+    presenter.handleChosenChatRoomdEvent(postAdapter.getClickEvent())
   }
 
   override fun startChatRoomActivity(event: Event) {

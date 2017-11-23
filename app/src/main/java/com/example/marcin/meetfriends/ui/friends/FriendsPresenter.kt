@@ -59,7 +59,7 @@ class FriendsPresenter @Inject constructor(
         val disposable = RxFirebaseDatabase
             .setValue(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(chosenEventId)
                 .child(Constants.FIREBASE_USERS)
-                .child(friend.uid), friend)
+                .child(Constants.FIREBASE_ID), friend.uid)
             .doFinally { view.showInvitedFriendSnackBar(friend, chosenEventId) }
             .subscribe()
         disposables?.add(disposable)
