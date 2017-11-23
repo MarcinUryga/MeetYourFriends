@@ -12,15 +12,13 @@ interface ChatRoomsContract {
 
   interface View : MvpView {
 
-    fun showLoading()
-
-    fun hideLoading()
-
     fun showCreateEventDialog()
 
     fun showCreatedEventSnackBar(eventId: String)
 
     fun showEmptyEvents()
+
+    fun hideEmptyEvents()
 
     fun showEvents(events: List<Event>)
 

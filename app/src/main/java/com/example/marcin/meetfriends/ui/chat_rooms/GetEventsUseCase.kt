@@ -22,7 +22,7 @@ class GetEventsUseCase @Inject constructor(
     { dataSnapshot ->
       val events = mutableListOf<Event>()
       dataSnapshot.children.filter {
-        it.child(Constants.FIREBASE_ORGANIZERID).getValue(String::class.java) == auth.uid
+        it.child(Constants.FIREBASE_ORGANIZER_ID).getValue(String::class.java) == auth.uid
       }.forEach {
         events.add(it.getValue(Event::class.java).let { it!! })
       }

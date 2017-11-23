@@ -18,12 +18,31 @@ import javax.inject.Inject
  */
 @ScreenScope
 class ChatPresenter @Inject constructor(
+    private val getChatMessagesUseCase: GetChatMessagesUseCase,
     private val firebaseDatabase: FirebaseDatabase,
     private val auth: FirebaseAuth
 ) : BasePresenter<ChatContract.View>(), ChatContract.Presenter {
 
+  override fun getMessages(eventId: String) {
+    val disposable = RxFirebaseDatabase
+        .observeChildEvent(firebaseDatabase.reference
+            .child(Constants.FIREBASE_EVENTS)
+            .child(eventId)
+            .child(Constants.FIREBASE_CHAT))
+        .subscribe({ dataSnapshot ->
+          val chatMessages = mutableListOf<Chat>()
+          chatMessages.add(dataSnapshot.value.getValue(Chat::class.java).let { it!! })
+          chatMessages.forEach {
+            view.addMessage(it)
+          }
+        })
+    disposables?.add(disposable)
+  }
+
   override fun sendMessage(event: Event, text: String) {
+    val chatId = firebaseDatabase.reference.push().key
     val chat = Chat(
+        id = chatId,
         user = User(
             uid = auth.currentUser?.uid,
             displayName = auth.currentUser?.displayName,
@@ -36,11 +55,11 @@ class ChatPresenter @Inject constructor(
             firebaseDatabase.reference
                 .child(Constants.FIREBASE_EVENTS)
                 .child(event.id)
-                .child(Constants.FIREBASE_CHAT), chat)
+                .child(Constants.FIREBASE_CHAT)
+                .child(chatId), chat)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe()
     disposables?.add(disposable)
-    view.addMessage(chat)
   }
 }

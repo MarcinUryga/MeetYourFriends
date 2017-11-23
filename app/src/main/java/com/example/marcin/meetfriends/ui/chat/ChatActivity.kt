@@ -22,10 +22,14 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_chat_room)
     val event = intent.getSerializableExtra(Constants.CHAT_ROOM_EXTRA) as Event
+    presenter.getMessages(event.id.let { it!! })
     sendMessageButton.setOnClickListener {
       presenter.sendMessage(event, inputMessageEditText.text.toString())
     }
+    setUpRecyclerView()
+  }
 
+  private fun setUpRecyclerView() {
     chatRecyclerView.layoutManager = LinearLayoutManager(this)
     chatRecyclerView.adapter = chatAdapter
   }

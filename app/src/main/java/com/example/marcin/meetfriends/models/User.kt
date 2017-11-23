@@ -1,6 +1,6 @@
 package com.example.marcin.meetfriends.models
 
-import android.net.Uri
+import java.io.Serializable
 
 /**
  * Created by marci on 2017-11-14.
@@ -14,4 +14,4 @@ data class User(
     val photoUrl: String? = null,
     val email: String? = null,
     val firebaseToken: String? = null
-)
+) : Serializable

@@ -3,24 +3,45 @@ package com.example.marcin.meetfriends.ui.chat.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.models.Chat
+import com.example.marcin.meetfriends.ui.common.BaseViewHolder
 
 /**
  * Created by marci on 2017-11-21.
  */
-class ChatAdapter : RecyclerView.Adapter<ChatViewHolder>() {
+class ChatAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
   private val chatMessagesList = mutableListOf<Chat>()
+
+  companion object {
+    private val VIEW_MY_MESSAGE = 0
+    private val VIEW_OTHER_MESSAGE = 1
+  }
 
   fun addMessage(chat: Chat) {
     chatMessagesList.add(chat)
     notifyDataSetChanged()
   }
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ChatViewHolder.create(parent)
 
-  override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-    holder.bind(chatMessagesList[position])
+
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+    val holder: BaseViewHolder
+    when (viewType) {
+      VIEW_MY_MESSAGE -> holder = MyMessageChatViewHolder.create(parent)
+      VIEW_OTHER_MESSAGE -> holder = OtherMessageChatViewHolder.create(parent)
+      else -> holder = BaseViewHolder.empty(parent)
+    }
+    return holder
+  }
+
+
+  override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+    when (holder.itemViewType) {
+      VIEW_MY_MESSAGE -> (holder as? MyMessageChatViewHolder)?.bind(chatMessagesList[position])
+      VIEW_OTHER_MESSAGE -> (holder as? OtherMessageChatViewHolder)?.bind(chatMessagesList[position])
+    }
   }
 
   override fun getItemCount() = chatMessagesList.size
 }
+

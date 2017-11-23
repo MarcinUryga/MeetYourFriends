@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.extensions.setEditTextHint
 import com.example.marcin.meetfriends.extensions.setMargins
@@ -46,14 +45,6 @@ class ChatRoomsFragment : BaseFragment<ChatRoomsContract.Presenter>(), ChatRooms
     }
   }
 
-  override fun showLoading() {
-    progressBar.visibility = View.VISIBLE
-  }
-
-  override fun hideLoading() {
-    progressBar.visibility = View.INVISIBLE
-  }
-
   override fun showCreateEventDialog() {
     val eventNameEditText = EditText(context)
     val parentLayout = LinearLayout(context)
@@ -81,6 +72,10 @@ class ChatRoomsFragment : BaseFragment<ChatRoomsContract.Presenter>(), ChatRooms
 
   override fun showEmptyEvents() {
     emptyChatRooms.visibility = View.VISIBLE
+  }
+
+  override fun hideEmptyEvents() {
+    emptyChatRooms.visibility = View.INVISIBLE
   }
 
   override fun showEvents(events: List<Event>) {

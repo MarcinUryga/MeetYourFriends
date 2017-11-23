@@ -7,7 +7,9 @@ import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.storage.SharedPref
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
+import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,22 +28,53 @@ class ChatRoomsPresenter @Inject constructor(
 ) : BasePresenter<ChatRoomsContract.View>(), ChatRoomsContract.Presenter {
 
   private val sharedPref = SharedPref(sharedPreferences)
+  val events = mutableListOf<Event>()
 
   override fun resume() {
     super.resume()
-    val disposable = getEventsUseCase.get()
+    val disposable = RxFirebaseDatabase
+        .observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS))
         .subscribeOn(Schedulers.io())
+        .doAfterNext {
+          if (events.isNotEmpty()) {
+            view.hideEmptyEvents()
+          }
+        }
         .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe { view.showLoading() }
-        .doFinally { view.hideLoading() }
-        .subscribe({ events ->
-          if (events.isEmpty()) {
+        .subscribe({ dataSnapshot ->
+          val organizerIdPath = dataSnapshot.value.child(Constants.FIREBASE_ORGANIZER_ID)
+          val participantsIdPath = dataSnapshot.value.child(Constants.FIREBASE_USERS)
+          if ((organizerIdPath.getValue(String::class.java) == auth.uid)) {
+            addEventToEventList(events, dataSnapshot)
+          }
+          if (participantsIdPath.exists()) {
+            participantsIdPath.children.forEach {
+              if (it.key == auth.uid) {
+                addEventToEventList(events, dataSnapshot)
+              }
+            }
+          }
+          view.hideEmptyEvents()
+          view.showEvents(events)
+          if (!organizerIdPath.exists() || events.isEmpty()) {
             view.showEmptyEvents()
-          } else {
-            view.showEvents(events)
           }
         })
     disposables?.add(disposable)
+  }
+
+  private fun addEventToEventList(events: MutableList<Event>, dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
+    val event = dataSnapshot.value.getValue(Event::class.java).let { it!! }
+    val index = events.filter { it.id == event.id }.lastIndex
+    if (dataSnapshot.eventType == RxFirebaseChildEvent.EventType.ADDED) {
+      if (event !in events) {
+        events.add(event)
+      }
+    } else if (dataSnapshot.eventType == RxFirebaseChildEvent.EventType.CHANGED) {
+      events[index] = event
+    } else if (dataSnapshot.eventType == RxFirebaseChildEvent.EventType.REMOVED) {
+      events.remove(event)
+    }
   }
 
   override fun addNewEvent() {
