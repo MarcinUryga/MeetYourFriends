@@ -22,7 +22,6 @@ import javax.inject.Inject
 @ScreenScope
 class ChatRoomsPresenter @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
-    private val getEventsUseCase: GetEventsUseCase,
     private val auth: FirebaseAuth,
     sharedPreferences: SharedPreferences
 ) : BasePresenter<ChatRoomsContract.View>(), ChatRoomsContract.Presenter {
