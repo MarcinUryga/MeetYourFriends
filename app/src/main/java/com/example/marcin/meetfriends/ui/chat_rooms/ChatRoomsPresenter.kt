@@ -14,6 +14,7 @@ import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -52,6 +53,8 @@ class ChatRoomsPresenter @Inject constructor(
                   }
                 })
           }
+        }, { error ->
+          Timber.e(error.localizedMessage)
         })
     disposables?.add(disposable)
   }

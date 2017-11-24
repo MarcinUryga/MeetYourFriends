@@ -25,6 +25,7 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
     presenter.getMessages(event.id.let { it!! })
     sendMessageButton.setOnClickListener {
       presenter.sendMessage(event, inputMessageEditText.text.toString())
+      inputMessageEditText.text = null
     }
     setUpRecyclerView()
   }

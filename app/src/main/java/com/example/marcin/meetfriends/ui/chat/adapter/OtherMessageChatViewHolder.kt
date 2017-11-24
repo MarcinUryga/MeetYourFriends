@@ -8,7 +8,7 @@ import com.example.marcin.meetfriends.models.Chat
 import com.example.marcin.meetfriends.ui.common.BaseViewHolder
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_my_chat_message.view.*
+import kotlinx.android.synthetic.main.item_other_chat_message.view.*
 
 /**
  * Created by marci on 2017-11-22.
@@ -25,8 +25,8 @@ class OtherMessageChatViewHolder(itemView: View) : BaseViewHolder(itemView) {
   }
 
   companion object {
-    fun create(parent: ViewGroup): MyMessageChatViewHolder {
-      return MyMessageChatViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_other_chat_message, parent, false))
+    fun create(parent: ViewGroup): OtherMessageChatViewHolder {
+      return OtherMessageChatViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_other_chat_message, parent, false))
     }
   }
 }

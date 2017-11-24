@@ -33,6 +33,9 @@ class ChatPresenter @Inject constructor(
           val chatMessages = mutableListOf<Chat>()
           chatMessages.add(dataSnapshot.value.getValue(Chat::class.java).let { it!! })
           chatMessages.forEach {
+            if (it.user?.uid == auth.uid) {
+              it.ifMine = true
+            }
             view.addMessage(it)
           }
         })
@@ -40,26 +43,28 @@ class ChatPresenter @Inject constructor(
   }
 
   override fun sendMessage(event: Event, text: String) {
-    val chatId = firebaseDatabase.reference.push().key
-    val chat = Chat(
-        id = chatId,
-        user = User(
-            uid = auth.currentUser?.uid,
-            displayName = auth.currentUser?.displayName,
-            photoUrl = auth.currentUser?.photoUrl.toString()
-        ),
-        message = text
-    )
-    val disposable = RxFirebaseDatabase
-        .setValue(
-            firebaseDatabase.reference
-                .child(Constants.FIREBASE_EVENTS)
-                .child(event.id)
-                .child(Constants.FIREBASE_CHAT)
-                .child(chatId), chat)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe()
-    disposables?.add(disposable)
+    if (text.isNotEmpty()) {
+      val chatId = firebaseDatabase.reference.push().key
+      val chat = Chat(
+          id = chatId,
+          user = User(
+              uid = auth.currentUser?.uid,
+              displayName = auth.currentUser?.displayName,
+              photoUrl = auth.currentUser?.photoUrl.toString()
+          ),
+          message = text
+      )
+      val disposable = RxFirebaseDatabase
+          .setValue(
+              firebaseDatabase.reference
+                  .child(Constants.FIREBASE_EVENTS)
+                  .child(event.id)
+                  .child(Constants.FIREBASE_CHAT)
+                  .child(chatId), chat)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe()
+      disposables?.add(disposable)
+    }
   }
 }

@@ -30,4 +30,5 @@
     <string name="you_do_not_have_any_events_yet">You do not have any events yet</string>
     <string name="create_new_with">Create new with</string>
     <string name="amount_of_participants">%d participants</string>
+    <string name="your_message">Your message</string>
 </resources>

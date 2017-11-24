@@ -23,7 +23,6 @@ class ChatAdapter : RecyclerView.Adapter<BaseViewHolder>() {
   }
 
 
-
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
     val holder: BaseViewHolder
     when (viewType) {
@@ -40,6 +39,10 @@ class ChatAdapter : RecyclerView.Adapter<BaseViewHolder>() {
       VIEW_MY_MESSAGE -> (holder as? MyMessageChatViewHolder)?.bind(chatMessagesList[position])
       VIEW_OTHER_MESSAGE -> (holder as? OtherMessageChatViewHolder)?.bind(chatMessagesList[position])
     }
+  }
+
+  override fun getItemViewType(position: Int): Int {
+    return if (chatMessagesList[position].ifMine) VIEW_MY_MESSAGE else VIEW_OTHER_MESSAGE
   }
 
   override fun getItemCount() = chatMessagesList.size
