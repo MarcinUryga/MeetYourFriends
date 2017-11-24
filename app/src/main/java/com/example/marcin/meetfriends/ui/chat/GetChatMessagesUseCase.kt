@@ -29,8 +29,4 @@ class GetChatMessagesUseCase @Inject constructor(
       return@observeSingleValueEvent chatMessages
     }
   }
-
-  fun getChild(eventId: String) {
-
-  }
 }

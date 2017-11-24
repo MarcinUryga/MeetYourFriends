@@ -7,7 +7,9 @@ import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.storage.SharedPref
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
+import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,46 +31,38 @@ class ChatRoomsPresenter @Inject constructor(
   override fun resume() {
     super.resume()
     loadChatRooms()
-    loadInvitations()
   }
 
   private fun loadChatRooms() {
-    /* view.hideRefresh()
-     val disposable = RxFirebaseDatabase
-         .observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS))
-         .subscribeOn(Schedulers.io())
-         .observeOn(AndroidSchedulers.mainThread())
-         .subscribe({ dataSnapshot ->
-           val organizerIdPath = dataSnapshot.value.child(Constants.FIREBASE_ORGANIZER_ID)
-           if ((organizerIdPath.getValue(String::class.java) == auth.uid)) {
-             view.manageEvent(dataSnapshot)
-             view.hideEmptyEvents()
-           }
-         })
-     disposables?.add(disposable)*/
-  }
-
-  fun loadInvitations() {
     view.hideRefresh()
     val disposable = RxFirebaseDatabase
         .observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS))
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ dataSnapshot ->
-          val participantsIdPath = dataSnapshot.value.child(Constants.FIREBASE_USERS)
-          participantsIdPath.children.forEach {
-            if (it.value == auth.uid) {
-              view.manageEvent(dataSnapshot)
-              view.hideEmptyEvents()
-            }
+          val organizerIdPath = dataSnapshot.value.child(Constants.FIREBASE_ORGANIZER_ID)
+          if ((organizerIdPath.getValue(String::class.java) == auth.uid)) {
+            addEvent(dataSnapshot)
+          } else {
+            RxFirebaseDatabase.observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(dataSnapshot.key).child(Constants.FIREBASE_PARTICIPANTS))
+                .subscribe({ participantsIdDataSnapshot ->
+                  val participantsIdPath = participantsIdDataSnapshot.value
+                  if (participantsIdPath.value == auth.uid) {
+                    addEvent(dataSnapshot)
+                  }
+                })
           }
         })
     disposables?.add(disposable)
   }
 
+  private fun addEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
+    view.manageEvent(dataSnapshot)
+    view.hideEmptyEvents()
+  }
+
   override fun onRefresh() {
     loadChatRooms()
-    loadInvitations()
   }
 
 

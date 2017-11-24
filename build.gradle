@@ -38,6 +38,7 @@ ext {
     reactivefb_version = "0.1.0-beta-1"
     picasso_version = "2.5.2"
     timber_version = "4.6.0"
+    joda_version = "2.9.9"
     junit_version = "4.12"
     runner_version = "1.0.1"
     espresso_version = "3.0.1"

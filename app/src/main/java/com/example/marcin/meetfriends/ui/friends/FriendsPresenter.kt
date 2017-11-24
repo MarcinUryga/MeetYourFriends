@@ -13,6 +13,7 @@ import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 /**
@@ -58,8 +59,8 @@ class FriendsPresenter @Inject constructor(
       } else {
         val disposable = RxFirebaseDatabase
             .setValue(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(chosenEventId)
-                .child(Constants.FIREBASE_USERS)
-                .child(Constants.FIREBASE_ID), friend.uid)
+                .child(Constants.FIREBASE_PARTICIPANTS)
+                .child("${Constants.FIREBASE_PARTICIPANT}_${DateTime.now().millis}"), friend.uid)
             .doFinally { view.showInvitedFriendSnackBar(friend, chosenEventId) }
             .subscribe()
         disposables?.add(disposable)

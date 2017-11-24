@@ -15,7 +15,7 @@ class ChatRoomsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
   fun bind(event: Event) {
     itemView.eventName.text = event.name
-    itemView.amountOfParticipants.text = itemView.context.getString(R.string.amount_of_participants, event.users?.size)
+    itemView.amountOfParticipants.text = itemView.context.getString(R.string.amount_of_participants, event.participants.size)
   }
 
   companion object {

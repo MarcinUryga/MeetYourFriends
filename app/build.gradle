@@ -53,6 +53,8 @@ dependencies {
     implementation "com.google.code.gson:gson:2.8.1"
     //timber
     implementation "com.jakewharton.timber:timber:$timber_version"
+    //joda time
+    implementation "joda-time:joda-time:$joda_version"
     //tests
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "com.android.support.test:runner:$runner_version"

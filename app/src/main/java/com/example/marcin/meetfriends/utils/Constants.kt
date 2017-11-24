@@ -8,6 +8,8 @@ object Constants {
   const val FIREBASE_ORGANIZER_ID = "organizerId"
   const val FIREBASE_EVENTS = "events"
   const val FIREBASE_USERS = "users"
+  const val FIREBASE_PARTICIPANTS = "participants"
+  const val FIREBASE_PARTICIPANT = "participant"
   const val FIREBASE_CHAT = "chat"
   const val FIREBASE_ID = "id"
 
