@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
-            android:background="@drawable/ic_add_circle_light_blue_24dp"
+            android:background="@drawable/ic_calendar_add_event_button_with_plus_sign"
             android:scaleType="fitXY" />
     </LinearLayout>
 

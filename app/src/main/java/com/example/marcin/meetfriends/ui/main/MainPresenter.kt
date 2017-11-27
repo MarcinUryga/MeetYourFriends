@@ -5,6 +5,7 @@ import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.storage.SharedPref
+import com.example.marcin.meetfriends.ui.change_event.GetMyEventsUseCase
 import com.example.marcin.meetfriends.utils.Constants
 import com.example.marcin.meetfriends.utils.Constants.FIREBASE_EVENTS
 import com.facebook.login.LoginManager
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(
     private val auth: FirebaseAuth,
     private val firebaseDatabase: FirebaseDatabase,
+    private val getMyEventsUseCase: GetMyEventsUseCase,
     sharedPreferences: SharedPreferences
 ) : BasePresenter<MainContract.View>(), MainContract.Presenter {
 
@@ -62,6 +64,10 @@ class MainPresenter @Inject constructor(
     firebaseDatabase.reference.child(FIREBASE_EVENTS).child(eventId).removeValue()
   }
 
+  override fun changeEvent() {
+    view.showChangeEventDialog()
+  }
+
   override fun tryLogout() {
     view.showConfirmLogoutDialog()
   }
@@ -72,5 +78,4 @@ class MainPresenter @Inject constructor(
     auth.signOut()
     view.startLoginActivity()
   }
-
 }

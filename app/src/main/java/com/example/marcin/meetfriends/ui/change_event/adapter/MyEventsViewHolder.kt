@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.chat_rooms.adapter
+package com.example.marcin.meetfriends.ui.change_event.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,9 +9,9 @@ import com.example.marcin.meetfriends.models.Event
 import kotlinx.android.synthetic.main.item_event.view.*
 
 /**
- * Created by marci on 2017-11-20.
+ * Created by marci on 2017-11-27.
  */
-class ChatRoomsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class MyEventsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
   fun bind(event: Event) {
     itemView.eventName.text = event.name
@@ -19,8 +19,8 @@ class ChatRoomsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
   }
 
   companion object {
-    fun create(parent: ViewGroup): ChatRoomsViewHolder {
-      return ChatRoomsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false))
+    fun create(parent: ViewGroup): MyEventsViewHolder {
+      return MyEventsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false))
     }
   }
 }

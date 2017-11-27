@@ -31,4 +31,6 @@
     <string name="create_new_with">Create new with</string>
     <string name="amount_of_participants">%d participants</string>
     <string name="your_message">Your message</string>
+    <string name="change_event">Change Event</string>
+    <string name="choose_your_event">Choose your event!</string>
 </resources>

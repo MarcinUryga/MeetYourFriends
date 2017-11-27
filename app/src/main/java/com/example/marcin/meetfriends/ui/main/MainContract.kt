@@ -1,5 +1,7 @@
 package com.example.marcin.meetfriends.ui.main
 
+import android.util.EventLog
+import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
 
@@ -16,6 +18,8 @@ interface MainContract {
 
     fun showCreateEventDialog()
 
+    fun showChangeEventDialog()
+
     fun showCreatedEventSnackBar(eventId: String)
 
     fun showConfirmLogoutDialog()
@@ -28,6 +32,8 @@ interface MainContract {
     fun createEvent(eventName: String)
 
     fun removeEvent(eventId: String)
+
+    fun changeEvent()
 
     fun tryLogout()
 

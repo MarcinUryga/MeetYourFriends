@@ -17,6 +17,7 @@ import com.example.marcin.meetfriends.extensions.ActionBarExtensions
 import com.example.marcin.meetfriends.extensions.setEditTextHint
 import com.example.marcin.meetfriends.extensions.setMargins
 import com.example.marcin.meetfriends.mvp.BaseActivity
+import com.example.marcin.meetfriends.ui.change_event.ChangeEventDialogFragment
 import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsFragment
 import com.example.marcin.meetfriends.ui.friends.FriendsFragment
 import com.example.marcin.meetfriends.ui.login.LoginActivity
@@ -46,6 +47,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     when (item.itemId) {
       R.id.logout -> presenter.tryLogout()
       R.id.addEvent -> presenter.addNewEvent()
+      R.id.changeEvent -> presenter.changeEvent()
     }
     return super.onOptionsItemSelected(item)
   }
@@ -76,6 +78,11 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
         })
         .setNegativeButton(android.R.string.no, null)
         .show()
+  }
+
+  override fun showChangeEventDialog() {
+    val changeEventDialogFragment = ChangeEventDialogFragment()
+    changeEventDialogFragment.show(supportFragmentManager, "asdasd")
   }
 
   override fun showCreatedEventSnackBar(eventId: String) {
