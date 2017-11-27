@@ -5,6 +5,7 @@ import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.storage.SharedPref
+import com.example.marcin.meetfriends.ui.change_event.GetMyEventsUseCase
 import com.example.marcin.meetfriends.utils.Constants
 import com.example.marcin.meetfriends.utils.Constants.FIREBASE_EVENTS
 import com.facebook.login.LoginManager
@@ -52,6 +53,7 @@ class MainPresenter @Inject constructor(
         .observeOn(AndroidSchedulers.mainThread())
         .doFinally {
           view.showCreatedEventSnackBar(eventId)
+          sharedPref.saveChosenEvent(eventId)
         }
         .subscribe()
     disposables?.add(disposable)

@@ -90,6 +90,7 @@ class FriendsPresenter @Inject constructor(
         .observeOn(AndroidSchedulers.mainThread())
         .doFinally {
           view.showCreatedEventSnackBar(eventId)
+          sharedPref.saveChosenEvent(eventId)
         }
         .subscribe()
     disposables?.add(disposable)
