@@ -22,7 +22,7 @@ class FriendsAdapter(
     holder.bind(friendsList[position])
     holder.itemView.inviteButton.setOnClickListener {
       publishSubject.onNext(friendsList[position])
-//      it.isEnabled = false
+      it.isEnabled = false
     }
   }
 

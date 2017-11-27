@@ -37,6 +37,11 @@ class FriendsFragment : BaseFragment<FriendsContract.Presenter>(), FriendsContra
     return inflater.inflate(R.layout.fragment_friends, container, false)
   }
 
+  override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    friendsRecyclerView.layoutManager = LinearLayoutManager(context)
+  }
+
   override fun showInviteFriendsTitle() {
     setActionBarTitle(getString(R.string.invite_friends))
   }
@@ -45,10 +50,12 @@ class FriendsFragment : BaseFragment<FriendsContract.Presenter>(), FriendsContra
     progressBar.visibility = View.VISIBLE
   }
 
-  override fun showFriendsList(friendsList: List<User>) {
+  override fun hideLoading() {
     progressBar.visibility = View.INVISIBLE
+  }
+
+  override fun showFriendsList(friendsList: List<User>) {
     friendsAdapter = setUpFriendsAdapter(friendsList)
-    friendsRecyclerView.layoutManager = LinearLayoutManager(context)
     friendsRecyclerView.adapter = friendsAdapter
   }
 
@@ -80,7 +87,7 @@ class FriendsFragment : BaseFragment<FriendsContract.Presenter>(), FriendsContra
   override fun showInvitedFriendSnackBar(friend: User, eventId: String) {
     Snackbar.make(activity.snackBarContainer, getString(R.string.added_friend, friend.displayName), Snackbar.LENGTH_LONG)
         .setAction(getString(R.string.undo), {
-          presenter.removeFriendFromEvent(friend.uid.let { it!! }, eventId)
+          presenter.removeParticipantFromEvent(friend.uid.let { it!! }, eventId)
         }).show()
   }
 

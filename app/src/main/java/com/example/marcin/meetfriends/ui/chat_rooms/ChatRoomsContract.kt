@@ -24,6 +24,10 @@ interface ChatRoomsContract {
 
     fun hideRefresh()
 
+    fun showLoading()
+
+    fun hideLoading()
+
     fun startChatRoomActivity(event: Event)
 
     fun manageEvent(post: RxFirebaseChildEvent<DataSnapshot>)

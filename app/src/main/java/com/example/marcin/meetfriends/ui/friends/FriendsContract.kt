@@ -16,6 +16,8 @@ interface FriendsContract {
 
     fun showLoading()
 
+    fun hideLoading()
+
     fun showFriendsList(friendsList: List<User>)
 
     fun showCreateEventDialog()
@@ -33,6 +35,6 @@ interface FriendsContract {
 
     fun removeEvent(eventId: String)
 
-    fun removeFriendFromEvent(friendId: String, eventId: String)
+    fun removeParticipantFromEvent(friendId: String, eventId: String)
   }
 }

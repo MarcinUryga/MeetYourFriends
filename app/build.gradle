@@ -6,7 +6,7 @@ kapt.generateStubs = true
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    buildToolsVersion "27.0.1"
     defaultConfig {
         applicationId "com.example.marcin.meetfriends"
         minSdkVersion 21

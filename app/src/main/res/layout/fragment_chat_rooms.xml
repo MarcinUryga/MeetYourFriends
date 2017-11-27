@@ -11,8 +11,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/chatRoomsRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible" />
+            android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -20,7 +19,13 @@
         android:id="@+id/emptyChatRooms"
         layout="@layout/empty_chat_rooms"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:layout_height="match_parent" />
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
 </FrameLayout>

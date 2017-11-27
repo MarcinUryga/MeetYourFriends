@@ -94,6 +94,14 @@ class ChatRoomsFragment : BaseFragment<ChatRoomsContract.Presenter>(), ChatRooms
     swipeRefreshLayout.isRefreshing = false
   }
 
+  override fun showLoading() {
+    progressBar.visibility = View.VISIBLE
+  }
+
+  override fun hideLoading() {
+    progressBar.visibility = View.INVISIBLE
+  }
+
   override fun manageEvent(post: RxFirebaseChildEvent<DataSnapshot>) {
     postAdapter.manageChildItem(post)
     presenter.handleChosenChatRoomdEvent(postAdapter.getClickEvent())

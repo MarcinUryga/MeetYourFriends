@@ -40,6 +40,17 @@ class ChatRoomsPresenter @Inject constructor(
         .observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS))
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+        .doAfterNext {
+          view.hideLoading()
+        }
+        .doOnRequest {
+          view.hideLoading()
+          view.showEmptyEvents()
+        }
+        .doOnNext { view.hideEmptyEvents() }
+        .doOnSubscribe {
+          view.showLoading()
+        }
         .subscribe({ dataSnapshot ->
           val organizerIdPath = dataSnapshot.value.child(Constants.FIREBASE_ORGANIZER_ID)
           if ((organizerIdPath.getValue(String::class.java) == auth.uid)) {
@@ -62,6 +73,7 @@ class ChatRoomsPresenter @Inject constructor(
   private fun addEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
     view.manageEvent(dataSnapshot)
     view.hideEmptyEvents()
+    view.hideLoading()
   }
 
   override fun onRefresh() {
