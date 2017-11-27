@@ -19,7 +19,8 @@
         android:id="@+id/emptyChatRooms"
         layout="@layout/empty_chat_rooms"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
     <ProgressBar
         android:id="@+id/progressBar"
