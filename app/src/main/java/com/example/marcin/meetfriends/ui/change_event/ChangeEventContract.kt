@@ -18,6 +18,10 @@ interface ChangeEventContract {
 
     fun showMyEvents(events: List<Event>)
 
+    fun showNoEventsTextView()
+
+    fun hideNoEventsTextView()
+
     fun dismissDialogFragment()
   }
 

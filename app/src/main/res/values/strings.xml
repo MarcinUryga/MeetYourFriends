@@ -33,4 +33,11 @@
     <string name="your_message">Your message</string>
     <string name="change_event">Change Event</string>
     <string name="choose_your_event">Choose your event!</string>
+    <string name="you_organize_events">You organize %s</string>
+    <string name="you_organize_no_events">You organize no events!</string>
+
+    <plurals name="events">
+        <item quantity="one">the event, you can invite more friends to it!</item>
+        <item quantity="other">%d events, choose one to invite more people!</item>
+    </plurals>
 </resources>

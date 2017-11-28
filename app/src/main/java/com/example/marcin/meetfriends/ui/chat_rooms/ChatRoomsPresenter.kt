@@ -72,7 +72,6 @@ class ChatRoomsPresenter @Inject constructor(
     loadChatRooms()
   }
 
-
   override fun addNewEvent() {
     view.showCreateEventDialog()
   }

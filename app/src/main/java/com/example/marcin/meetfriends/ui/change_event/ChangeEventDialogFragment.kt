@@ -42,9 +42,26 @@ class ChangeEventDialogFragment : BaseFragmentDialog<ChangeEventContract.Present
     progressBar.visibility = View.INVISIBLE
   }
 
+  override fun showNoEventsTextView() {
+    noEventsTextView.visibility = View.VISIBLE
+  }
+
+  override fun hideNoEventsTextView() {
+    noEventsTextView.visibility = View.INVISIBLE
+  }
+
   override fun showMyEvents(events: List<Event>) {
+    eventsLayout.visibility = View.VISIBLE
+    prepareDialogFragmentTitle(events.size)
     myEventsAdapter = setupAdapter(events)
     eventsRecyclerView.adapter = myEventsAdapter
+  }
+
+  private fun prepareDialogFragmentTitle(amountOfEvents: Int) {
+    chooseEventTextView.text = getString(
+        R.string.you_organize_events,
+        resources.getQuantityString(R.plurals.events, amountOfEvents, amountOfEvents)
+    )
   }
 
   private fun setupAdapter(events: List<Event>): MyEventsAdapter {

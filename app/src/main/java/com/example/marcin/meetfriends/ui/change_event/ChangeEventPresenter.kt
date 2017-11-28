@@ -8,7 +8,6 @@ import com.example.marcin.meetfriends.storage.SharedPref
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -30,8 +29,11 @@ class ChangeEventPresenter @Inject constructor(
         .doOnSubscribe { view.showLoading() }
         .doFinally { view.hideLoading() }
         .subscribe { events ->
-          Timber.d(events.toString())
-          view.showMyEvents(events)
+          if (events.isEmpty()) {
+            view.showNoEventsTextView()
+          } else {
+            view.showMyEvents(events)
+          }
         }
     disposables?.add(disposable)
   }
