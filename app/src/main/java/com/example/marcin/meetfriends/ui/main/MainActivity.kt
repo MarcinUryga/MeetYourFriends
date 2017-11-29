@@ -26,7 +26,9 @@ import com.example.marcin.meetfriends.ui.venues.VenuesFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 
-
+/**
+ * Created by marci on 2017-11-09.
+ */
 class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
 
   override fun onCreate(savedInstanceState: Bundle?) {

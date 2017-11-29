@@ -7,6 +7,7 @@ import com.example.marcin.meetfriends.ui.login.LoginActivity
 import com.example.marcin.meetfriends.ui.main.MainActivity
 import dagger.android.AndroidInjection
 
+
 @SuppressLint("CheckResult")
 class LaunchActivity : BaseActivity<LaunchContract.Presenter>(), LaunchContract.View {
 

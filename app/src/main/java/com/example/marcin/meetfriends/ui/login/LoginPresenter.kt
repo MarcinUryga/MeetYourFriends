@@ -5,7 +5,6 @@ import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.utils.Constants
 import com.facebook.AccessToken
-import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -39,7 +38,7 @@ class LoginPresenter @Inject constructor(
 
   private fun handleFacebookAccessToken(accesToken: AccessToken) {
     val credential = FacebookAuthProvider.getCredential(accesToken.token)
-    RxFirebaseAuth.signInWithCredential(auth, credential)
+    val disposable = RxFirebaseAuth.signInWithCredential(auth, credential)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSubscribe { view.showProgressBar() }
@@ -59,6 +58,7 @@ class LoginPresenter @Inject constructor(
         }, { error ->
 
         })
+    disposables?.add(disposable)
   }
 
   private fun saveUser(user: User) {
