@@ -36,6 +36,8 @@
     <string name="you_organize_events">You organize %s</string>
     <string name="you_organize_no_events">You organize no events!</string>
     <string name="date">Date: %s</string>
+    <string name="invite_more_friends">invite more friends</string>
+    <string name="participant_image">participant image</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>

@@ -3,6 +3,7 @@ package com.example.marcin.meetfriends.ui.my_schedule.confirmed_events
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
+import com.example.marcin.meetfriends.ui.event_detail.EventDetailsParams
 import com.google.firebase.database.DataSnapshot
 import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import io.reactivex.Observable
@@ -12,26 +13,26 @@ import io.reactivex.Observable
  */
 interface PlannedEventsContract {
 
-  interface View : MvpView {
+    interface View : MvpView {
 
-   /* fun showEmptyEvents()
+        /* fun showEmptyEvents()
 
-    fun hideEmptyEvents()
+         fun hideEmptyEvents()
 
-    fun hideRefresh()
+         fun hideRefresh()
 
-    fun showLoading()
+         fun showLoading()
 
-    fun hideLoading()
-*/
-    fun manageEvent(post: RxFirebaseChildEvent<DataSnapshot>)
+         fun hideLoading()
+     */
+        fun manageEvent(post: RxFirebaseChildEvent<DataSnapshot>)
 
-    fun startEventDetailActivity(event: Event)
-  }
+        fun startEventDetailActivity(params: EventDetailsParams)
+    }
 
-  interface Presenter : MvpPresenter {
+    interface Presenter : MvpPresenter {
 
-    fun handleChosenEvent(eventChatRoom: Observable<Event>)
+        fun handleChosenEvent(eventChatRoom: Observable<Event>)
 
-  }
+    }
 }

@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
-import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BaseFragment
 import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity
+import com.example.marcin.meetfriends.ui.event_detail.EventDetailsParams
 import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.PlannedEventsContract
 import com.example.marcin.meetfriends.ui.my_schedule.planned_event.adapter.PlannedEventsAdapter
 import com.google.firebase.database.DataSnapshot
@@ -22,30 +22,30 @@ import kotlinx.android.synthetic.main.fragment_planned_events.*
  */
 class PlannedEventsFragment : BaseFragment<PlannedEventsContract.Presenter>(), PlannedEventsContract.View {
 
-  private val eventsAdapter = PlannedEventsAdapter()
+    private val eventsAdapter = PlannedEventsAdapter()
 
-  override fun onAttach(context: Context?) {
-    AndroidSupportInjection.inject(this)
-    super.onAttach(context)
-  }
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
 
-  override fun onResume() {
-    super.onResume()
-    plannedEventsRecyclerView.visibility = View.VISIBLE
-    plannedEventsRecyclerView.layoutManager = LinearLayoutManager(context)
-    plannedEventsRecyclerView.adapter = eventsAdapter
-  }
+    override fun onResume() {
+        super.onResume()
+        plannedEventsRecyclerView.visibility = View.VISIBLE
+        plannedEventsRecyclerView.layoutManager = LinearLayoutManager(context)
+        plannedEventsRecyclerView.adapter = eventsAdapter
+    }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.fragment_planned_events, container, false)
-  }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_planned_events, container, false)
+    }
 
-  override fun manageEvent(post: RxFirebaseChildEvent<DataSnapshot>) {
-    eventsAdapter.manageChildItem(post)
-    presenter.handleChosenEvent(eventsAdapter.getClickEvent())
-  }
+    override fun manageEvent(post: RxFirebaseChildEvent<DataSnapshot>) {
+        eventsAdapter.manageChildItem(post)
+        presenter.handleChosenEvent(eventsAdapter.getClickEvent())
+    }
 
-  override fun startEventDetailActivity(event: Event) {
-    startActivity(EventDetailActivity.newIntent(context))
-  }
+    override fun startEventDetailActivity(params: EventDetailsParams) {
+        startActivity(EventDetailActivity.newIntent(context, params))
+    }
 }

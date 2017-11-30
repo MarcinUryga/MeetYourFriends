@@ -10,5 +10,6 @@ data class Event(
     val organizerId: String? = null,
     val name: String? = null,
     val date: String? = null,
+    val description: String? = null,
     val participants: Map<String, String> = emptyMap()
 ) : Serializable
