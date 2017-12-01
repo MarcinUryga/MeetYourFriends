@@ -10,16 +10,27 @@ import com.example.marcin.meetfriends.mvp.MvpView
  */
 interface EventDetailContract {
 
-    interface View : MvpView {
+  interface View : MvpView {
 
-        fun showProgressBar()
+    fun showParticipantsProgressBar()
 
-        fun hideProgressBar()
+    fun hideParticipantsProgressBar()
 
-        fun showEventDetails(event: Event)
+    fun showEventDescriptionProgressBar()
 
-        fun showParticipants(participants: List<User>)
-    }
+    fun hideEventDescriptionProgressBar()
 
-    interface Presenter : MvpPresenter
+    fun showEventDetails(event: Event)
+
+    fun showNoParticipantsLayout()
+
+    fun showParticipants(participants: List<User>)
+
+    fun startFriendsFragment(eventId: String)
+  }
+
+  interface Presenter : MvpPresenter {
+
+    fun navigateToFriendsFragment()
+  }
 }

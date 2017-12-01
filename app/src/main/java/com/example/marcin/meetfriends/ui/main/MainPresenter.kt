@@ -5,7 +5,6 @@ import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.storage.SharedPref
-import com.example.marcin.meetfriends.ui.change_event.GetMyEventsUseCase
 import com.example.marcin.meetfriends.utils.Constants
 import com.example.marcin.meetfriends.utils.Constants.FIREBASE_EVENTS
 import com.facebook.login.LoginManager
@@ -37,12 +36,13 @@ class MainPresenter @Inject constructor(
     view.showCreateEventDialog()
   }
 
-  override fun createEvent(eventName: String) {
+  override fun createEvent(eventName: String, eventDescription: String) {
     val eventId = firebaseDatabase.reference.push().key
     val event = Event(
         id = eventId,
         organizerId = auth.uid,
-        name = eventName
+        name = eventName,
+        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     )
     val disposable = RxFirebaseDatabase
         .setValue(

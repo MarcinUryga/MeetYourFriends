@@ -9,7 +9,7 @@ data class Event(
     val id: String? = null,
     val organizerId: String? = null,
     val name: String? = null,
-    val date: String? = null,
-    val description: String? = null,
+    var date: String? = null,
+    var description: String? = null,
     val participants: Map<String, String> = emptyMap()
 ) : Serializable

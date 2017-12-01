@@ -27,7 +27,7 @@ interface MainContract {
 
     fun addNewEvent()
 
-    fun createEvent(eventName: String)
+    fun createEvent(eventName: String, eventDescription: String)
 
     fun removeEvent(eventId: String)
 

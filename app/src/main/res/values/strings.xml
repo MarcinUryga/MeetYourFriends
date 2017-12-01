@@ -38,6 +38,11 @@
     <string name="date">Date: %s</string>
     <string name="invite_more_friends">invite more friends</string>
     <string name="participant_image">participant image</string>
+    <string name="add_description">add description</string>
+    <string name="event_description">Event description</string>
+    <string name="description">Description</string>
+    <string name="no_participants_in_this_event">No participants in this event!</string>
+    <string name="participants">Participants</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>

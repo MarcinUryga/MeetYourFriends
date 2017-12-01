@@ -21,6 +21,7 @@ import com.example.marcin.meetfriends.ui.change_event.ChangeEventDialogFragment
 import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsFragment
 import com.example.marcin.meetfriends.ui.friends.FriendsFragment
 import com.example.marcin.meetfriends.ui.login.LoginActivity
+import com.example.marcin.meetfriends.ui.main.viewmodel.BottomBarEnum
 import com.example.marcin.meetfriends.ui.my_schedule.MyScheduleFragment
 import com.example.marcin.meetfriends.ui.venues.VenuesFragment
 import dagger.android.AndroidInjection
@@ -35,8 +36,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    bottomNavigationView.selectedItemId = R.id.schedule
-    switchFragment(MyScheduleFragment())
+    switchFragment(MyScheduleFragment(), BottomBarEnum.SCHEDULE.itemId)
     navigateWithBottomView()
   }
 
@@ -58,6 +58,11 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     ActionBarExtensions.loadUserIcon(this, supportActionBar, uri)
   }
 
+  override fun onNewIntent(intent: Intent) {
+    super.onNewIntent(intent)
+    getCurrentFragment(intent)
+  }
+
   override fun startLoginActivity() {
     finish()
     startActivity(LoginActivity.newIntent(this))
@@ -65,8 +70,10 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
 
   override fun showCreateEventDialog() {
     val eventNameEditText = EditText(this)
+    val eventDescriptionEditText = EditText(this)
     val parentLayout = LinearLayout(this)
     parentLayout.addView(eventNameEditText.setMargins(45, 45, 10, 10).setEditTextHint(getString(R.string.event_name)))
+//    parentLayout.addView(eventDescriptionEditText.setMargins(45, 45, 10, 10).setEditTextHint(getString(R.string.event_description)))
     AlertDialog.Builder(this)
         .setTitle(getString(R.string.create_new_event))
         .setMessage(getString(R.string.name_your_event))
@@ -74,7 +81,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
         .setPositiveButton(android.R.string.yes, { _, _ ->
           val eventName = eventNameEditText.text.toString()
           if (eventName.isNotEmpty()) {
-            presenter.createEvent(eventNameEditText.text.toString())
+            presenter.createEvent(eventNameEditText.text.toString(), eventDescriptionEditText.text.toString())
             Toast.makeText(this, eventNameEditText.text, Toast.LENGTH_SHORT).show()
           }
         })
@@ -106,6 +113,21 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
         .show()
   }
 
+  private fun getCurrentFragment(intent: Intent) {
+    if (intent.hasExtra(FRAGMENT_TO_OPEN)) {
+      val bottomItemId = intent.getIntExtra(FRAGMENT_TO_OPEN, -1)
+      when (bottomItemId) {
+        BottomBarEnum.SCHEDULE.itemId -> switchFragment(MyScheduleFragment(), bottomItemId)
+        BottomBarEnum.FRIENDS.itemId -> switchFragment(FriendsFragment(), bottomItemId)
+        BottomBarEnum.VENUES.itemId -> switchFragment(VenuesFragment(), bottomItemId)
+        BottomBarEnum.CHAT.itemId -> switchFragment(ChatRoomsFragment(), bottomItemId)
+        else -> throw Exception("Illegal fragment")
+      }
+    } else {
+      switchFragment(MyScheduleFragment(), 1)
+    }
+  }
+
   private fun navigateWithBottomView() {
     bottomNavigationView
         .setOnNavigationItemSelectedListener { item ->
@@ -120,17 +142,24 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
         }
   }
 
-  private fun switchFragment(currentFragment: Fragment) {
+  private fun switchFragment(currentFragment: Fragment, bottomItem: Int = -1) {
     supportFragmentManager
         .beginTransaction()
         .replace(R.id.container, currentFragment)
         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         .commit()
+    if (bottomItem != -1) {
+      bottomNavigationView.selectedItemId = bottomItem
+    }
   }
 
   companion object {
-    fun newIntent(context: Context): Intent {
-      return Intent(context, MainActivity::class.java)
+    private const val FRAGMENT_TO_OPEN = "openFragment"
+
+    fun newIntent(context: Context, bottomItem: Int = -1): Intent {
+      val intent = Intent(context, MainActivity::class.java)
+      intent.putExtra(FRAGMENT_TO_OPEN, bottomItem)
+      return intent
     }
   }
 }
