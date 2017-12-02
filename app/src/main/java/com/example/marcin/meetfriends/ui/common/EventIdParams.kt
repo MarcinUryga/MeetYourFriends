@@ -1,11 +1,11 @@
-package com.example.marcin.meetfriends.ui.event_detail
+package com.example.marcin.meetfriends.ui.common
 
 import android.os.Bundle
 
 /**
  * Created by marci on 2017-11-29.
  */
-class EventDetailsParams(bundle: Bundle? = Bundle()) {
+class EventIdParams(bundle: Bundle? = Bundle()) {
 
     val data: Bundle = bundle ?: Bundle()
 

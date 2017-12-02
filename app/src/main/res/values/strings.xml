@@ -43,6 +43,7 @@
     <string name="description">Description</string>
     <string name="no_participants_in_this_event">No participants in this event!</string>
     <string name="participants">Participants</string>
+    <string name="organizer">Organizer:</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>

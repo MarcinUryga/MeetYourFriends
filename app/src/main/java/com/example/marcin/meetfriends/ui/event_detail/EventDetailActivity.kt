@@ -10,6 +10,7 @@ import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BaseActivity
+import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.event_detail.adapter.ParticipantsAdapter
 import com.example.marcin.meetfriends.ui.main.MainActivity
 import com.example.marcin.meetfriends.ui.main.viewmodel.BottomBarEnum
@@ -79,11 +80,11 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
 
   private fun prepareToolbar(name: String?) {
     toolbar.title = name
-//    setSupportActionBar(toolbar)
+    setSupportActionBar(toolbar)
   }
 
   companion object {
-    fun newIntent(context: Context, params: EventDetailsParams): Intent {
+    fun newIntent(context: Context, params: EventIdParams): Intent {
       val intent = Intent(context, EventDetailActivity::class.java)
       intent.putExtras(params.data)
       return intent

@@ -5,6 +5,7 @@ import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.storage.SharedPref
+import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,7 +19,7 @@ import javax.inject.Inject
 class EventDetailPresenter @Inject constructor(
     private val getEventDetailsUseCase: GetEventDetailsUseCase,
     private val getParticipantsUseCase: GetParticipantsUseCase,
-    private val eventDetailsParams: EventDetailsParams,
+    private val eventIdParams: EventIdParams,
     private val firebaseDatabase: FirebaseDatabase,
     sharedPreferences: SharedPreferences,
     private val auth: FirebaseAuth
@@ -33,7 +34,7 @@ class EventDetailPresenter @Inject constructor(
   }
 
   private fun loadEvent() {
-    val disposable = getEventDetailsUseCase.get(eventDetailsParams.eventId)
+    val disposable = getEventDetailsUseCase.get(eventIdParams.eventId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSubscribe { view.showEventDescriptionProgressBar() }

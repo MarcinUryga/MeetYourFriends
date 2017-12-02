@@ -38,7 +38,8 @@
         <activity
             android:name=".ui.event_detail.EventDetailActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

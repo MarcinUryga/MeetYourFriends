@@ -1,5 +1,7 @@
 package com.example.marcin.meetfriends.ui.event_detail;
 
+import com.example.marcin.meetfriends.ui.common.EventIdParams;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
@@ -17,7 +19,7 @@ public abstract class EventDetailModule {
     public abstract EventDetailContract.Presenter bindPresenter(EventDetailPresenter presenter);
 
     @Provides
-    static EventDetailsParams provideParams(EventDetailActivity activity) {
-        return new EventDetailsParams(activity.getIntent().getExtras());
+    static EventIdParams provideParams(EventDetailActivity activity) {
+        return new EventIdParams(activity.getIntent().getExtras());
     }
 }

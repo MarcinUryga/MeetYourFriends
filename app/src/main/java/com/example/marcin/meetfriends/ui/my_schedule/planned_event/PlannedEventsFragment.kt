@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseFragment
 import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity
-import com.example.marcin.meetfriends.ui.event_detail.EventDetailsParams
+import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.PlannedEventsContract
 import com.example.marcin.meetfriends.ui.my_schedule.planned_event.adapter.PlannedEventsAdapter
 import com.google.firebase.database.DataSnapshot
@@ -45,7 +45,7 @@ class PlannedEventsFragment : BaseFragment<PlannedEventsContract.Presenter>(), P
         presenter.handleChosenEvent(eventsAdapter.getClickEvent())
     }
 
-    override fun startEventDetailActivity(params: EventDetailsParams) {
+    override fun startEventDetailActivity(params: EventIdParams) {
         startActivity(EventDetailActivity.newIntent(context, params))
     }
 }
