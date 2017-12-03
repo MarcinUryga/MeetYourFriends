@@ -40,6 +40,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".ui.friends.FriendsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

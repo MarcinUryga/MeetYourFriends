@@ -15,8 +15,8 @@ import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.ChatActivity
 import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.event_detail.adapter.ParticipantsAdapter
+import com.example.marcin.meetfriends.ui.friends.FriendsActivity
 import com.example.marcin.meetfriends.ui.main.MainActivity
-import com.example.marcin.meetfriends.ui.main.viewmodel.BottomBarEnum
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
@@ -84,10 +84,12 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
 
   override fun showNoParticipantsLayout() {
     noParticipantsLayout.visibility = View.VISIBLE
+    inviteFriendsButton.visibility = View.VISIBLE
+    inviteFriendsButton.text = getString(R.string.invite_friends)
   }
 
-  override fun startFriendsFragment(eventId: String) {
-    startActivity(MainActivity.newIntent(baseContext, BottomBarEnum.QUESTIONNAIRES.itemId))
+  override fun startFriendsActivity(params: EventIdParams) {
+    startActivity(FriendsActivity.newIntent(baseContext, params))
   }
 
   override fun startEventChatActivity(params: EventIdParams) {

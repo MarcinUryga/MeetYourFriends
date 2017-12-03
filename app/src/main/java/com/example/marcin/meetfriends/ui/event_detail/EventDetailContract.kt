@@ -29,7 +29,7 @@ interface EventDetailContract {
 
     fun showNoParticipantsLayout()
 
-    fun startFriendsFragment(eventId: String)
+    fun startFriendsActivity(eventIdParams: EventIdParams)
 
     fun startEventChatActivity(params: EventIdParams)
 

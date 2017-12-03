@@ -74,9 +74,9 @@ class EventDetailPresenter @Inject constructor(
   }
 
   override fun navigateToFriendsFragment() {
-//    TODO("handle event it in FriendsFragment")
+//    TODO("handle event it in FriendsActivity")
     sharedPref.saveChosenEvent(event.id.let { it!! })
-    view.startFriendsFragment(event.id.let { it!! })
+    view.startFriendsActivity(EventIdParams(event.id.let { it!! }))
   }
 
   override fun navigateToEventChat() {

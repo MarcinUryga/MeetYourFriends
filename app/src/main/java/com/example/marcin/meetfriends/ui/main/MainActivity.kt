@@ -19,7 +19,7 @@ import com.example.marcin.meetfriends.extensions.setMargins
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.change_event.ChangeEventDialogFragment
 import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsFragment
-import com.example.marcin.meetfriends.ui.friends.FriendsFragment
+import com.example.marcin.meetfriends.ui.friends.FriendsActivity
 import com.example.marcin.meetfriends.ui.login.LoginActivity
 import com.example.marcin.meetfriends.ui.main.viewmodel.BottomBarEnum
 import com.example.marcin.meetfriends.ui.my_schedule.MyScheduleFragment
@@ -48,7 +48,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     when (item.itemId) {
       R.id.logout -> presenter.tryLogout()
       R.id.addEvent -> presenter.addNewEvent()
-      R.id.changeEvent -> presenter.changeEvent()
+//      R.id.changeEvent -> presenter.changeEvent()
     }
     return super.onOptionsItemSelected(item)
   }
@@ -117,7 +117,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
       val bottomItemId = intent.getIntExtra(FRAGMENT_TO_OPEN, -1)
       when (bottomItemId) {
         BottomBarEnum.SCHEDULE.itemId -> switchFragment(MyScheduleFragment(), bottomItemId)
-        BottomBarEnum.QUESTIONNAIRES.itemId -> switchFragment(FriendsFragment(), bottomItemId)
+        BottomBarEnum.QUESTIONNAIRES.itemId -> switchFragment(MyScheduleFragment(), bottomItemId)
 //        BottomBarEnum.VENUES.itemId -> switchFragment(VenuesFragment(), bottomItemId)
         BottomBarEnum.CHAT.itemId -> switchFragment(ChatRoomsFragment(), bottomItemId)
         else -> switchFragment(MyScheduleFragment(), 1)
@@ -130,7 +130,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
         .setOnNavigationItemSelectedListener { item ->
           when (item.itemId) {
             R.id.schedule -> switchFragment(MyScheduleFragment())
-            R.id.questionnaires -> switchFragment(FriendsFragment())
+            R.id.questionnaires -> switchFragment(MyScheduleFragment())
 //            R.id.venues -> switchFragment(VenuesFragment())
             R.id.chatRooms -> switchFragment(ChatRoomsFragment())
             else -> throw Exception("Illegal fragment")

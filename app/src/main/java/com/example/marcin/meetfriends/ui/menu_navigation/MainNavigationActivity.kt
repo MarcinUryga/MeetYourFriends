@@ -12,7 +12,7 @@ import android.view.View
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BaseActivity
-import com.example.marcin.meetfriends.ui.friends.FriendsFragment
+import com.example.marcin.meetfriends.ui.friends.FriendsActivity
 import com.example.marcin.meetfriends.ui.my_schedule.MyScheduleFragment
 import com.example.marcin.meetfriends.ui.venues.VenuesFragment
 import com.squareup.picasso.Picasso
@@ -68,7 +68,7 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
     navigationView.setNavigationItemSelectedListener { menuItem ->
       when (menuItem.itemId) {
         R.id.nav_schedule -> switchFragment(MyScheduleFragment())
-        R.id.nav_friends -> switchFragment(FriendsFragment())
+        R.id.nav_friends -> switchFragment(MyScheduleFragment())
         R.id.nav_venues -> switchFragment(VenuesFragment())
         R.id.logout -> switchFragment(VenuesFragment())
         else -> throw Exception("Illegal fragment")

@@ -12,17 +12,11 @@ interface FriendsContract {
 
   interface View : MvpView {
 
-    fun showInviteFriendsTitle()
-
     fun showLoading()
 
     fun hideLoading()
 
     fun showFriendsList(friendsList: List<User>)
-
-    fun showCreateEventDialog()
-
-    fun showCreatedEventSnackBar(eventId: String)
 
     fun showInvitedFriendSnackBar(friend: User, eventId: String)
   }
@@ -30,10 +24,6 @@ interface FriendsContract {
   interface Presenter : MvpPresenter {
 
     fun handleInviteFriendEvent(observable: Observable<User>)
-
-    fun createEvent(eventName: String)
-
-    fun removeEvent(eventId: String)
 
     fun removeParticipantFromEvent(friendId: String, eventId: String)
   }
