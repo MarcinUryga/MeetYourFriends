@@ -29,6 +29,7 @@ class ChatRoomsPresenter @Inject constructor(
 ) : BasePresenter<ChatRoomsContract.View>(), ChatRoomsContract.Presenter {
 
   private val sharedPref = SharedPref(sharedPreferences)
+  private var loading = false
 
   override fun resume() {
     super.resume()
@@ -41,7 +42,10 @@ class ChatRoomsPresenter @Inject constructor(
         .observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS))
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe { view.showLoading() }
+        .doOnSubscribe {
+          view.showLoading()
+          loading = true
+        }
         .subscribe({ dataSnapshot ->
           val organizerIdPath = dataSnapshot.value.child(Constants.FIREBASE_ORGANIZER_ID)
           if ((organizerIdPath.getValue(String::class.java) == auth.uid)) {
@@ -49,13 +53,7 @@ class ChatRoomsPresenter @Inject constructor(
           } else {
             view.showEmptyEvents()
             view.hideLoading()
-            RxFirebaseDatabase.observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(dataSnapshot.key).child(Constants.FIREBASE_PARTICIPANTS))
-                .subscribe({ participantsIdDataSnapshot ->
-                  val participantsIdPath = participantsIdDataSnapshot.value
-                  if (participantsIdPath.value == auth.uid) {
-                    addEvent(dataSnapshot)
-                  }
-                })
+            findParticipants(dataSnapshot)
           }
         }, { error ->
           Timber.e(error.localizedMessage)
@@ -63,9 +61,22 @@ class ChatRoomsPresenter @Inject constructor(
     disposables?.add(disposable)
   }
 
+  private fun findParticipants(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
+    val disposable = RxFirebaseDatabase.observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(dataSnapshot.key).child(Constants.FIREBASE_PARTICIPANTS))
+        .subscribe({ participantsIdDataSnapshot ->
+          val participantsIdPath = participantsIdDataSnapshot.value
+          if (participantsIdPath.value == auth.uid) {
+            addEvent(dataSnapshot)
+          }
+        })
+    disposables?.add(disposable)
+  }
+
   private fun addEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
     view.manageEvent(dataSnapshot)
-    view.hideLoading()
+    if (loading) {
+      view.hideLoading()
+    }
     view.hideEmptyEvents()
   }
 

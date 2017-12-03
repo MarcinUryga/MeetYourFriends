@@ -23,4 +23,9 @@ public abstract class FriendsModule {
   public static EventIdParams providesEventIdParams(FriendsActivity activity) {
     return new EventIdParams(activity.getIntent().getExtras());
   }
+
+  @Provides
+  public static ParticipantsListParams providesParticipantsListParams(FriendsActivity activity) {
+    return new ParticipantsListParams(activity.getIntent().getExtras());
+  }
 }

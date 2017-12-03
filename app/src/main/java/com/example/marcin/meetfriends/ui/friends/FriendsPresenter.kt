@@ -1,11 +1,10 @@
 package com.example.marcin.meetfriends.ui.friends
 
 import com.example.marcin.meetfriends.di.ScreenScope
-import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.ui.common.EventIdParams
+import com.example.marcin.meetfriends.ui.friends.viewmodel.Friend
 import com.example.marcin.meetfriends.utils.Constants
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -26,12 +25,19 @@ class FriendsPresenter @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
     private val getFriendsFromFacebook: GetFriendsFromFacebook,
     private val getFriendsFromFirebase: GetFriendsFromFirebase,
-    private val eventIdParams: EventIdParams,
-    private val auth: FirebaseAuth
+    private val participantsListParams: ParticipantsListParams,
+    private val eventIdParams: EventIdParams
 ) : BasePresenter<FriendsContract.View>(), FriendsContract.Presenter {
+
+  override fun onViewCreated() {
+    super.onViewCreated()
+  }
 
   override fun resume() {
     super.resume()
+    participantsListParams.participantsIdList.forEach {
+      Timber.d(it)
+    }
     val disposable = getFriendsFromFacebook.getFriends()
         .subscribe({ profiles ->
           val disposable = getFriendsFromFirebase.get()
@@ -40,24 +46,34 @@ class FriendsPresenter @Inject constructor(
               .doOnSubscribe { view.showLoading() }
               .doFinally { view.hideLoading() }
               .subscribe({ users ->
-                view.showFriendsList(
-                    users.filter { user ->
-                      profiles.any { it.id == user.facebookId }
-                    }
-                )
+                val facebookUsers = users.filter { user ->
+                  profiles.any { it.id == user.facebookId }
+                }
+                val friendsList = mutableListOf<Friend>()
+                facebookUsers.forEach { fbUser ->
+                  friendsList.add(Friend(
+                      id = fbUser.uid.let { it!! },
+                      photoUrl = fbUser.photoUrl.let { it!! },
+                      displayName = fbUser.displayName.let { it!! },
+//                      phoneNumber = fbUser.phoneNumber.let { it!! },
+//                      email = fbUser.email.let { it!! },
+                      isInvitated = participantsListParams.participantsIdList.any { it == fbUser.uid }
+                  ))
+                }
+                view.showFriendsList(friendsList)
               })
           disposables?.add(disposable)
         })
     disposables?.add(disposable)
   }
 
-  override fun handleInviteFriendEvent(observable: Observable<User>) {
+  override fun handleInviteFriendEvent(observable: Observable<Friend>) {
     val disposable = observable.subscribe({ friend ->
       val chosenEventId = eventIdParams.eventId
       val disposable = RxFirebaseDatabase
           .setValue(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(chosenEventId)
               .child(Constants.FIREBASE_PARTICIPANTS)
-              .child("${Constants.FIREBASE_PARTICIPANT}_${DateTime.now().millis}"), friend.uid)
+              .child("${Constants.FIREBASE_PARTICIPANT}_${DateTime.now().millis}"), friend.id)
           .doFinally { view.showInvitedFriendSnackBar(friend, chosenEventId) }
           .subscribe()
       disposables?.add(disposable)

@@ -1,8 +1,8 @@
 package com.example.marcin.meetfriends.ui.friends
 
-import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
+import com.example.marcin.meetfriends.ui.friends.viewmodel.Friend
 import io.reactivex.Observable
 
 /**
@@ -16,14 +16,14 @@ interface FriendsContract {
 
     fun hideLoading()
 
-    fun showFriendsList(friendsList: List<User>)
+    fun showFriendsList(friendsList: List<Friend>)
 
-    fun showInvitedFriendSnackBar(friend: User, eventId: String)
+    fun showInvitedFriendSnackBar(friend: Friend, eventId: String)
   }
 
   interface Presenter : MvpPresenter {
 
-    fun handleInviteFriendEvent(observable: Observable<User>)
+    fun handleInviteFriendEvent(observable: Observable<Friend>)
 
     fun removeParticipantFromEvent(friendId: String, eventId: String)
   }

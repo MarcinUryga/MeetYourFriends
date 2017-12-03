@@ -138,7 +138,8 @@
             android:layout_margin="10dp"
             android:backgroundTint="@color/invite_button_selector"
             android:text="@string/invite_more_friends"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
 
         <ImageView
             android:layout_width="match_parent"

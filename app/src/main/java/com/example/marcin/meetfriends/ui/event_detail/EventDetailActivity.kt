@@ -16,6 +16,7 @@ import com.example.marcin.meetfriends.ui.chat.ChatActivity
 import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.event_detail.adapter.ParticipantsAdapter
 import com.example.marcin.meetfriends.ui.friends.FriendsActivity
+import com.example.marcin.meetfriends.ui.friends.ParticipantsListParams
 import com.example.marcin.meetfriends.ui.main.MainActivity
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
@@ -38,18 +39,11 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_event_detail)
     participantsRecyclerView.layoutManager = GridLayoutManager(baseContext, 3)
-    inviteFriendsButton.setOnClickListener {
-      presenter.navigateToFriendsFragment()
-    }
-    openChatButton.setOnClickListener {
-      presenter.navigateToEventChat()
-    }
-    openVoteButton.setOnClickListener {
-      presenter.navigateToEventQuestionnaire()
-    }
-    deleteEventButton.setOnClickListener {
-      presenter.onDeleteClicked()
-    }
+    setUpNavigateButtons()
+  }
+
+  override fun showInviteFriendsButton() {
+    inviteFriendsButton.visibility = View.VISIBLE
   }
 
   override fun showEventDescriptionProgressBar() {
@@ -88,8 +82,8 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     inviteFriendsButton.text = getString(R.string.invite_friends)
   }
 
-  override fun startFriendsActivity(params: EventIdParams) {
-    startActivity(FriendsActivity.newIntent(baseContext, params))
+  override fun startFriendsActivity(eventIdParams: EventIdParams, participantsListParams: ParticipantsListParams) {
+    startActivity(FriendsActivity.newIntent(baseContext, eventIdParams, participantsListParams))
   }
 
   override fun startEventChatActivity(params: EventIdParams) {
@@ -98,6 +92,21 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
 
   override fun startEventVoteActivity(eventIdParams: EventIdParams) {
     Toast.makeText(baseContext, "Questonnarie to: ${eventIdParams.data}", Toast.LENGTH_SHORT).show()
+  }
+
+  private fun setUpNavigateButtons() {
+    inviteFriendsButton.setOnClickListener {
+      presenter.navigateToFriendsFragment()
+    }
+    openChatButton.setOnClickListener {
+      presenter.navigateToEventChat()
+    }
+    openVoteButton.setOnClickListener {
+      presenter.navigateToEventQuestionnaire()
+    }
+    deleteEventButton.setOnClickListener {
+      presenter.onDeleteClicked(resources)
+    }
   }
 
   private fun prepareToolbar(name: String?) {
@@ -110,10 +119,10 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     Picasso.with(baseContext).load(user.photoUrl).transform(CircleTransform()).into(organizerPhoto)
   }
 
-  override fun showDeleteEventDialog() {
+  override fun openDeleteButtonDialog(message: String) {
     AlertDialog.Builder(this)
         .setTitle(getString(R.string.delete_event))
-        .setMessage(getString(R.string.do_you_really_want_to_delete_this_event))
+        .setMessage(message)
         .setIcon(android.R.drawable.ic_dialog_alert)
         .setPositiveButton(android.R.string.yes) { _, _ ->
           presenter.deleteEvent()

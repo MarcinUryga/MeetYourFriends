@@ -47,6 +47,7 @@
     <string name="delete_event">Delete event</string>
     <string name="do_you_really_want_to_delete_this_event">Do you really want to delete this event?</string>
     <string name="questionnaires">Questionnaires</string>
+    <string name="do_you_really_want_to_leave_this_event">Do you really want to leave this event?</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>
