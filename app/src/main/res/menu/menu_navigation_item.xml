@@ -6,16 +6,13 @@
         android:icon="@drawable/ic_schedule_white_24dp"
         android:title="@string/schedule"
         app:showAsAction="ifRoom" />
+
     <item
-        android:id="@+id/friends"
-        android:icon="@drawable/ic_people_white_24dp"
-        android:title="@string/friends"
+        android:id="@+id/questionnaires"
+        android:icon="@drawable/ic_vote_white"
+        android:title="@string/questionnaires"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/venues"
-        android:icon="@drawable/ic_venues_white_24dp"
-        android:title="@string/venues"
-        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/chatRooms"
         android:icon="@drawable/ic_chat_white_24dp"

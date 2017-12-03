@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/participantImage"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:contentDescription="@string/participant_image"
         android:src="@drawable/circle_chat_user_placeholder" />
 
@@ -19,7 +19,7 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/participantImage"
         android:minLines="2"
-        android:textSize="14sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         tools:text="name surname" />
 

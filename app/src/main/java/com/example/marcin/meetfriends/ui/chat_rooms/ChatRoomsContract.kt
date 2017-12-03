@@ -3,6 +3,7 @@ package com.example.marcin.meetfriends.ui.chat_rooms
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
+import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.google.firebase.database.DataSnapshot
 import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import io.reactivex.Observable
@@ -28,7 +29,7 @@ interface ChatRoomsContract {
 
     fun hideLoading()
 
-    fun startChatRoomActivity(event: Event)
+    fun startChatRoomActivity(params: EventIdParams)
 
     fun manageEvent(post: RxFirebaseChildEvent<DataSnapshot>)
   }

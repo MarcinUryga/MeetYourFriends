@@ -14,6 +14,6 @@ object Constants {
   const val FIREBASE_EVENT_DESCRIPTION = "description"
 
   const val FIREBASE_ID = "id"
-  const val CHAT_ROOM_EXTRA = "ChatRoom"
+  const val EVENT_ID = "eventId"
   const val EMPTY_VALUE = " "
 }

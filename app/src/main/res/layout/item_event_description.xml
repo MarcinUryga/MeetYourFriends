@@ -66,11 +66,4 @@
                 android:textColor="@android:color/white" />
         </RelativeLayout>-->
 
-    <ProgressBar
-        android:id="@+id/descriptionProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center" />
 </RelativeLayout>

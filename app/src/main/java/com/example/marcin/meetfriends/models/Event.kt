@@ -12,4 +12,4 @@ data class Event(
     var date: String? = null,
     var description: String? = null,
     val participants: Map<String, String> = emptyMap()
-) : Serializable
+)

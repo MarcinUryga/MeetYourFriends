@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.Chat
-import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.adapter.ChatAdapter
+import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.utils.Constants
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_chat_room.*
@@ -21,10 +21,10 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_chat_room)
-    val event = intent.getSerializableExtra(Constants.CHAT_ROOM_EXTRA) as Event
-    presenter.getMessages(event.id.let { it!! })
+    val eventId = intent.extras.get(Constants.EVENT_ID)
+    presenter.getMessages()
     sendMessageButton.setOnClickListener {
-      presenter.sendMessage(event, inputMessageEditText.text.toString())
+      presenter.sendMessage(inputMessageEditText.text.toString())
       inputMessageEditText.text = null
     }
     setUpRecyclerView()
@@ -41,9 +41,9 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
   }
 
   companion object {
-    fun newIntent(context: Context, event: Event): Intent {
+    fun newIntent(context: Context, params: EventIdParams): Intent {
       val intent = Intent(context, ChatActivity::class.java)
-      intent.putExtra(Constants.CHAT_ROOM_EXTRA, event)
+      intent.putExtras(params.data)
       return intent
     }
   }

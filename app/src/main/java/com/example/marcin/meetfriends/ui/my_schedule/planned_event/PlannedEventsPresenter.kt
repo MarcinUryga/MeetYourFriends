@@ -21,53 +21,53 @@ import javax.inject.Inject
  * */
 @ScreenScope
 class PlannedEventsPresenter @Inject constructor(
-        private val firebaseDatabase: FirebaseDatabase,
-        private val auth: FirebaseAuth
+    private val firebaseDatabase: FirebaseDatabase,
+    private val auth: FirebaseAuth
 ) : BasePresenter<PlannedEventsContract.View>(), PlannedEventsContract.Presenter {
 
-    override fun resume() {
-        super.resume()
-        loadEvents()
-    }
+  override fun resume() {
+    super.resume()
+    loadEvents()
+  }
 
-    override fun handleChosenEvent(eventChatRoom: Observable<Event>) {
-        val disposable = eventChatRoom.subscribe({ event ->
-            view.startEventDetailActivity(EventIdParams(event.id.let { it!! }))
-        })
-        disposables?.add(disposable)
-    }
+  override fun handleChosenEvent(eventChatRoom: Observable<Event>) {
+    val disposable = eventChatRoom.subscribe({ event ->
+      view.startEventDetailActivity(EventIdParams(event.id.let { it!! }))
+    })
+    disposables?.add(disposable)
+  }
 
-    private fun loadEvents() {
+  private fun loadEvents() {
 //    view.hideRefresh()
-        val disposable = RxFirebaseDatabase
-                .observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { /*view.showLoading()*/ }
-                .subscribe({ dataSnapshot ->
-                    val organizerIdPath = dataSnapshot.value.child(Constants.FIREBASE_ORGANIZER_ID)
-                    if ((organizerIdPath.getValue(String::class.java) == auth.uid)) {
-                        addEvent(dataSnapshot)
-                    } else {
-                        /*  view.showEmptyEvents()
-                          view.hideLoading()*/
-                        RxFirebaseDatabase.observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(dataSnapshot.key).child(Constants.FIREBASE_PARTICIPANTS))
-                                .subscribe({ participantsIdDataSnapshot ->
-                                    val participantsIdPath = participantsIdDataSnapshot.value
-                                    if (participantsIdPath.value == auth.uid) {
-                                        addEvent(dataSnapshot)
-                                    }
-                                })
-                    }
-                }, { error ->
-                    Timber.e(error.localizedMessage)
+    val disposable = RxFirebaseDatabase
+        .observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS))
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnSubscribe { /*view.showLoading()*/ }
+        .subscribe({ dataSnapshot ->
+          val organizerIdPath = dataSnapshot.value.child(Constants.FIREBASE_ORGANIZER_ID)
+          if ((organizerIdPath.getValue(String::class.java) == auth.uid)) {
+            addEvent(dataSnapshot)
+          } else {
+            /*  view.showEmptyEvents()
+              view.hideLoading()*/
+            RxFirebaseDatabase.observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(dataSnapshot.key).child(Constants.FIREBASE_PARTICIPANTS))
+                .subscribe({ participantsIdDataSnapshot ->
+                  val participantsIdPath = participantsIdDataSnapshot.value
+                  if (participantsIdPath.value == auth.uid) {
+                    addEvent(dataSnapshot)
+                  }
                 })
-        disposables?.add(disposable)
-    }
+          }
+        }, { error ->
+          Timber.e(error.localizedMessage)
+        })
+    disposables?.add(disposable)
+  }
 
-    private fun addEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
-        view.manageEvent(dataSnapshot)
-        /* view.hideLoading()
-         view.hideEmptyEvents()*/
-    }
+  private fun addEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
+    view.manageEvent(dataSnapshot)
+    /* view.hideLoading()
+     view.hideEmptyEvents()*/
+  }
 }

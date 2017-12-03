@@ -17,8 +17,8 @@ interface ChatContract {
 
   interface Presenter : MvpPresenter {
 
-    fun getMessages(eventId: String)
+    fun getMessages()
 
-    fun sendMessage(event: Event, text: String)
+    fun sendMessage(text: String)
   }
 }

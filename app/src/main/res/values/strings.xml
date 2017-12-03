@@ -44,6 +44,9 @@
     <string name="no_participants_in_this_event">No participants in this event!</string>
     <string name="participants">Participants</string>
     <string name="organizer">Organizer:</string>
+    <string name="delete_event">Delete event</string>
+    <string name="do_you_really_want_to_delete_this_event">Do you really want to delete this event?</string>
+    <string name="questionnaires">Questionnaires</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>

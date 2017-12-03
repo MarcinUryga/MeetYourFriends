@@ -2,9 +2,9 @@ package com.example.marcin.meetfriends.ui.chat
 
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Chat
-import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BasePresenter
+import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -20,14 +20,15 @@ import javax.inject.Inject
 class ChatPresenter @Inject constructor(
     private val getChatMessagesUseCase: GetChatMessagesUseCase,
     private val firebaseDatabase: FirebaseDatabase,
+    private val eventIdParams: EventIdParams,
     private val auth: FirebaseAuth
 ) : BasePresenter<ChatContract.View>(), ChatContract.Presenter {
 
-  override fun getMessages(eventId: String) {
+  override fun getMessages() {
     val disposable = RxFirebaseDatabase
         .observeChildEvent(firebaseDatabase.reference
             .child(Constants.FIREBASE_EVENTS)
-            .child(eventId)
+            .child(eventIdParams.eventId)
             .child(Constants.FIREBASE_CHAT))
         .subscribe({ dataSnapshot ->
           val chatMessages = mutableListOf<Chat>()
@@ -42,7 +43,7 @@ class ChatPresenter @Inject constructor(
     disposables?.add(disposable)
   }
 
-  override fun sendMessage(event: Event, text: String) {
+  override fun sendMessage(text: String) {
     if (text.isNotEmpty()) {
       val chatId = firebaseDatabase.reference.push().key
       val chat = Chat(
@@ -58,7 +59,7 @@ class ChatPresenter @Inject constructor(
           .setValue(
               firebaseDatabase.reference
                   .child(Constants.FIREBASE_EVENTS)
-                  .child(event.id)
+                  .child(eventIdParams.eventId)
                   .child(Constants.FIREBASE_CHAT)
                   .child(chatId), chat)
           .subscribeOn(Schedulers.io())

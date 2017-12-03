@@ -5,6 +5,7 @@ import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.storage.SharedPref
+import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -104,7 +105,7 @@ class ChatRoomsPresenter @Inject constructor(
 
   override fun handleChosenChatRoomdEvent(eventChatRoom: Observable<Event>) {
     val disposable = eventChatRoom.subscribe({ event ->
-      view.startChatRoomActivity(event)
+      view.startChatRoomActivity(EventIdParams(event.id.let { it!! }))
     })
     disposables?.add(disposable)
   }

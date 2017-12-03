@@ -7,7 +7,7 @@ import com.example.marcin.meetfriends.R
  */
 enum class BottomBarEnum(val itemId: Int) {
   SCHEDULE(R.id.schedule),
-  FRIENDS(R.id.friends),
-  VENUES(R.id.venues),
+  QUESTIONNAIRES(R.id.questionnaires),
+  //  VENUES(R.id.venues),
   CHAT(R.id.chatRooms)
 }

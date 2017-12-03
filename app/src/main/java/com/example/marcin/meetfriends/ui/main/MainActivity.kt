@@ -23,7 +23,6 @@ import com.example.marcin.meetfriends.ui.friends.FriendsFragment
 import com.example.marcin.meetfriends.ui.login.LoginActivity
 import com.example.marcin.meetfriends.ui.main.viewmodel.BottomBarEnum
 import com.example.marcin.meetfriends.ui.my_schedule.MyScheduleFragment
-import com.example.marcin.meetfriends.ui.venues.VenuesFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -118,13 +117,11 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
       val bottomItemId = intent.getIntExtra(FRAGMENT_TO_OPEN, -1)
       when (bottomItemId) {
         BottomBarEnum.SCHEDULE.itemId -> switchFragment(MyScheduleFragment(), bottomItemId)
-        BottomBarEnum.FRIENDS.itemId -> switchFragment(FriendsFragment(), bottomItemId)
-        BottomBarEnum.VENUES.itemId -> switchFragment(VenuesFragment(), bottomItemId)
+        BottomBarEnum.QUESTIONNAIRES.itemId -> switchFragment(FriendsFragment(), bottomItemId)
+//        BottomBarEnum.VENUES.itemId -> switchFragment(VenuesFragment(), bottomItemId)
         BottomBarEnum.CHAT.itemId -> switchFragment(ChatRoomsFragment(), bottomItemId)
-        else -> throw Exception("Illegal fragment")
+        else -> switchFragment(MyScheduleFragment(), 1)
       }
-    } else {
-      switchFragment(MyScheduleFragment(), 1)
     }
   }
 
@@ -133,8 +130,8 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
         .setOnNavigationItemSelectedListener { item ->
           when (item.itemId) {
             R.id.schedule -> switchFragment(MyScheduleFragment())
-            R.id.friends -> switchFragment(FriendsFragment())
-            R.id.venues -> switchFragment(VenuesFragment())
+            R.id.questionnaires -> switchFragment(FriendsFragment())
+//            R.id.venues -> switchFragment(VenuesFragment())
             R.id.chatRooms -> switchFragment(ChatRoomsFragment())
             else -> throw Exception("Illegal fragment")
           }

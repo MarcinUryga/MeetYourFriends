@@ -18,25 +18,28 @@
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:background="@color/colorPrimary"
-                android:src="@drawable/ic_chat_white_24dp"
+                android:id="@+id/openChatButton"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="40dp" />
+                android:src="@drawable/circle_chat_icon_primary_color" />
 
             <ImageButton
-                android:background="@color/colorPrimary"
-                android:src="@drawable/ic_chat_white_24dp"
+                android:id="@+id/openVoteButton"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/circle_vote_icon_primary_color" />
 
             <ImageButton
-                android:background="@color/colorPrimary"
-                android:src="@drawable/ic_chat_white_24dp"
+                android:id="@+id/deleteEventButton"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_height="40dp" />
+                android:src="@drawable/circle_close_icon" />
 
         </LinearLayout>
 
@@ -44,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -51,11 +55,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/organizer"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:id="@+id/organizerPhoto"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:src="@drawable/ic_people_red_24dp" />
@@ -66,46 +72,40 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
+                android:textSize="15sp"
                 tools:text="name surname" />
 
-        </LinearLayout>
-
-        <include layout="@layout/item_event_description" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:src="#a3a3a3" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@string/participants" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:src="#a3a3a3" />
         </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/participantsRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/eventDescriptionLayout"
+                layout="@layout/item_event_description" />
+
+            <ProgressBar
+                android:id="@+id/descriptionProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/eventParticipantsLayout"
+                layout="@layout/item_event_participants"
+                android:visibility="invisible" />
+
+            <ProgressBar
+                android:id="@+id/eventParticipantsProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <LinearLayout
                 android:id="@+id/noParticipantsLayout"
@@ -127,23 +127,7 @@
                     android:text="@string/no_participants_in_this_event" />
 
             </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
         </FrameLayout>
-
-        <Button
-            android:id="@+id/inviteFriendsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:backgroundTint="@color/invite_button_selector"
-            android:text="@string/invite_more_friends"
-            android:textColor="@android:color/white" />
 
         <ImageView
             android:layout_width="match_parent"
