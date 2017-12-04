@@ -8,6 +8,8 @@ import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsFragment
 import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsModule
 import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity
 import com.example.marcin.meetfriends.ui.event_detail.EventDetailModule
+import com.example.marcin.meetfriends.ui.event_detail.event_description.EventDescriptionFragment
+import com.example.marcin.meetfriends.ui.event_detail.event_description.EventDescriptionModule
 import com.example.marcin.meetfriends.ui.friends.FriendsActivity
 import com.example.marcin.meetfriends.ui.friends.FriendsModule
 import com.example.marcin.meetfriends.ui.launch.LaunchActivity
@@ -81,4 +83,8 @@ abstract class InjectorsModule {
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(EventDetailModule::class))
   abstract fun eventDetailActivity(): EventDetailActivity
+
+  @ScreenScope
+  @ContributesAndroidInjector(modules = arrayOf(EventDescriptionModule::class))
+  abstract fun eventDescriptionFragment(): EventDescriptionFragment
 }

@@ -1,89 +1,49 @@
 package com.example.marcin.meetfriends.ui.event_detail
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.GridLayoutManager
-import android.view.View
+import android.support.v4.app.FragmentTransaction
 import android.widget.Toast
 import com.example.marcin.meetfriends.R
-import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.ChatActivity
 import com.example.marcin.meetfriends.ui.common.EventIdParams
-import com.example.marcin.meetfriends.ui.event_detail.adapter.ParticipantsAdapter
-import com.example.marcin.meetfriends.ui.friends.FriendsActivity
-import com.example.marcin.meetfriends.ui.friends.ParticipantsListParams
+import com.example.marcin.meetfriends.ui.event_detail.event_description.EventDescriptionFragment
 import com.example.marcin.meetfriends.ui.main.MainActivity
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import kotlinx.android.synthetic.main.content_event_details.*
-import kotlinx.android.synthetic.main.item_event_description.*
-import kotlinx.android.synthetic.main.item_event_participants.*
 
 /**
  * Created by marci on 2017-11-28.
  */
 class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), EventDetailContract.View {
 
-  private lateinit var participantsAdapter: ParticipantsAdapter
-
   @SuppressLint("CheckResult")
   override fun onCreate(savedInstanceState: Bundle?) {
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_event_detail)
-    participantsRecyclerView.layoutManager = GridLayoutManager(baseContext, 3)
     setUpNavigateButtons()
   }
 
-  override fun showInviteFriendsButton() {
-    inviteFriendsButton.visibility = View.VISIBLE
+  override fun setUpToolbarEventName(eventName: String) {
+    prepareToolbar(eventName)
   }
 
-  override fun showEventDescriptionProgressBar() {
-    eventDescriptionLayout.visibility = View.INVISIBLE
-    descriptionProgressBar.visibility = View.VISIBLE
-  }
-
-  override fun hideEventDescriptionProgressBar() {
-    descriptionProgressBar.visibility = View.INVISIBLE
-  }
-
-  override fun showParticipantsProgressBar() {
-    eventParticipantsLayout.visibility = View.INVISIBLE
-    eventParticipantsProgressBar.visibility = View.VISIBLE
-  }
-
-  override fun hideParticipantsProgressBar() {
-    eventParticipantsProgressBar.visibility = View.INVISIBLE
-  }
-
-  override fun showEventDetails(event: Event) {
-    prepareToolbar(event.name)
-    showEventDescription(event)
-  }
-
-  override fun showParticipants(participants: List<User>) {
-    noParticipantsLayout.visibility = View.INVISIBLE
-    eventParticipantsLayout.visibility = View.VISIBLE
-    participantsAdapter = ParticipantsAdapter(participants)
-    participantsRecyclerView.adapter = participantsAdapter
-  }
-
-  override fun showNoParticipantsLayout() {
-    noParticipantsLayout.visibility = View.VISIBLE
-    inviteFriendsButton.visibility = View.VISIBLE
-    inviteFriendsButton.text = getString(R.string.invite_friends)
-  }
-
-  override fun startFriendsActivity(eventIdParams: EventIdParams, participantsListParams: ParticipantsListParams) {
-    startActivity(FriendsActivity.newIntent(baseContext, eventIdParams, participantsListParams))
+  override fun setUpEventDescriptionFragment(arguments: EventBasicInfoParams) {
+    val currentFragment = EventDescriptionFragment()
+    currentFragment.arguments = arguments.data
+    supportFragmentManager.beginTransaction()
+        .replace(R.id.container, currentFragment)
+        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        .commit()
   }
 
   override fun startEventChatActivity(params: EventIdParams) {
@@ -95,9 +55,7 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
   }
 
   private fun setUpNavigateButtons() {
-    inviteFriendsButton.setOnClickListener {
-      presenter.navigateToFriendsFragment()
-    }
+
     openChatButton.setOnClickListener {
       presenter.navigateToEventChat()
     }
@@ -135,15 +93,10 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     startActivity(MainActivity.newIntent(baseContext))
   }
 
-  private fun showEventDescription(event: Event) {
-    eventDescriptionLayout.visibility = View.VISIBLE
-    eventDescriptionTextView.text = event.description
-  }
-
   companion object {
-    fun newIntent(context: Context, params: EventIdParams): Intent {
+    fun newIntent(context: Context, eventBasicInfoParams: EventBasicInfoParams): Intent {
       val intent = Intent(context, EventDetailActivity::class.java)
-      intent.putExtras(params.data)
+      intent.putExtras(eventBasicInfoParams.data)
       return intent
     }
   }

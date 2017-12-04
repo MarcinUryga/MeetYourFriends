@@ -14,7 +14,6 @@ class ChatRoomsAdapter : RxFirebaseRecyclerAdapter<ChatRoomsViewHolder, Event>(E
 
   private val publishSubject = PublishSubject.create<Event>()
 
-
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ChatRoomsViewHolder.create(parent)
 
   override fun onBindViewHolder(holder: ChatRoomsViewHolder, position: Int) {

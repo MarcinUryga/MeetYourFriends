@@ -21,7 +21,6 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_chat_room)
-    val eventId = intent.extras.get(Constants.EVENT_ID)
     presenter.getMessages()
     sendMessageButton.setOnClickListener {
       presenter.sendMessage(inputMessageEditText.text.toString())
