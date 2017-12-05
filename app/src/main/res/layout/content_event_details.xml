@@ -26,12 +26,21 @@
                 android:src="@drawable/circle_chat_icon_primary_color" />
 
             <ImageButton
-                android:id="@+id/openVoteButton"
+                android:id="@+id/openQuestionnaireButton"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/circle_vote_icon_primary_color" />
+
+            <ImageButton
+                android:id="@+id/openDescriptionButton"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/circle_info_icon"
+                android:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/deleteEventButton"
@@ -80,7 +89,7 @@
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

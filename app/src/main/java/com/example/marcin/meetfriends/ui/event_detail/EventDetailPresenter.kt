@@ -32,8 +32,8 @@ class EventDetailPresenter @Inject constructor(
 
   override fun resume() {
     super.resume()
-    view.setUpEventDescriptionFragment(eventInfoParams)
     loadEvent()
+    navigateToEventDescription()
   }
 
   private fun loadEvent() {
@@ -56,8 +56,12 @@ class EventDetailPresenter @Inject constructor(
     view.startEventChatActivity(EventIdParams(eventId))
   }
 
+  override fun navigateToEventDescription() {
+    view.switchToEventDescriptionFragment(eventInfoParams)
+  }
+
   override fun navigateToEventQuestionnaire() {
-    view.startEventVoteActivity(EventIdParams(eventId))
+    view.switchToEventQuestionnaireFragment(EventBasicInfoParams(eventInfoParams.event))
   }
 
   override fun onDeleteClicked(resources: Resources) {

@@ -15,13 +15,13 @@ interface EventDetailContract {
 
     fun setUpToolbarEventName(eventName: String)
 
-    fun setUpEventDescriptionFragment(arguments: EventBasicInfoParams)
-
     fun setUpOrganizerData(organizer: User)
 
     fun startEventChatActivity(params: EventIdParams)
 
-    fun startEventVoteActivity(eventIdParams: EventIdParams)
+    fun switchToEventDescriptionFragment(arguments: EventBasicInfoParams)
+
+    fun switchToEventQuestionnaireFragment(arguments: EventBasicInfoParams)
 
     fun openDeleteButtonDialog(message: String)
 
@@ -31,6 +31,8 @@ interface EventDetailContract {
   interface Presenter : MvpPresenter {
 
     fun navigateToEventChat()
+
+    fun navigateToEventDescription()
 
     fun navigateToEventQuestionnaire()
 

@@ -5,14 +5,16 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
-import android.widget.Toast
+import android.view.View
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.ChatActivity
 import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.event_detail.event_description.EventDescriptionFragment
+import com.example.marcin.meetfriends.ui.event_detail.event_questionnaire.EventQuestionnaireFragment
 import com.example.marcin.meetfriends.ui.main.MainActivity
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
@@ -37,29 +39,30 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     prepareToolbar(eventName)
   }
 
-  override fun setUpEventDescriptionFragment(arguments: EventBasicInfoParams) {
-    val currentFragment = EventDescriptionFragment()
-    currentFragment.arguments = arguments.data
-    supportFragmentManager.beginTransaction()
-        .replace(R.id.container, currentFragment)
-        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        .commit()
-  }
-
   override fun startEventChatActivity(params: EventIdParams) {
     startActivity(ChatActivity.newIntent(baseContext, params))
   }
 
-  override fun startEventVoteActivity(eventIdParams: EventIdParams) {
-    Toast.makeText(baseContext, "Questonnarie to: ${eventIdParams.data}", Toast.LENGTH_SHORT).show()
+  override fun switchToEventDescriptionFragment(arguments: EventBasicInfoParams) {
+    openDescriptionButton.visibility = View.GONE
+    openQuestionnaireButton.visibility = View.VISIBLE
+    switchCurrentFragmente(EventDescriptionFragment(), arguments)
+  }
+
+  override fun switchToEventQuestionnaireFragment(arguments: EventBasicInfoParams) {
+    openDescriptionButton.visibility = View.VISIBLE
+    openQuestionnaireButton.visibility = View.GONE
+    switchCurrentFragmente(EventQuestionnaireFragment(), arguments)
   }
 
   private fun setUpNavigateButtons() {
-
+    openDescriptionButton.setOnClickListener {
+      presenter.navigateToEventDescription()
+    }
     openChatButton.setOnClickListener {
       presenter.navigateToEventChat()
     }
-    openVoteButton.setOnClickListener {
+    openQuestionnaireButton.setOnClickListener {
       presenter.navigateToEventQuestionnaire()
     }
     deleteEventButton.setOnClickListener {
@@ -91,6 +94,14 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
 
   override fun startMainActivity() {
     startActivity(MainActivity.newIntent(baseContext))
+  }
+
+  private fun switchCurrentFragmente(currentFragment: Fragment, arguments: EventBasicInfoParams) {
+    currentFragment.arguments = arguments.data
+    supportFragmentManager.beginTransaction()
+        .replace(R.id.container, currentFragment)
+        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        .commit()
   }
 
   companion object {
