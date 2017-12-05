@@ -34,6 +34,6 @@ interface EventDescriptionContract {
 
   interface Presenter : MvpPresenter {
 
-    fun navigateToFriendsFragment()
+    fun navigateToFriendsFragment(participants: MutableList<User>)
   }
 }
