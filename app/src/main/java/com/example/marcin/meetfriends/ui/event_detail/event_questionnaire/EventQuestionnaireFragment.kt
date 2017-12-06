@@ -4,12 +4,13 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseFragment
+import com.example.marcin.meetfriends.utils.DateTimeFormatters
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_event_questionnaire.*
 import org.joda.time.DateTime
@@ -20,7 +21,7 @@ import org.joda.time.chrono.ISOChronology
  */
 class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Presenter>(), EventQuestionnaireContract.View {
 
-  var selectedDate: DateTime = DateTime().withChronology(ISOChronology.getInstance())
+  private var selectedDate: DateTime = DateTime().withChronology(ISOChronology.getInstance())
 
   override fun onAttach(context: Context?) {
     AndroidSupportInjection.inject(this)
@@ -33,13 +34,23 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    dateSuggestionTextView.text = getString(R.string.your_date_suggestion, "${selectedDate.year}-${selectedDate.monthOfYear}-${selectedDate.dayOfMonth}")
-    timeSuggestionTextView.text = getString(R.string.your_date_suggestion, "${selectedDate.hourOfDay}:${selectedDate.minuteOfHour}")
+    dateSuggestionTextView.text = getString(R.string.your_date_suggestion, DateTimeFormatters.formatToShortDate(selectedDate))
+    timeSuggestionTextView.text = getString(R.string.your_time_suggestion, DateTimeFormatters.formatToShortTime(selectedDate))
     setUpDateChooserButton()
     setUpTimeChooserButton()
     confirmDateSuggestionButton.setOnClickListener {
-      Toast.makeText(context, "${selectedDate.year}-${selectedDate.monthOfYear}-${selectedDate.dayOfMonth} ${selectedDate.hourOfDay}:${selectedDate.minuteOfHour}", Toast.LENGTH_LONG).show()
+      presenter.sendDateVote(selectedDate)
     }
+  }
+
+  override fun showChosenDateSnackBar(selectedDate: DateTime, voter: Pair<String, String>) {
+    Snackbar.make(
+        this.snackBarContainer,
+        getString(R.string.chosen_date, "${DateTimeFormatters.formatToShortDate(selectedDate)} ${DateTimeFormatters.formatToShortTime(selectedDate)}"),
+        Snackbar.LENGTH_LONG)
+        .setAction(getString(R.string.undo), {
+          presenter.removeChosenDateFromEvent(selectedDate, voter)
+        }).show()
   }
 
   private fun setUpDateChooserButton() {
@@ -47,8 +58,8 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
       DatePickerDialog(
           context,
           DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-            selectedDate = DateTime(year, monthOfYear, dayOfMonth, selectedDate.hourOfDay, selectedDate.minuteOfHour)
-            dateSuggestionTextView.text = getString(R.string.your_date_suggestion, selectedDate.toLocalDate().toString())
+            selectedDate = DateTime(year, monthOfYear, dayOfMonth, selectedDate.hourOfDay, selectedDate.minuteOfHour, 0, 0)
+            dateSuggestionTextView.text = getString(R.string.your_date_suggestion, DateTimeFormatters.formatToShortDate(selectedDate))
           },
           selectedDate.year,
           selectedDate.monthOfYear - 1,
@@ -62,8 +73,8 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
       TimePickerDialog(
           context,
           TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-            selectedDate = DateTime(selectedDate.year, selectedDate.monthOfYear, selectedDate.dayOfMonth, hour, minute)
-            timeSuggestionTextView.text = getString(R.string.your_date_suggestion, "${selectedDate.hourOfDay}:${selectedDate.minuteOfHour}")
+            selectedDate = DateTime(selectedDate.year, selectedDate.monthOfYear, selectedDate.dayOfMonth, hour, minute, 0, 0)
+            timeSuggestionTextView.text = getString(R.string.your_time_suggestion, DateTimeFormatters.formatToShortTime(selectedDate))
           },
           selectedDate.hourOfDay,
           selectedDate.minuteOfHour,

@@ -14,36 +14,20 @@ class GetParticipantsUseCase @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) {
 
-  /* fun getParticipants(participantId: String): Flowable<RxFirebaseChildEvent<DataSnapshot>> {
-     return RxFirebaseDatabase.observeChildEvent(
-         firebaseDatabase.reference.child(Constants.FIREBASE_USERS))
-     { dataSnapshot ->
-       var participant: RxFirebaseChildEvent<DataSnapshot>? = null
-       if (dataSnapshot.key == participantId) {
-         participant = dataSnapshot
-       }
-       return@observeChildEvent participant.let { it!! }
-     }*/
-  fun getParticipants(participantId: String): Maybe<User> {
+  fun getParticipantsIds(eventId: String): Maybe<MutableMap<String, String>> {
     return RxFirebaseDatabase.observeSingleValueEvent(
-        firebaseDatabase.reference.child(Constants.FIREBASE_USERS))
+        firebaseDatabase.reference
+            .child(Constants.FIREBASE_EVENTS)
+            .child(eventId)
+            .child(Constants.FIREBASE_PARTICIPANTS))
     { dataSnapshot ->
-      return@observeSingleValueEvent dataSnapshot.children.first {
-        it.key == participantId
-      }.getValue(User::class.java).let { it!! }
+      val participantsIds = mutableMapOf<String, String>()
+      dataSnapshot.children.forEach {
+        participantsIds.put(it.key, it.getValue(String::class.java).let { it!! })
+      }
+      return@observeSingleValueEvent participantsIds
     }
   }
-/*  fun getParticipants(participantsIds: List<String>): Maybe<MutableList<User>> {
-    return RxFirebaseDatabase.observeSingleValueEvent(
-        firebaseDatabase.reference.child(Constants.FIREBASE_USERS))
-    { dataSnapshot ->
-      val participants = mutableListOf<User>()
-      dataSnapshot.children.filter { userKey -> participantsIds.any { it == userKey.key } }.forEach {
-        participants.add(it.getValue(User::class.java).let { it!! })
-      }
-      return@observeSingleValueEvent participants
-    }
-  }*/
 
   fun getOrganizer(organizerId: String): Maybe<User> {
     return RxFirebaseDatabase.observeSingleValueEvent(
