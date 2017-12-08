@@ -3,8 +3,9 @@ package com.example.marcin.meetfriends.ui.chat.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.marcin.meetfriends.R
-import com.example.marcin.meetfriends.models.Chat
+import com.example.marcin.meetfriends.ui.chat.viewmodel.Message
 import com.example.marcin.meetfriends.ui.common.BaseViewHolder
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
@@ -15,10 +16,13 @@ import kotlinx.android.synthetic.main.item_my_chat_message.view.*
  */
 class MyMessageChatViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
-  fun bind(chat: Chat) {
-    itemView.messageTextView.text = chat.message
+  fun bind(message: Message) {
+    itemView.messageTextView.text = message.message
+    if (itemView.messageTextView.containsDate()) {
+      Toast.makeText(itemView.context, "okokoko", Toast.LENGTH_SHORT).show()
+    }
     Picasso.with(itemView.context)
-        .load(chat.user?.photoUrl)
+        .load(message.user?.photoUrl)
         .placeholder(R.drawable.circle_chat_user_placeholder)
         .transform(CircleTransform())
         .into(itemView.userPhotoImageView)

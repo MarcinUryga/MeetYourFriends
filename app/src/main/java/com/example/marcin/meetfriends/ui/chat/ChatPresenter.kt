@@ -2,8 +2,8 @@ package com.example.marcin.meetfriends.ui.chat
 
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Chat
-import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BasePresenter
+import com.example.marcin.meetfriends.ui.chat.viewmodel.Message
 import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -18,13 +18,18 @@ import javax.inject.Inject
  */
 @ScreenScope
 class ChatPresenter @Inject constructor(
-    private val getChatMessagesUseCase: GetChatMessagesUseCase,
+    private val getUserUseCase: GetUserUseCase,
     private val firebaseDatabase: FirebaseDatabase,
     private val eventIdParams: EventIdParams,
     private val auth: FirebaseAuth
 ) : BasePresenter<ChatContract.View>(), ChatContract.Presenter {
 
-  override fun getMessages() {
+  override fun onViewCreated() {
+    super.onViewCreated()
+    getMessages()
+  }
+
+  private fun getMessages() {
     val disposable = RxFirebaseDatabase
         .observeChildEvent(firebaseDatabase.reference
             .child(Constants.FIREBASE_EVENTS)
@@ -33,13 +38,29 @@ class ChatPresenter @Inject constructor(
         .subscribe({ dataSnapshot ->
           val chatMessages = mutableListOf<Chat>()
           chatMessages.add(dataSnapshot.value.getValue(Chat::class.java).let { it!! })
-          chatMessages.forEach {
-            if (it.user?.uid == auth.uid) {
-              it.ifMine = true
+          if (chatMessages.isNotEmpty()) {
+            chatMessages.forEach {
+              if (it.userId == auth.uid) {
+                it.ifMine = true
+              }
+              createMessage(it)
             }
-            view.addMessage(it)
           }
         })
+    disposables?.add(disposable)
+  }
+
+  private fun createMessage(chat: Chat) {
+    val disposable = getUserUseCase.get(chat.userId.let { it!! })
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
+        .subscribe { user ->
+          view.addMessage(Message(
+              user = user,
+              message = chat.message,
+              ifMine = chat.ifMine
+          ))
+        }
     disposables?.add(disposable)
   }
 
@@ -48,11 +69,7 @@ class ChatPresenter @Inject constructor(
       val chatId = firebaseDatabase.reference.push().key
       val chat = Chat(
           id = chatId,
-          user = User(
-              uid = auth.currentUser?.uid,
-              displayName = auth.currentUser?.displayName,
-              photoUrl = auth.currentUser?.photoUrl.toString()
-          ),
+          userId = auth.currentUser?.uid,
           message = text
       )
       val disposable = RxFirebaseDatabase

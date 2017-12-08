@@ -3,6 +3,7 @@ package com.example.marcin.meetfriends.ui.chat.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.models.Chat
+import com.example.marcin.meetfriends.ui.chat.viewmodel.Message
 import com.example.marcin.meetfriends.ui.common.BaseViewHolder
 
 /**
@@ -10,15 +11,15 @@ import com.example.marcin.meetfriends.ui.common.BaseViewHolder
  */
 class ChatAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
-  private val chatMessagesList = mutableListOf<Chat>()
+  private val chatMessagesList = mutableListOf<Message>()
 
   companion object {
     private val VIEW_MY_MESSAGE = 0
     private val VIEW_OTHER_MESSAGE = 1
   }
 
-  fun addMessage(chat: Chat) {
-    chatMessagesList.add(chat)
+  fun addMessage(message: Message) {
+    chatMessagesList.add(message)
     notifyDataSetChanged()
   }
 

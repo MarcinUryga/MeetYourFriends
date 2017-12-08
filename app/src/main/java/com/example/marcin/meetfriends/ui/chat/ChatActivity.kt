@@ -8,8 +8,8 @@ import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.Chat
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.adapter.ChatAdapter
+import com.example.marcin.meetfriends.ui.chat.viewmodel.Message
 import com.example.marcin.meetfriends.ui.common.EventIdParams
-import com.example.marcin.meetfriends.utils.Constants
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_chat_room.*
 
@@ -21,7 +21,6 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_chat_room)
-    presenter.getMessages()
     sendMessageButton.setOnClickListener {
       presenter.sendMessage(inputMessageEditText.text.toString())
       inputMessageEditText.text = null
@@ -34,8 +33,8 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
     chatRecyclerView.adapter = chatAdapter
   }
 
-  override fun addMessage(chat: Chat) {
-    chatAdapter.addMessage(chat)
+  override fun addMessage(message: Message) {
+    chatAdapter.addMessage(message)
     chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
   }
 

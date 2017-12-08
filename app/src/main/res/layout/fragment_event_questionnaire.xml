@@ -20,6 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:text="@string/date_text" />
 
         <ImageView
@@ -30,49 +31,72 @@
             android:src="#a3a3a3" />
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/dateChooserButton"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_below="@id/dateHeader"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_date_range_primary_color_48dp" />
-
-    <TextView
-        android:id="@+id/dateSuggestionTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/dateTimeChooserLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/dateChooserButton"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
-        android:layout_toEndOf="@+id/dateChooserButton"
-        android:text="@string/your_date_suggestion" />
+        android:layout_below="@+id/dateHeader"
+        android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/timeChooserButton"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_below="@id/dateChooserButton"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_time_primary_color_48dp" />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/timeSuggestionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/timeChooserButton"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
-        android:layout_toEndOf="@+id/dateChooserButton"
-        android:text="@string/your_time_suggestion" />
+            <ImageButton
+                android:id="@+id/dateChooserButton"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_date_range_primary_color_48dp" />
+
+            <TextView
+                android:id="@+id/dateSuggestionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/dateChooserButton"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="14dp"
+                android:layout_toEndOf="@+id/dateChooserButton"
+                android:text="@string/your_date_suggestion" />
+
+            <ImageButton
+                android:id="@+id/timeChooserButton"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_below="@id/dateChooserButton"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_time_primary_color_48dp" />
+
+            <TextView
+                android:id="@+id/timeSuggestionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/timeChooserButton"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="14dp"
+                android:layout_toEndOf="@+id/dateChooserButton"
+                android:text="@string/your_time_suggestion" />
+
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/dateTimeChartsButton"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/circle_charts_icon" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/confirmDateSuggestionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/timeChooserButton"
+        android:layout_below="@id/dateTimeChooserLayout"
         android:layout_centerHorizontal="true"
         android:backgroundTint="@color/confirm_button_selector"
         android:text="@string/confirm_date"

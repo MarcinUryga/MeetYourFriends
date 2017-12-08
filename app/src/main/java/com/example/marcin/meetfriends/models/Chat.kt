@@ -5,7 +5,7 @@ package com.example.marcin.meetfriends.models
  */
 data class Chat(
     val id: String? = null,
-    val user: User? = null,
+    val userId: String? = null,
     val message: String? = null,
     val timestamp: String? = null,
     var ifMine: Boolean = false
