@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail
+package com.example.marcin.meetfriends.ui.common
 
 import android.os.Bundle
 import com.example.marcin.meetfriends.ui.event_detail.viewmodel.EventBasicInfo
@@ -19,6 +19,6 @@ class EventBasicInfoParams(bundle: Bundle? = Bundle()) {
   }
 
   companion object {
-    private const val EVENT_INFO = "eventInfo"
+    const val EVENT_INFO = "eventInfo"
   }
 }

@@ -93,4 +93,7 @@ abstract class InjectorsModule {
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(EventQuestionnaireModule::class))
   abstract fun eventQuestionnaireFragment(): EventQuestionnaireFragment
+
+/*  @ContributesAndroidInjector(modules = arrayOf(UpdateDateTimeEventServiceModule::class))
+  abstract fun updateDateTimeEventService(): UpdateDateTimeEventService*/
 }

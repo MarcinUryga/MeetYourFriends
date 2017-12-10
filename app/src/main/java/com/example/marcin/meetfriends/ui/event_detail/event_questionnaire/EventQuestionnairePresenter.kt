@@ -2,8 +2,8 @@ package com.example.marcin.meetfriends.ui.event_detail.event_questionnaire
 
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.ui.event_detail.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.event_detail.GetParticipantsUseCase
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.GetParticipantsUseCase
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

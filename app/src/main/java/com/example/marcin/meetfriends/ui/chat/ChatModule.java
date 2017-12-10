@@ -1,6 +1,7 @@
 package com.example.marcin.meetfriends.ui.chat;
 
-import com.example.marcin.meetfriends.ui.common.EventIdParams;
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams;
+import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity;
 
 import dagger.Binds;
 import dagger.Module;
@@ -18,8 +19,12 @@ abstract public class ChatModule {
   @Binds
   abstract ChatContract.Presenter bindPresenter(ChatPresenter presenter);
 
+  /*  @Provides
+    static EventIdParams provideParams(ChatActivity activity) {
+      return new EventIdParams(activity.getIntent().getExtras());
+    }*/
   @Provides
-  static EventIdParams provideParams(ChatActivity activity) {
-    return new EventIdParams(activity.getIntent().getExtras());
+  static EventBasicInfoParams provideBasicInfoParams(ChatActivity view) {
+    return new EventBasicInfoParams(view.getIntent().getExtras());
   }
 }

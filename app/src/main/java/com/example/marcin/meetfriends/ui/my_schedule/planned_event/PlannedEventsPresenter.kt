@@ -3,7 +3,7 @@ package com.example.marcin.meetfriends.ui.my_schedule.confirmed_events
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.ui.event_detail.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.event_detail.viewmodel.EventBasicInfo
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth

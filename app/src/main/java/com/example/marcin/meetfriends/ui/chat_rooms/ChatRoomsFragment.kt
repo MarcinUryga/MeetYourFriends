@@ -16,7 +16,7 @@ import com.example.marcin.meetfriends.extensions.setMargins
 import com.example.marcin.meetfriends.mvp.BaseFragment
 import com.example.marcin.meetfriends.ui.chat.ChatActivity
 import com.example.marcin.meetfriends.ui.chat_rooms.adapter.ChatRoomsAdapter
-import com.example.marcin.meetfriends.ui.common.EventIdParams
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.google.firebase.database.DataSnapshot
 import dagger.android.support.AndroidSupportInjection
 import durdinapps.rxfirebase2.RxFirebaseChildEvent
@@ -107,7 +107,7 @@ class ChatRoomsFragment : BaseFragment<ChatRoomsContract.Presenter>(), ChatRooms
     presenter.handleChosenChatRoomdEvent(postAdapter.getClickEvent())
   }
 
-  override fun startChatRoomActivity(params: EventIdParams) {
+  override fun startChatRoomActivity(params: EventBasicInfoParams) {
     startActivity(ChatActivity.newIntent(context, params))
   }
 }

@@ -4,6 +4,7 @@ import android.content.res.Resources
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.common.EventIdParams
 
 /**
@@ -17,7 +18,7 @@ interface EventDetailContract {
 
     fun setUpOrganizerData(organizer: User)
 
-    fun startEventChatActivity(params: EventIdParams)
+    fun startEventChatActivity(params: EventBasicInfoParams)
 
     fun switchToEventDescriptionFragment(arguments: EventBasicInfoParams)
 

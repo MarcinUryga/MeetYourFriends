@@ -2,7 +2,6 @@ package com.example.marcin.meetfriends.ui.chat.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.example.marcin.meetfriends.models.Chat
 import com.example.marcin.meetfriends.ui.chat.viewmodel.Message
 import com.example.marcin.meetfriends.ui.common.BaseViewHolder
 
@@ -23,17 +22,13 @@ class ChatAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     notifyDataSetChanged()
   }
 
-
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-    val holder: BaseViewHolder
-    when (viewType) {
-      VIEW_MY_MESSAGE -> holder = MyMessageChatViewHolder.create(parent)
-      VIEW_OTHER_MESSAGE -> holder = OtherMessageChatViewHolder.create(parent)
-      else -> holder = BaseViewHolder.empty(parent)
+    return when (viewType) {
+      VIEW_MY_MESSAGE -> MyMessageChatViewHolder.create(parent)
+      VIEW_OTHER_MESSAGE -> OtherMessageChatViewHolder.create(parent)
+      else -> BaseViewHolder.empty(parent)
     }
-    return holder
   }
-
 
   override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
     when (holder.itemViewType) {

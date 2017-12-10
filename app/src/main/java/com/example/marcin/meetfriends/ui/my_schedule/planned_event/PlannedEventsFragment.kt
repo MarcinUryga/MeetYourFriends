@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseFragment
-import com.example.marcin.meetfriends.ui.event_detail.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity
 import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.PlannedEventsContract
 import com.example.marcin.meetfriends.ui.my_schedule.planned_event.adapter.PlannedEventsAdapter

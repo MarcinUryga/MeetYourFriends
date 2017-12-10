@@ -3,8 +3,7 @@ package com.example.marcin.meetfriends.ui.my_schedule.confirmed_events
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
-import com.example.marcin.meetfriends.ui.common.EventIdParams
-import com.example.marcin.meetfriends.ui.event_detail.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.google.firebase.database.DataSnapshot
 import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import io.reactivex.Observable

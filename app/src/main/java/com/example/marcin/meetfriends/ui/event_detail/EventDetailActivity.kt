@@ -12,6 +12,7 @@ import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.ChatActivity
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.event_detail.event_description.EventDescriptionFragment
 import com.example.marcin.meetfriends.ui.event_detail.event_questionnaire.EventQuestionnaireFragment
@@ -39,7 +40,7 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     prepareToolbar(eventName)
   }
 
-  override fun startEventChatActivity(params: EventIdParams) {
+  override fun startEventChatActivity(params: EventBasicInfoParams) {
     startActivity(ChatActivity.newIntent(baseContext, params))
   }
 

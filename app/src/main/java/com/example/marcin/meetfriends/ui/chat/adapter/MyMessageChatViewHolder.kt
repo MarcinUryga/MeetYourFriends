@@ -3,7 +3,6 @@ package com.example.marcin.meetfriends.ui.chat.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.ui.chat.viewmodel.Message
 import com.example.marcin.meetfriends.ui.common.BaseViewHolder
@@ -18,11 +17,11 @@ class MyMessageChatViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
   fun bind(message: Message) {
     itemView.messageTextView.text = message.message
-    if (itemView.messageTextView.containsDate()) {
-      Toast.makeText(itemView.context, "okokoko", Toast.LENGTH_SHORT).show()
+    if (message.ifContainsDate()) {
+      itemView.messageTextView.underlineDate(message.dateHandler.let { it!! })
     }
     Picasso.with(itemView.context)
-        .load(message.user?.photoUrl)
+        .load(message.user.photoUrl)
         .placeholder(R.drawable.circle_chat_user_placeholder)
         .transform(CircleTransform())
         .into(itemView.userPhotoImageView)

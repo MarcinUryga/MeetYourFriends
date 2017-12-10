@@ -4,7 +4,10 @@ import android.content.res.Resources
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.common.EventIdParams
+import com.example.marcin.meetfriends.ui.common.GetParticipantsUseCase
+import com.example.marcin.meetfriends.ui.event_detail.viewmodel.EventBasicInfo
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -53,7 +56,7 @@ class EventDetailPresenter @Inject constructor(
   }
 
   override fun navigateToEventChat() {
-    view.startEventChatActivity(EventIdParams(eventId))
+    view.startEventChatActivity(EventBasicInfoParams(eventInfoParams.event))
   }
 
   override fun navigateToEventDescription() {

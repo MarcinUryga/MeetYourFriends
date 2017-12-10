@@ -1,5 +1,7 @@
 package com.example.marcin.meetfriends.ui.event_detail;
 
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
