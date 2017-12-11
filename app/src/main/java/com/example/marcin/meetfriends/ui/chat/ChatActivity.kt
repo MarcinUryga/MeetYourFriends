@@ -44,7 +44,6 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
 
   override fun tryToVoteOnEventDate(message: Message) {
     if (message.ifContainsDate()) {
-      Toast.makeText(baseContext, "Hurrraaa!!! ${message.transformDateHandlerToJodaTime()}", Toast.LENGTH_SHORT).show()
       presenter.sendDateVote(message.transformDateHandlerToJodaTime())
     }
   }

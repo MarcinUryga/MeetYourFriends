@@ -22,7 +22,7 @@
         android:elevation="5dp"
         app:cardCornerRadius="5dp">
 
-        <TextView
+        <com.example.marcin.meetfriends.ui.chat.MessageTextView
             android:id="@+id/messageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

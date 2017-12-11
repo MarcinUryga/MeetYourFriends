@@ -17,6 +17,9 @@ class OtherMessageChatViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
   fun bind(message: Message) {
     itemView.messageTextView.text = message.message
+    if (message.ifContainsDate()) {
+      itemView.messageTextView.underlineDate(message.dateHandler.let { it!! })
+    }
     Picasso.with(itemView.context)
         .load(message.user?.photoUrl)
         .placeholder(R.drawable.circle_chat_user_placeholder)
