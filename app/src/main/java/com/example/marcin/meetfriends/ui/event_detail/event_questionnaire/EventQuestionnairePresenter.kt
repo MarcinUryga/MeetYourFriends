@@ -11,8 +11,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import durdinapps.rxfirebase2.RxFirebaseDatabase
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import org.joda.time.DateTime
 import timber.log.Timber
 import javax.inject.Inject
@@ -29,45 +27,31 @@ class EventQuestionnairePresenter @Inject constructor(
 ) : BasePresenter<EventQuestionnaireContract.View>(), EventQuestionnaireContract.Presenter {
 
   override fun sendDateVote(selectedDate: DateTime) {
-    val disposable = getParticipantsUseCase.getParticipantsIds(eventBasicInfoParams.event.id.let { it!! })
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { participantsIds ->
-          val voter: Pair<String, String> = if (eventBasicInfoParams.event.organizerId == auth.currentUser?.uid) {
-            Pair(Constants.FIREBASE_ORGANIZER_ID, auth.currentUser?.uid.let { it!! })
-          } else {
-            participantsIds.asSequence().first { it.value == auth.currentUser?.uid }.toPair()
-          }
-          val disposable = RxFirebaseDatabase
-              .setValue(firebaseDatabase.reference
-                  .child(Constants.FIREBASE_EVENTS)
-                  .child(eventBasicInfoParams.event.id)
-                  .child(Constants.FIREBASE_QUESTIONNAIRE)
-                  .child(Constants.FIREBASE_DATE)
-                  .child(selectedDate.millis.toString())
-                  .child(voter.first), voter.second)
-              .doFinally { view.showChosenDateSnackBar(selectedDate, voter) }
-              .subscribe()
-          disposables?.add(disposable)
-        }
+    val disposable = RxFirebaseDatabase
+        .setValue(firebaseDatabase.reference
+            .child(Constants.FIREBASE_EVENTS)
+            .child(eventBasicInfoParams.event.id)
+            .child(Constants.FIREBASE_QUESTIONNAIRE)
+            .child(Constants.FIREBASE_DATE)
+            .child(auth.currentUser?.uid.let { it!! }), selectedDate.millis.toString())
+        .doFinally { view.showChosenDateSnackBar(selectedDate, auth.uid!!) }
+        .subscribe()
     disposables?.add(disposable)
   }
 
-  override fun removeChosenDateFromEvent(selectedDate: DateTime, voter: Pair<String, String>) {
+  override fun removeChosenDateFromEvent(selectedDate: DateTime, userId: String) {
     firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS)
         .child(eventBasicInfoParams.event.id)
         .child(Constants.FIREBASE_QUESTIONNAIRE)
         .child(Constants.FIREBASE_DATE)
-        .child(selectedDate.millis.toString())
         .orderByValue()
-        .equalTo(voter.second)
         .addListenerForSingleValueEvent(object : ValueEventListener {
           override fun onDataChange(dataSnapshot: DataSnapshot) {
-            dataSnapshot.ref.child(dataSnapshot.children.firstOrNull { it.value == voter.second }?.key.toString()).removeValue()
+            dataSnapshot.ref.child(dataSnapshot.children.firstOrNull { it.key == userId }?.key.toString()).removeValue()
           }
 
           override fun onCancelled(p0: DatabaseError?) {
-            Timber.d("Canncelled remove participant with id ${voter.second}")
+            Timber.d("Canncelled remove participant with id $userId")
           }
         })
   }

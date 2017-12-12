@@ -16,7 +16,7 @@ interface ChatContract {
 
     fun tryToVoteOnEventDate(message: Message)
 
-    fun showChosenDateSnackBar(selectedDate: DateTime, voter: Pair<String, String>)
+    fun showChosenDateSnackBar(selectedDate: DateTime, userId: String)
 
 //    fun startUpdateDateTimeService(params: EventBasicInfoParams)
   }
@@ -26,6 +26,7 @@ interface ChatContract {
     fun sendMessage(text: String)
 
     fun sendDateVote(selectedDate: DateTime)
-    fun removeChosenDateFromEvent(selectedDate: DateTime, voter: Pair<String, String>)
+
+    fun removeChosenDateFromEvent(selectedDate: DateTime, userId: String)
   }
 }

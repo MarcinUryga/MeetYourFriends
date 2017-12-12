@@ -11,13 +11,13 @@ interface EventQuestionnaireContract {
 
   interface View : MvpView {
 
-    fun showChosenDateSnackBar(selectedDate: DateTime, voter: Pair<String, String>)
+    fun showChosenDateSnackBar(selectedDate: DateTime, userId: String)
   }
 
   interface Presenter : MvpPresenter {
 
     fun sendDateVote(selectedDate: DateTime)
 
-    fun removeChosenDateFromEvent(selectedDate: DateTime, voter: Pair<String, String>)
+    fun removeChosenDateFromEvent(selectedDate: DateTime, userId: String)
   }
 }
