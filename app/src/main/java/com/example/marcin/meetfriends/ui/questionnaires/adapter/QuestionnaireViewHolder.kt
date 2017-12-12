@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.chat_rooms.adapter
+package com.example.marcin.meetfriends.ui.questionnaires.adapter
 
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -10,19 +10,19 @@ import com.example.marcin.meetfriends.models.Event
 import kotlinx.android.synthetic.main.item_event_room.view.*
 
 /**
- * Created by marci on 2017-11-20.
+ * Created by marci on 2017-12-12.
  */
-class ChatRoomsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class QuestionnaireViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
   fun bind(event: Event) {
     itemView.eventName.text = event.name
     itemView.amountOfParticipants.text = itemView.context.getString(R.string.amount_of_participants, event.participants.size)
-    itemView.eventRoomIconImageView.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.circle_chat_icon_primary_color))
+    itemView.eventRoomIconImageView.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.circle_charts_icon))
   }
 
   companion object {
-    fun create(parent: ViewGroup): ChatRoomsViewHolder {
-      return ChatRoomsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_event_room, parent, false))
+    fun create(parent: ViewGroup): QuestionnaireViewHolder {
+      return QuestionnaireViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_event_room, parent, false))
     }
   }
 }

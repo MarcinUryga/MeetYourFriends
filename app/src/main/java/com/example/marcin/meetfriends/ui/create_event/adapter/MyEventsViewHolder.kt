@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.Event
-import kotlinx.android.synthetic.main.item_event.view.*
+import kotlinx.android.synthetic.main.item_event_room.view.*
 
 /**
  * Created by marci on 2017-11-27.
@@ -20,7 +20,7 @@ class MyEventsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
   companion object {
     fun create(parent: ViewGroup): MyEventsViewHolder {
-      return MyEventsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false))
+      return MyEventsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_event_room, parent, false))
     }
   }
 }

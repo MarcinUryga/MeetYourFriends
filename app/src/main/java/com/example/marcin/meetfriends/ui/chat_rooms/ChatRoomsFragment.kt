@@ -22,7 +22,7 @@ import dagger.android.support.AndroidSupportInjection
 import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.empty_chat_rooms.*
-import kotlinx.android.synthetic.main.fragment_chat_rooms.*
+import kotlinx.android.synthetic.main.fragment_events_rooms.*
 
 /**
  * Created by marci on 2017-11-20.
@@ -37,7 +37,7 @@ class ChatRoomsFragment : BaseFragment<ChatRoomsContract.Presenter>(), ChatRooms
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.fragment_chat_rooms, container, false)
+    return inflater.inflate(R.layout.fragment_events_rooms, container, false)
   }
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -52,9 +52,9 @@ class ChatRoomsFragment : BaseFragment<ChatRoomsContract.Presenter>(), ChatRooms
 
   override fun onResume() {
     super.onResume()
-    chatRoomsRecyclerView.visibility = View.VISIBLE
-    chatRoomsRecyclerView.layoutManager = LinearLayoutManager(context)
-    chatRoomsRecyclerView.adapter = postAdapter
+    eventRoomsRecyclerView.visibility = View.VISIBLE
+    eventRoomsRecyclerView.layoutManager = LinearLayoutManager(context)
+    eventRoomsRecyclerView.adapter = postAdapter
   }
 
   override fun showCreateEventDialog() {

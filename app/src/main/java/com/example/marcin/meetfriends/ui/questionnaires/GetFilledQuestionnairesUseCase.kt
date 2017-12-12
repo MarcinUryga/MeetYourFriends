@@ -5,7 +5,6 @@ import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Maybe
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -15,17 +14,17 @@ class GetFilledQuestionnairesUseCase @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) {
 
-  fun get(): Maybe<MutableList<DateQuestionnaire>> {
+  fun get(eventId: String): Maybe<MutableList<DateQuestionnaire>> {
     return RxFirebaseDatabase.observeSingleValueEvent(
         firebaseDatabase.reference
             .child(Constants.FIREBASE_EVENTS)
-            .child(Constants.FIREBASE_QUESTIONNAIRE))
+            .child(eventId)
+            .child(Constants.FIREBASE_QUESTIONNAIRE)
+            .child(Constants.FIREBASE_DATE))
     { dataSnapshot ->
       val dateQuestionnaires = mutableListOf<DateQuestionnaire>()
       dataSnapshot.children.forEach {
-        it.children.forEach {
-          Timber.d(it.toString())
-        }
+        dateQuestionnaires.add(DateQuestionnaire(it.key, it.value.toString()))
       }
       return@observeSingleValueEvent dateQuestionnaires
     }
