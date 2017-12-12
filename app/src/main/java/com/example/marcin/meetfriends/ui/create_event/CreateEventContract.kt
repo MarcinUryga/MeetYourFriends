@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.change_event
+package com.example.marcin.meetfriends.ui.create_event
 
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.MvpPresenter
@@ -8,7 +8,7 @@ import io.reactivex.Observable
 /**
  * Created by marci on 2017-11-27.
  */
-interface ChangeEventContract {
+interface CreateEventContract {
 
   interface View : MvpView {
 

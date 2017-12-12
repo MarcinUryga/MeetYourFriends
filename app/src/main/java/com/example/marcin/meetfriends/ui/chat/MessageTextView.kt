@@ -21,7 +21,11 @@ class MessageTextView @JvmOverloads constructor(
     val spannableDate = SpannableString(dateHandler)
     spannableDate.setSpan(UnderlineSpan(), 0, dateHandler.length, 0)
     val spannableStringBuilder = SpannableStringBuilder(text, 0, text.length)
-    spannableStringBuilder.replace(text.indexOf(dateHandler), text.indexOf(dateHandler.last()) + 1, spannableDate)
+    spannableStringBuilder.replace(
+        text.indexOf(dateHandler.first()),
+        text.indexOf(dateHandler.first()) + dateHandler.length,
+        spannableDate
+    )
     text = spannableStringBuilder
   }
 }

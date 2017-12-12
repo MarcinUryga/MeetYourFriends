@@ -1,7 +1,7 @@
 package com.example.marcin.meetfriends.di
 
-import com.example.marcin.meetfriends.ui.change_event.ChangeEventDialogFragment
-import com.example.marcin.meetfriends.ui.change_event.ChangeEventModule
+import com.example.marcin.meetfriends.ui.create_event.CreateEventDialogFragment
+import com.example.marcin.meetfriends.ui.create_event.CreateEventModule
 import com.example.marcin.meetfriends.ui.chat.ChatActivity
 import com.example.marcin.meetfriends.ui.chat.ChatModule
 import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsFragment
@@ -79,8 +79,8 @@ abstract class InjectorsModule {
   abstract fun chatActivity(): ChatActivity
 
   @ScreenScope
-  @ContributesAndroidInjector(modules = arrayOf(ChangeEventModule::class))
-  abstract fun changeEventFragment(): ChangeEventDialogFragment
+  @ContributesAndroidInjector(modules = arrayOf(CreateEventModule::class))
+  abstract fun changeEventFragment(): CreateEventDialogFragment
 
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(EventDetailModule::class))

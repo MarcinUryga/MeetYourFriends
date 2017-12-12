@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.change_event
+package com.example.marcin.meetfriends.ui.create_event
 
 import android.content.Context
 import android.os.Bundle
@@ -9,14 +9,14 @@ import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BaseFragmentDialog
-import com.example.marcin.meetfriends.ui.change_event.adapter.MyEventsAdapter
+import com.example.marcin.meetfriends.ui.create_event.adapter.MyEventsAdapter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_dialog.*
 
 /**
  * Created by marci on 2017-11-27.
  */
-class ChangeEventDialogFragment : BaseFragmentDialog<ChangeEventContract.Presenter>(), ChangeEventContract.View {
+class CreateEventDialogFragment : BaseFragmentDialog<CreateEventContract.Presenter>(), CreateEventContract.View {
 
   lateinit var myEventsAdapter: MyEventsAdapter
 

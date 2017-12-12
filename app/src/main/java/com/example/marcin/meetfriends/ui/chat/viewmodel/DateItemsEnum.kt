@@ -26,9 +26,40 @@ enum class DateItems(val polishName: Regex) {
   NEXT_WEEK("([zZ]a tydzie[nń])".toRegex()),
   NEXT_MONTH("([zZ]a miesi[ąa]c)".toRegex());
 
-
   companion object {
-    fun repackMonth(month: String): Int {
+    private val currentDate = DateTime()
+
+    fun convertToDateTime(separator: String, dateTab: List<String>, timeTab: List<String>): DateTime {
+      val date = dateTab[1].split(separator)
+      val year = convertToYear(date)
+      return DateTime(year, monthToInt(date[1]), date[0].toInt(), timeTab[0].toInt(), timeTab[1].toInt())
+    }
+
+    fun convertToYear(date: List<String>, size: Int = 3): Int {
+      return if (date.size == size) {
+        date[size - 1].toInt()
+      } else {
+        if (currentDate.monthOfYear > DateItems.monthToInt(date[size - 2])) {
+          currentDate.year + 1
+        } else {
+          currentDate.year
+        }
+      }
+    }
+
+    fun createDateFromOthersWords(word: String, timeTab: List<String>): DateTime {
+      val newDate = when {
+        DateItems.TODAY.polishName.matches(word) -> DateTime(currentDate.year, currentDate.monthOfYear, currentDate.dayOfMonth, 0, 0)
+        DateItems.TOMMOROW.polishName.matches(word) -> currentDate.plusDays(1)
+        DateItems.DAY_AFTER_TOMMOROW.polishName.matches(word) -> currentDate.plusDays(2)
+        DateItems.NEXT_WEEK.polishName.matches(word) -> currentDate.plusWeeks(1)
+        DateItems.NEXT_MONTH.polishName.matches(word) -> currentDate.plusMonths(1)
+        else -> currentDate
+      }
+      return newDate.withTime(timeTab[0].toInt(), timeTab[1].toInt(), 0, 0)
+    }
+
+    fun monthToInt(month: String): Int {
       return when {
         DateItems.JANUARY.polishName.matches(month) -> 1
         DateItems.FEBRUARY.polishName.matches(month) -> 2
@@ -44,19 +75,6 @@ enum class DateItems(val polishName: Regex) {
         DateItems.DECEMBER.polishName.matches(month) -> 12
         else -> month.toInt()
       }
-    }
-
-    fun createDateFromOthersWords(word: String, timeTab: List<String>): DateTime {
-      val currentDate = DateTime()
-      val newDate = when {
-        DateItems.TODAY.polishName.matches(word) -> DateTime(currentDate.year, currentDate.monthOfYear, currentDate.dayOfMonth, 0, 0)
-        DateItems.TOMMOROW.polishName.matches(word) -> currentDate.plusDays(1)
-        DateItems.DAY_AFTER_TOMMOROW.polishName.matches(word) -> currentDate.plusDays(2)
-        DateItems.NEXT_WEEK.polishName.matches(word) -> currentDate.plusWeeks(1)
-        DateItems.NEXT_MONTH.polishName.matches(word) -> currentDate.plusMonths(1)
-        else -> currentDate
-      }
-      return newDate.withTime(timeTab[0].toInt(), timeTab[1].toInt(), 0, 0)
     }
   }
 }

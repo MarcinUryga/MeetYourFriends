@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.change_event
+package com.example.marcin.meetfriends.ui.create_event
 
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.utils.Constants

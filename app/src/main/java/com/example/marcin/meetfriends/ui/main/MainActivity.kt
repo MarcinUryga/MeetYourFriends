@@ -17,9 +17,8 @@ import com.example.marcin.meetfriends.extensions.ActionBarExtensions
 import com.example.marcin.meetfriends.extensions.setEditTextHint
 import com.example.marcin.meetfriends.extensions.setMargins
 import com.example.marcin.meetfriends.mvp.BaseActivity
-import com.example.marcin.meetfriends.ui.change_event.ChangeEventDialogFragment
+import com.example.marcin.meetfriends.ui.create_event.CreateEventDialogFragment
 import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsFragment
-import com.example.marcin.meetfriends.ui.friends.FriendsActivity
 import com.example.marcin.meetfriends.ui.login.LoginActivity
 import com.example.marcin.meetfriends.ui.main.viewmodel.BottomBarEnum
 import com.example.marcin.meetfriends.ui.my_schedule.MyScheduleFragment
@@ -89,7 +88,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
   }
 
   override fun showChangeEventDialog() {
-    val changeEventDialogFragment = ChangeEventDialogFragment()
+    val changeEventDialogFragment = CreateEventDialogFragment()
     changeEventDialogFragment.show(supportFragmentManager, "asdasd")
   }
 

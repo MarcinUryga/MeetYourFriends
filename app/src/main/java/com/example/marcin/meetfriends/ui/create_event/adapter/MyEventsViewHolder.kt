@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.change_event.adapter
+package com.example.marcin.meetfriends.ui.create_event.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

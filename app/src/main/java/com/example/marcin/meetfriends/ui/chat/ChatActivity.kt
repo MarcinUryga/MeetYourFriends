@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.adapter.ChatAdapter
@@ -65,8 +64,4 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
       return intent
     }
   }
-/*
-  override fun startUpdateDateTimeService(params: EventBasicInfoParams) {
-    startService(UpdateDateTimeEventService.newIntent(baseContext, params))
-  }*/
 }

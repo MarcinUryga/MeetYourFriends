@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.change_event
+package com.example.marcin.meetfriends.ui.create_event
 
 import android.content.SharedPreferences
 import com.example.marcin.meetfriends.di.ScreenScope
@@ -14,10 +14,10 @@ import javax.inject.Inject
  * Created by marci on 2017-11-27.
  */
 @ScreenScope
-class ChangeEventPresenter @Inject constructor(
+class CreateEventPresenter @Inject constructor(
     private val getMyEventsUseCase: GetMyEventsUseCase,
     sharedPreferences: SharedPreferences
-) : BasePresenter<ChangeEventContract.View>(), ChangeEventContract.Presenter {
+) : BasePresenter<CreateEventContract.View>(), CreateEventContract.Presenter {
 
   private val sharedPRef = SharedPref(sharedPreferences)
 
