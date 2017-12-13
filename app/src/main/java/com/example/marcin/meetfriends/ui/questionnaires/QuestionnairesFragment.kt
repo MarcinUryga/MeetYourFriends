@@ -34,7 +34,6 @@ class QuestionnairesFragment : BaseFragment<QuestionairesContract.Presenter>(), 
     super.onResume()
     eventRoomsRecyclerView.layoutManager = LinearLayoutManager(context)
     postAdapter = QuestionnaireAdapter()
-//    postAdapter.clearEventList()
     eventRoomsRecyclerView.adapter = postAdapter
   }
 
