@@ -13,9 +13,9 @@ import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.ChatActivity
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.event_detail.event_description.EventDescriptionFragment
 import com.example.marcin.meetfriends.ui.event_detail.event_questionnaire.EventQuestionnaireFragment
+import com.example.marcin.meetfriends.ui.event_detail.viewmodel.FragmentsItems
 import com.example.marcin.meetfriends.ui.main.MainActivity
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
@@ -34,6 +34,14 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_event_detail)
     setUpNavigateButtons()
+    navigateToCurrentFragment()
+  }
+
+  private fun navigateToCurrentFragment() {
+    when {
+      intent.extras.getInt(FRAGMENT_TO_OPEN, 1) == FragmentsItems.DESCRIPTION.fragmentId -> presenter.navigateToEventDescription()
+      intent.extras.getInt(FRAGMENT_TO_OPEN, 1) == FragmentsItems.QUESTIONNAIRES.fragmentId -> presenter.navigateToEventQuestionnaire()
+    }
   }
 
   override fun setUpToolbarEventName(eventName: String) {
@@ -106,9 +114,12 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
   }
 
   companion object {
-    fun newIntent(context: Context, eventBasicInfoParams: EventBasicInfoParams): Intent {
+    private const val FRAGMENT_TO_OPEN = "openFragment"
+
+    fun newIntent(context: Context, eventBasicInfoParams: EventBasicInfoParams, fragmentItem: FragmentsItems = FragmentsItems.DESCRIPTION): Intent {
       val intent = Intent(context, EventDetailActivity::class.java)
       intent.putExtras(eventBasicInfoParams.data)
+      intent.putExtra(FRAGMENT_TO_OPEN, fragmentItem.fragmentId)
       return intent
     }
   }

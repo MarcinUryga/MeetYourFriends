@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,12 +16,36 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include
-        android:id="@+id/emptyChatRooms"
-        layout="@layout/empty_chat_rooms"
+    <RelativeLayout
+        android:id="@+id/emptyEventItemsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible" />
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/noItemsImageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:scaleType="fitXY"
+            tools:src="@drawable/ic_chat_red_24dp" />
+
+        <TextView
+            android:id="@+id/noItemsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/noItemsImageView"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="You do not have any events yet!" />
+
+    </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"

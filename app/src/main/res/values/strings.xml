@@ -53,6 +53,7 @@
     <string name="your_date_suggestion">Your date suggestion: %s</string>
     <string name="your_time_suggestion">Your time suggestion: %s</string>
     <string name="chosen_date">You chose date: %s</string>
+    <string name="you_have_any_questionnaires_to_fill">You have any questionnaires to fill!</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>

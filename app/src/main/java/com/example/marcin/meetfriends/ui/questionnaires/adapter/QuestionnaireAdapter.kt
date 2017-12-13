@@ -3,6 +3,8 @@ package com.example.marcin.meetfriends.ui.questionnaires.adapter
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.models.Event
 import durdinapps.rxfirebase2.RxFirebaseRecyclerAdapter
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 
 /**
@@ -10,22 +12,20 @@ import timber.log.Timber
  */
 class QuestionnaireAdapter : RxFirebaseRecyclerAdapter<QuestionnaireViewHolder, Event>(Event::class.java) {
 
-//  private val publishSubject = PublishSubject.create<Event>()
+  private val publishSubject = PublishSubject.create<Event>()
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = QuestionnaireViewHolder.create(parent)
 
   override fun onBindViewHolder(holder: QuestionnaireViewHolder, position: Int) {
     holder.bind(items[position])
-    /* holder.itemView.setOnClickListener {
-       publishSubject.onNext(items[position])
-     }*/
+    holder.itemView.setOnClickListener {
+      publishSubject.onNext(items[position])
+    }
   }
 
-/*
   fun getClickEvent(): Observable<Event> {
     return publishSubject
   }
-*/
 
   override fun itemAdded(item: Event, key: String, position: Int) {
     //Add the refs if you need them later

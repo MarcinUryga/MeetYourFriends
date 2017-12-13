@@ -36,7 +36,6 @@ class EventDetailPresenter @Inject constructor(
   override fun resume() {
     super.resume()
     loadEvent()
-    navigateToEventDescription()
   }
 
   private fun loadEvent() {

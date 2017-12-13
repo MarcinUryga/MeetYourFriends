@@ -1,12 +1,9 @@
 package com.example.marcin.meetfriends.ui.chat_rooms
 
-import android.content.SharedPreferences
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.storage.SharedPref
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.event_detail.viewmodel.EventBasicInfo
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -26,11 +23,9 @@ import javax.inject.Inject
 @ScreenScope
 class ChatRoomsPresenter @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
-    private val auth: FirebaseAuth,
-    sharedPreferences: SharedPreferences
+    private val auth: FirebaseAuth
 ) : BasePresenter<ChatRoomsContract.View>(), ChatRoomsContract.Presenter {
 
-  private val sharedPref = SharedPref(sharedPreferences)
   private var loading = false
 
   override fun resume() {
@@ -84,36 +79,6 @@ class ChatRoomsPresenter @Inject constructor(
 
   override fun onRefresh() {
     loadChatRooms()
-  }
-
-  override fun addNewEvent() {
-    view.showCreateEventDialog()
-  }
-
-  override fun createEvent(eventName: String) {
-    val eventId = firebaseDatabase.reference.push().key
-    val event = Event(
-        id = eventId,
-        organizerId = auth.uid,
-        name = eventName
-    )
-    val disposable = RxFirebaseDatabase
-        .setValue(
-            firebaseDatabase.reference
-                .child(Constants.FIREBASE_EVENTS)
-                .child(eventId), event)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doFinally {
-          view.showCreatedEventSnackBar(eventId)
-          sharedPref.saveChosenEvent(eventId)
-        }
-        .subscribe()
-    disposables?.add(disposable)
-  }
-
-  override fun removeEvent(eventId: String) {
-    firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(eventId).removeValue()
   }
 
   override fun handleChosenChatRoomdEvent(eventChatRoom: Observable<Event>) {

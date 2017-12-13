@@ -15,10 +15,6 @@ interface ChatRoomsContract {
 
   interface View : MvpView {
 
-    fun showCreateEventDialog()
-
-    fun showCreatedEventSnackBar(eventId: String)
-
     fun showEmptyEvents()
 
     fun hideEmptyEvents()
@@ -35,12 +31,6 @@ interface ChatRoomsContract {
   }
 
   interface Presenter : MvpPresenter {
-
-    fun addNewEvent()
-
-    fun createEvent(eventName: String)
-
-    fun removeEvent(eventId: String)
 
     fun onRefresh()
 

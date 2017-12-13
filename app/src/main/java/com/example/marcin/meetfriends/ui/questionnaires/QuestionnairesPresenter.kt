@@ -1,13 +1,17 @@
 package com.example.marcin.meetfriends.ui.questionnaires
 
 import com.example.marcin.meetfriends.di.ScreenScope
+import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.event_detail.viewmodel.EventBasicInfo
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import durdinapps.rxfirebase2.RxFirebaseDatabase
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -25,12 +29,24 @@ class QuestionnairesPresenter @Inject constructor(
 
   override fun resume() {
     super.resume()
-    loadFilledQuestionnaires()
-    loadChatRooms()
+    loadUnfilledQuestionnaires()
   }
 
-  private fun loadChatRooms() {
-//    view.hideRefresh()
+  override fun handleChosenEventRoom(chosenEventRoom: Observable<Event>) {
+    val disposable = chosenEventRoom.subscribe({ event ->
+      view.startEventQuestionnaireFragment(EventBasicInfoParams(
+          event = EventBasicInfo(
+              id = event.id,
+              organizerId = event.organizerId,
+              name = event.name,
+              description = event.description
+          )
+      ))
+    })
+    disposables?.add(disposable)
+  }
+
+  private fun loadUnfilledQuestionnaires() {
     val disposable = RxFirebaseDatabase
         .observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS))
         .subscribeOn(Schedulers.io())
@@ -49,7 +65,15 @@ class QuestionnairesPresenter @Inject constructor(
   }
 
   private fun findParticipants(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
-    val disposable = RxFirebaseDatabase.observeChildEvent(firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(dataSnapshot.key).child(Constants.FIREBASE_PARTICIPANTS))
+    val disposable = RxFirebaseDatabase
+        .observeChildEvent(
+            firebaseDatabase.reference
+                .child(Constants.FIREBASE_EVENTS)
+                .child(dataSnapshot.key)
+                .child(Constants.FIREBASE_PARTICIPANTS)
+        )
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ participantsIdDataSnapshot ->
           val participantsIdPath = participantsIdDataSnapshot.value
           if (participantsIdPath.value == auth.uid) {
@@ -61,21 +85,19 @@ class QuestionnairesPresenter @Inject constructor(
 
   private fun addEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
     val disposable = getFilledQuestionnairesUseCase.get(dataSnapshot.key)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnSubscribe { view.showLoading() }
+        .doFinally { view.hideLoading() }
         .subscribe { filledQuestionnaires ->
-          val questionnaire = filledQuestionnaires.firstOrNull { it.userId == auth.currentUser?.uid }
-          if (questionnaire == null) {
+          val dateQuestionnaire = filledQuestionnaires.firstOrNull { it.userId == auth.currentUser?.uid }
+          if (dateQuestionnaire == null || view.getEventItemsSizeFromAdapter() > 0) {
             view.manageEvent(dataSnapshot)
+            view.hideEmptyQuestionnairesToFillScreen()
+          } else {
+            view.showEmptyQuestionnairesToFillScreen()
           }
         }
-    disposables?.add(disposable)
-/*    if (loading) {
-      view.hideLoading()
-    }
-    view.hideEmptyEvents()*/
-  }
-
-  fun loadFilledQuestionnaires() {
-    val disposable = getFilledQuestionnairesUseCase.get("-L-kwk4xWbemCDGbsGpH").subscribe()
     disposables?.add(disposable)
   }
 }
