@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_events_rooms.*
  */
 class QuestionnairesFragment : BaseFragment<QuestionairesContract.Presenter>(), QuestionairesContract.View {
 
-  private val postAdapter = QuestionnaireAdapter()
+  private lateinit var postAdapter: QuestionnaireAdapter
 
   override fun onAttach(context: Context?) {
     AndroidSupportInjection.inject(this)
@@ -33,6 +33,8 @@ class QuestionnairesFragment : BaseFragment<QuestionairesContract.Presenter>(), 
   override fun onResume() {
     super.onResume()
     eventRoomsRecyclerView.layoutManager = LinearLayoutManager(context)
+    postAdapter = QuestionnaireAdapter()
+//    postAdapter.clearEventList()
     eventRoomsRecyclerView.adapter = postAdapter
   }
 

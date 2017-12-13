@@ -91,10 +91,10 @@ class QuestionnairesPresenter @Inject constructor(
         .doFinally { view.hideLoading() }
         .subscribe { filledQuestionnaires ->
           val dateQuestionnaire = filledQuestionnaires.firstOrNull { it.userId == auth.currentUser?.uid }
-          if (dateQuestionnaire == null || view.getEventItemsSizeFromAdapter() > 0) {
+          if (dateQuestionnaire == null) {
             view.manageEvent(dataSnapshot)
             view.hideEmptyQuestionnairesToFillScreen()
-          } else {
+          } else if (view.getEventItemsSizeFromAdapter() == 0) {
             view.showEmptyQuestionnairesToFillScreen()
           }
         }

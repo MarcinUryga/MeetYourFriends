@@ -27,9 +27,15 @@ class QuestionnaireAdapter : RxFirebaseRecyclerAdapter<QuestionnaireViewHolder, 
     return publishSubject
   }
 
+  fun clearEventList() {
+    items.clear()
+    notifyDataSetChanged()
+  }
+
   override fun itemAdded(item: Event, key: String, position: Int) {
     //Add the refs if you need them later
 //    item.setRef(key)
+    notifyDataSetChanged()
     Timber.d("Added a new item to the adapter.")
   }
 
@@ -41,6 +47,7 @@ class QuestionnaireAdapter : RxFirebaseRecyclerAdapter<QuestionnaireViewHolder, 
 
   override fun itemRemoved(item: Event, key: String, position: Int) {
     Timber.d("Removed an item.")
+    notifyDataSetChanged()
   }
 
   override fun itemMoved(item: Event, key: String, oldPosition: Int, newPosition: Int) {
