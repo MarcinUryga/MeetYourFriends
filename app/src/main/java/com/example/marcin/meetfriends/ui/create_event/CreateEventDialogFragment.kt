@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.view.Window
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseFragmentDialog
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_dialog_create_event.*
 
@@ -54,6 +56,10 @@ class CreateEventDialogFragment : BaseFragmentDialog<CreateEventContract.Present
   override fun getEventName() = eventNameEditText.text.toString()
 
   override fun getEventDescription() = eventDescriptionEditText.text.toString()
+
+  override fun openEventDetailsActivity(eventBasicInfoParams: EventBasicInfoParams) {
+    startActivity(EventDetailActivity.newIntent(context, eventBasicInfoParams))
+  }
 
   override fun dismissDialogFragment() {
     dismiss()

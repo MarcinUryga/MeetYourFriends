@@ -3,6 +3,8 @@ package com.example.marcin.meetfriends.ui.create_event
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
+import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.event_detail.viewmodel.EventBasicInfo
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -41,6 +43,15 @@ class CreateEventPresenter @Inject constructor(
                 .child(eventId), event)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+        .doFinally {
+          view.openEventDetailsActivity(EventBasicInfoParams(event = EventBasicInfo(
+              id = event.id,
+              organizerId = event.organizerId,
+              name = event.name,
+              description = event.description
+          )))
+          view.dismissDialogFragment()
+        }
         .subscribe()
     disposables?.add(disposable)
   }
