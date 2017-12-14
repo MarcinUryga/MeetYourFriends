@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@android:color/holo_blue_bright</item>
         <item name="android:windowTranslucentStatus">false</item>
     </style>
 
@@ -20,5 +20,10 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="TextInputLayout" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/input_layout_text_color_selector</item>
+        <item name="errorEnabled">true</item>
+    </style>
 
 </resources>

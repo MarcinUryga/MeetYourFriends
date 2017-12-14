@@ -1,9 +1,7 @@
 package com.example.marcin.meetfriends.ui.create_event
 
-import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
-import io.reactivex.Observable
 
 /**
  * Created by marci on 2017-11-27.
@@ -12,21 +10,23 @@ interface CreateEventContract {
 
   interface View : MvpView {
 
-    fun showLoading()
+    fun validateEventName(): Boolean
 
-    fun hideLoading()
+    fun validateEventDescription(): Boolean
 
-    fun showMyEvents(events: List<Event>)
+    fun getEventName(): String
 
-    fun showNoEventsTextView()
-
-    fun hideNoEventsTextView()
+    fun getEventDescription(): String
 
     fun dismissDialogFragment()
+
+    fun showCreatedEventSnackBar(eventId: String)
   }
 
   interface Presenter : MvpPresenter {
 
-    fun handleChosenEvent(observableEvent: Observable<Event>)
+    fun tryToCreateEvent()
+
+    fun removeEvent(eventId: String)
   }
 }

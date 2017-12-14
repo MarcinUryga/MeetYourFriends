@@ -75,10 +75,6 @@ abstract class InjectorsModule {
   abstract fun chatActivity(): ChatActivity
 
   @ScreenScope
-  @ContributesAndroidInjector(modules = arrayOf(CreateEventModule::class))
-  abstract fun changeEventFragment(): CreateEventDialogFragment
-
-  @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(EventDetailModule::class))
   abstract fun eventDetailActivity(): EventDetailActivity
 
@@ -94,6 +90,7 @@ abstract class InjectorsModule {
   @ContributesAndroidInjector(modules = arrayOf(QuestionnairesModule::class))
   abstract fun questionnairesFragment(): QuestionnairesFragment
 
-/*  @ContributesAndroidInjector(modules = arrayOf(UpdateDateTimeEventServiceModule::class))
-  abstract fun updateDateTimeEventService(): UpdateDateTimeEventService*/
+  @ScreenScope
+  @ContributesAndroidInjector(modules = arrayOf(CreateEventModule::class))
+  abstract fun createEventFragment(): CreateEventDialogFragment
 }

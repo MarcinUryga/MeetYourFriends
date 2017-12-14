@@ -68,7 +68,9 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
   }
 
   override fun showCreateEventDialog() {
-    val eventNameEditText = EditText(this)
+    val createEventDialogFragment = CreateEventDialogFragment()
+    createEventDialogFragment.show(supportFragmentManager, "asdasd")
+    /* val eventNameEditText = EditText(this)
     val eventDescriptionEditText = EditText(this)
     val parentLayout = LinearLayout(this)
     parentLayout.addView(eventNameEditText.setMargins(45, 45, 10, 10).setEditTextHint(getString(R.string.event_name)))
@@ -85,12 +87,12 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
           }
         })
         .setNegativeButton(android.R.string.no, null)
-        .show()
+        .show()*/
   }
 
   override fun showChangeEventDialog() {
-    val changeEventDialogFragment = CreateEventDialogFragment()
-    changeEventDialogFragment.show(supportFragmentManager, "asdasd")
+  /*  val changeEventDialogFragment = CreateEventDialogFragment()*/
+//    changeEventDialogFragment.show(supportFragmentManager, "asdasd")
   }
 
   override fun showCreatedEventSnackBar(eventId: String) {
