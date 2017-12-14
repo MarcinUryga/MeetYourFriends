@@ -3,19 +3,13 @@ package com.example.marcin.meetfriends.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.extensions.ActionBarExtensions
-import com.example.marcin.meetfriends.extensions.setEditTextHint
-import com.example.marcin.meetfriends.extensions.setMargins
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsFragment
 import com.example.marcin.meetfriends.ui.create_event.CreateEventDialogFragment
@@ -48,7 +42,6 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     when (item.itemId) {
       R.id.logout -> presenter.tryLogout()
       R.id.addEvent -> presenter.addNewEvent()
-//      R.id.changeEvent -> presenter.changeEvent()
     }
     return super.onOptionsItemSelected(item)
   }
@@ -69,37 +62,7 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
 
   override fun showCreateEventDialog() {
     val createEventDialogFragment = CreateEventDialogFragment()
-    createEventDialogFragment.show(supportFragmentManager, "asdasd")
-    /* val eventNameEditText = EditText(this)
-    val eventDescriptionEditText = EditText(this)
-    val parentLayout = LinearLayout(this)
-    parentLayout.addView(eventNameEditText.setMargins(45, 45, 10, 10).setEditTextHint(getString(R.string.event_name)))
-//    parentLayout.addView(eventDescriptionEditText.setMargins(45, 45, 10, 10).setEditTextHint(getString(R.string.event_description)))
-    AlertDialog.Builder(this)
-        .setTitle(getString(R.string.create_new_event))
-        .setMessage(getString(R.string.name_your_event))
-        .setView(parentLayout)
-        .setPositiveButton(android.R.string.yes, { _, _ ->
-          val eventName = eventNameEditText.text.toString()
-          if (eventName.isNotEmpty()) {
-            presenter.createEvent(eventNameEditText.text.toString(), eventDescriptionEditText.text.toString())
-            Toast.makeText(this, eventNameEditText.text, Toast.LENGTH_SHORT).show()
-          }
-        })
-        .setNegativeButton(android.R.string.no, null)
-        .show()*/
-  }
-
-  override fun showChangeEventDialog() {
-  /*  val changeEventDialogFragment = CreateEventDialogFragment()*/
-//    changeEventDialogFragment.show(supportFragmentManager, "asdasd")
-  }
-
-  override fun showCreatedEventSnackBar(eventId: String) {
-    Snackbar.make(snackBarContainer, getString(R.string.created_new_event), Snackbar.LENGTH_LONG)
-        .setAction(getString(R.string.undo), {
-          presenter.removeEvent(eventId)
-        }).show()
+    createEventDialogFragment.show(supportFragmentManager, CreateEventDialogFragment::class.java.toString())
   }
 
   override fun showConfirmLogoutDialog() {
@@ -120,7 +83,6 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
       when (bottomItemId) {
         BottomBarEnum.SCHEDULE.itemId -> switchFragment(MyScheduleFragment(), bottomItemId)
         BottomBarEnum.QUESTIONNAIRES.itemId -> switchFragment(QuestionnairesFragment(), bottomItemId)
-//        BottomBarEnum.VENUES.itemId -> switchFragment(VenuesFragment(), bottomItemId)
         BottomBarEnum.CHAT.itemId -> switchFragment(ChatRoomsFragment(), bottomItemId)
         else -> switchFragment(MyScheduleFragment(), 1)
       }
@@ -133,7 +95,6 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
           when (item.itemId) {
             R.id.schedule -> switchFragment(MyScheduleFragment())
             R.id.questionnaires -> switchFragment(QuestionnairesFragment())
-//            R.id.venues -> switchFragment(VenuesFragment())
             R.id.chatRooms -> switchFragment(ChatRoomsFragment())
             else -> throw Exception("Illegal fragment")
           }

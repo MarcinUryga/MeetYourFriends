@@ -19,14 +19,10 @@ interface CreateEventContract {
     fun getEventDescription(): String
 
     fun dismissDialogFragment()
-
-    fun showCreatedEventSnackBar(eventId: String)
   }
 
   interface Presenter : MvpPresenter {
 
     fun tryToCreateEvent()
-
-    fun removeEvent(eventId: String)
   }
 }

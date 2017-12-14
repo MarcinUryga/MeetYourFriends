@@ -21,7 +21,6 @@ import javax.inject.Inject
 @ScreenScope
 class MainPresenter @Inject constructor(
     private val auth: FirebaseAuth,
-    private val firebaseDatabase: FirebaseDatabase,
     sharedPreferences: SharedPreferences
 ) : BasePresenter<MainContract.View>(), MainContract.Presenter {
 
@@ -34,37 +33,6 @@ class MainPresenter @Inject constructor(
 
   override fun addNewEvent() {
     view.showCreateEventDialog()
-  }
-
-  override fun createEvent(eventName: String, eventDescription: String) {
-    val eventId = firebaseDatabase.reference.push().key
-    val event = Event(
-        id = eventId,
-        organizerId = auth.uid,
-        name = eventName,
-        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    )
-    val disposable = RxFirebaseDatabase
-        .setValue(
-            firebaseDatabase.reference
-                .child(Constants.FIREBASE_EVENTS)
-                .child(eventId), event)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doFinally {
-          view.showCreatedEventSnackBar(eventId)
-          sharedPref.saveChosenEvent(eventId)
-        }
-        .subscribe()
-    disposables?.add(disposable)
-  }
-
-  override fun removeEvent(eventId: String) {
-    firebaseDatabase.reference.child(FIREBASE_EVENTS).child(eventId).removeValue()
-  }
-
-  override fun changeEvent() {
-    view.showChangeEventDialog()
   }
 
   override fun tryLogout() {

@@ -4,7 +4,6 @@ import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.utils.Constants
-import com.example.marcin.meetfriends.utils.Constants.FIREBASE_EVENTS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseDatabase
@@ -42,12 +41,8 @@ class CreateEventPresenter @Inject constructor(
                 .child(eventId), event)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .doFinally { view.showCreatedEventSnackBar(eventId) }
         .subscribe()
     disposables?.add(disposable)
   }
 
-  override fun removeEvent(eventId: String) {
-    firebaseDatabase.reference.child(FIREBASE_EVENTS).child(eventId).removeValue()
-  }
 }

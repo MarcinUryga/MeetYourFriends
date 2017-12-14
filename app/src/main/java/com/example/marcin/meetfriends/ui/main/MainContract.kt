@@ -16,22 +16,12 @@ interface MainContract {
 
     fun showCreateEventDialog()
 
-    fun showChangeEventDialog()
-
-    fun showCreatedEventSnackBar(eventId: String)
-
     fun showConfirmLogoutDialog()
   }
 
   interface Presenter : MvpPresenter {
 
     fun addNewEvent()
-
-    fun createEvent(eventName: String, eventDescription: String)
-
-    fun removeEvent(eventId: String)
-
-    fun changeEvent()
 
     fun tryLogout()
 
