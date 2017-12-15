@@ -16,6 +16,8 @@ interface EventDetailContract {
 
     fun setUpToolbarEventName(eventName: String)
 
+    fun setEventImage(imageId: Int)
+
     fun setUpOrganizerData(organizer: User)
 
     fun startEventChatActivity(params: EventBasicInfoParams)

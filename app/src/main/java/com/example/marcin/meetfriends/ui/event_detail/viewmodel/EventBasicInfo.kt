@@ -8,6 +8,7 @@ import android.os.Parcelable
  */
 data class EventBasicInfo(
     val id: String? = null,
+    val iconId: String? = null,
     val organizerId: String? = null,
     val name: String? = null,
     var description: String? = null
@@ -17,11 +18,13 @@ data class EventBasicInfo(
       parcel.readString(),
       parcel.readString(),
       parcel.readString(),
+      parcel.readString(),
       parcel.readString()) {
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
     parcel.writeString(id)
+    parcel.writeString(iconId)
     parcel.writeString(organizerId)
     parcel.writeString(name)
     parcel.writeString(description)

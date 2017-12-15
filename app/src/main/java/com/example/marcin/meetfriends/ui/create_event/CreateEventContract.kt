@@ -22,6 +22,8 @@ interface CreateEventContract {
     fun openEventDetailsActivity(eventBasicInfoParams: EventBasicInfoParams)
 
     fun startSelectEventIconDialog()
+
+    fun getEventIconId(): String?
   }
 
   interface Presenter : MvpPresenter {

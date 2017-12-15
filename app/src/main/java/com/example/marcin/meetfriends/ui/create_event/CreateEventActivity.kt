@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_create_event.*
 class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), CreateEventContract.View, OnIconSelectedListener {
 
   override fun onIconSelected(icon: EventIconEnum) {
+    eventIconButton.tag = icon.resourceId
     Picasso.with(baseContext).load(icon.resourceId).transform(CircleTransform()).into(eventIconButton)
     Picasso.with(baseContext).load(icon.resourceId).into(eventImage)
   }
@@ -31,6 +32,7 @@ class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), Creat
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_create_event)
+    onIconSelected(EventIconEnum.BEER)
     createEventButton.setOnClickListener {
       presenter.tryToCreateEvent()
     }
@@ -63,6 +65,8 @@ class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), Creat
   override fun getEventName() = eventNameEditText.text.toString()
 
   override fun getEventDescription() = eventDescriptionEditText.text.toString()
+
+  override fun getEventIconId() = eventIconButton.tag.toString()
 
   override fun openEventDetailsActivity(eventBasicInfoParams: EventBasicInfoParams) {
     startActivity(EventDetailActivity.newIntent(baseContext, eventBasicInfoParams))

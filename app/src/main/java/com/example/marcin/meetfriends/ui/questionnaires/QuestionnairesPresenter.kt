@@ -37,6 +37,7 @@ class QuestionnairesPresenter @Inject constructor(
       view.startEventQuestionnaireFragment(EventBasicInfoParams(
           event = EventBasicInfo(
               id = event.id,
+              iconId = event.iconId,
               organizerId = event.organizerId,
               name = event.name,
               description = event.description

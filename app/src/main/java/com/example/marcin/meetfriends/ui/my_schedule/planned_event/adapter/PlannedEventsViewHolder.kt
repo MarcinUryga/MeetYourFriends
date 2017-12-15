@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.Event
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_planned_event.view.*
 
 /**
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.item_planned_event.view.*
 class PlannedEventsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
   fun bind(event: Event) {
+    Picasso.with(itemView.context).load(event.iconId.let { it!! }.toInt()).into(itemView.eventIcon)
     itemView.eventNameTextView.text = event.name
     itemView.eventDateTextView.text = itemView.context.getString(
         R.string.date,

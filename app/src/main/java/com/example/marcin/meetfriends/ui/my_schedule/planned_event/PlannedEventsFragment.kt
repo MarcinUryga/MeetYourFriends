@@ -13,6 +13,7 @@ import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity
 import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.PlannedEventsContract
 import com.example.marcin.meetfriends.ui.my_schedule.planned_event.adapter.PlannedEventsAdapter
 import com.google.firebase.database.DataSnapshot
+import com.squareup.picasso.Picasso
 import dagger.android.support.AndroidSupportInjection
 import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import kotlinx.android.synthetic.main.fragment_planned_events.*

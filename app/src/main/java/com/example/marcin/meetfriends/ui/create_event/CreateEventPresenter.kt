@@ -24,7 +24,7 @@ class CreateEventPresenter @Inject constructor(
 
   override fun tryToCreateEvent() {
     if (view.validateEventName() && view.validateEventDescription()) {
-      createEvent(view.getEventName(), view.getEventDescription())
+      createEvent()
     }
   }
 
@@ -32,13 +32,14 @@ class CreateEventPresenter @Inject constructor(
     view.startSelectEventIconDialog()
   }
 
-  private fun createEvent(eventName: String, eventDescription: String) {
+  private fun createEvent() {
     val eventId = firebaseDatabase.reference.push().key
     val event = Event(
         id = eventId,
+        iconId = view.getEventIconId(),
         organizerId = auth.uid,
-        name = eventName,
-        description = eventDescription
+        name = view.getEventName(),
+        description = view.getEventDescription()
     )
     val disposable = RxFirebaseDatabase
         .setValue(
@@ -50,6 +51,7 @@ class CreateEventPresenter @Inject constructor(
         .doFinally {
           view.openEventDetailsActivity(EventBasicInfoParams(event = EventBasicInfo(
               id = event.id,
+              iconId = event.iconId,
               organizerId = event.organizerId,
               name = event.name,
               description = event.description

@@ -37,6 +37,10 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     navigateToCurrentFragment()
   }
 
+  override fun setEventImage(imageId: Int) {
+    Picasso.with(baseContext).load(imageId).into(eventImage)
+  }
+
   private fun navigateToCurrentFragment() {
     when {
       intent.extras.getInt(FRAGMENT_TO_OPEN, 1) == FragmentsItems.DESCRIPTION.fragmentId -> presenter.navigateToEventDescription()
