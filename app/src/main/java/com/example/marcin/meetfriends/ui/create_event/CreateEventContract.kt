@@ -19,13 +19,15 @@ interface CreateEventContract {
 
     fun getEventDescription(): String
 
-    fun dismissDialogFragment()
-
     fun openEventDetailsActivity(eventBasicInfoParams: EventBasicInfoParams)
+
+    fun startSelectEventIconDialog()
   }
 
   interface Presenter : MvpPresenter {
 
     fun tryToCreateEvent()
+
+    fun clickedEventIconButton()
   }
 }

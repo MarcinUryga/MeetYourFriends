@@ -12,7 +12,7 @@ import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.extensions.ActionBarExtensions
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsFragment
-import com.example.marcin.meetfriends.ui.create_event.CreateEventDialogFragment
+import com.example.marcin.meetfriends.ui.create_event.CreateEventActivity
 import com.example.marcin.meetfriends.ui.login.LoginActivity
 import com.example.marcin.meetfriends.ui.main.viewmodel.BottomBarEnum
 import com.example.marcin.meetfriends.ui.my_schedule.MyScheduleFragment
@@ -60,9 +60,8 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     startActivity(LoginActivity.newIntent(this))
   }
 
-  override fun showCreateEventDialog() {
-    val createEventDialogFragment = CreateEventDialogFragment()
-    createEventDialogFragment.show(supportFragmentManager, CreateEventDialogFragment::class.java.toString())
+  override fun startCreateEventActivity() {
+    startActivity(CreateEventActivity.newIntent(baseContext))
   }
 
   override fun showConfirmLogoutDialog() {

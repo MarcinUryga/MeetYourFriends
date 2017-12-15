@@ -10,7 +10,7 @@ import dagger.Module
 abstract class CreateEventModule {
 
   @Binds
-  abstract fun bindView(view: CreateEventDialogFragment): CreateEventContract.View
+  abstract fun bindView(view: CreateEventActivity): CreateEventContract.View
 
   @Binds
   abstract fun bindPresenter(presenter: CreateEventPresenter): CreateEventContract.Presenter

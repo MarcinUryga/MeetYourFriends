@@ -28,6 +28,10 @@ class CreateEventPresenter @Inject constructor(
     }
   }
 
+  override fun clickedEventIconButton() {
+    view.startSelectEventIconDialog()
+  }
+
   private fun createEvent(eventName: String, eventDescription: String) {
     val eventId = firebaseDatabase.reference.push().key
     val event = Event(
@@ -50,10 +54,8 @@ class CreateEventPresenter @Inject constructor(
               name = event.name,
               description = event.description
           )))
-          view.dismissDialogFragment()
         }
         .subscribe()
     disposables?.add(disposable)
   }
-
 }

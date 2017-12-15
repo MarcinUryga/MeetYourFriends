@@ -49,14 +49,19 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".ui.menu_navigation.MainNavigationActivity" />
         <activity
             android:name=".ui.chat.ChatActivity"
             android:launchMode="singleTask"
             android:noHistory="true"
             android:screenOrientation="portrait" />
 
-        <service android:name=".services.UpdateDateTimeEventService" />
+        <activity
+            android:name=".ui.create_event.CreateEventActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
+
+
     </application>
 
 </manifest>

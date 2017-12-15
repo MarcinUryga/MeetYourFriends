@@ -40,7 +40,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/beer_event_icon" />
+                android:src="@drawable/event_icon_beer" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

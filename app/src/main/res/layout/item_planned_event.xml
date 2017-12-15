@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/beer_event_icon" />
+            android:src="@drawable/event_icon_beer" />
 
         <LinearLayout
             android:layout_width="match_parent"

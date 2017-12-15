@@ -2,17 +2,10 @@ package com.example.marcin.meetfriends.ui.main
 
 import android.content.SharedPreferences
 import com.example.marcin.meetfriends.di.ScreenScope
-import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.storage.SharedPref
-import com.example.marcin.meetfriends.utils.Constants
-import com.example.marcin.meetfriends.utils.Constants.FIREBASE_EVENTS
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import durdinapps.rxfirebase2.RxFirebaseDatabase
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -32,7 +25,7 @@ class MainPresenter @Inject constructor(
   }
 
   override fun addNewEvent() {
-    view.showCreateEventDialog()
+    view.startCreateEventActivity()
   }
 
   override fun tryLogout() {

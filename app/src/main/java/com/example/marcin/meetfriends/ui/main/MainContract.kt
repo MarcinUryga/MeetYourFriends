@@ -14,7 +14,7 @@ interface MainContract {
 
     fun startLoginActivity()
 
-    fun showCreateEventDialog()
+    fun startCreateEventActivity()
 
     fun showConfirmLogoutDialog()
   }
