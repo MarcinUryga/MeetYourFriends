@@ -19,6 +19,8 @@ interface EventDescriptionContract {
 
     fun showInviteFriendsButton()
 
+    fun hideInviteFriendsButton()
+
     fun startFriendsActivity(eventIdParams: EventIdParams, participantsListParams: ParticipantsListParams)
 
     fun showParticipantsProgressBar()

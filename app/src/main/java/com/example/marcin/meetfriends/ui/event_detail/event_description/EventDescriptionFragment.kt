@@ -60,6 +60,10 @@ class EventDescriptionFragment : BaseFragment<EventDescriptionContract.Presenter
     inviteFriendsButton.visibility = View.VISIBLE
   }
 
+  override fun hideInviteFriendsButton(){
+    inviteFriendsButton.visibility = View.GONE
+  }
+
   override fun showParticipantsProgressBar() {
     eventParticipantsLayout.visibility = View.INVISIBLE
     eventParticipantsProgressBar.visibility = View.VISIBLE

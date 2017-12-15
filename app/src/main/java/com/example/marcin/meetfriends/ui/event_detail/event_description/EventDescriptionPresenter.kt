@@ -43,6 +43,9 @@ class EventDescriptionPresenter @Inject constructor(
   override fun resume() {
     super.resume()
     loadParticipants()
+    if(auth.uid != event.organizerId){
+      view.hideInviteFriendsButton()
+    }
   }
 
   private fun loadParticipants() {
