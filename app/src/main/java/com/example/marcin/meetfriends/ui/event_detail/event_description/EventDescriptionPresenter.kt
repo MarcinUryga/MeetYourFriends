@@ -28,7 +28,6 @@ class EventDescriptionPresenter @Inject constructor(
     private val auth: FirebaseAuth
 ) : BasePresenter<EventDescriptionContract.View>(), EventDescriptionContract.Presenter {
 
-  var participantsMutableList = mutableListOf<String>()
   val event = eventInfoParams.event
   var ifRemove = false
 
@@ -49,6 +48,7 @@ class EventDescriptionPresenter @Inject constructor(
   }
 
   private fun loadParticipants() {
+    var participantsMutableList = mutableListOf<String>()
     view.showNoParticipantsLayout()
     view.hideParticipantsProgressBar()
     val disposable = RxFirebaseDatabase
