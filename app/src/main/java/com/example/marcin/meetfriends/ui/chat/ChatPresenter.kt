@@ -34,6 +34,7 @@ class ChatPresenter @Inject constructor(
 
   override fun onViewCreated() {
     super.onViewCreated()
+    view.setUpActionBarTitle(getEventBasicInfoParams.event.name.let { it!! })
     getMessages()
   }
 

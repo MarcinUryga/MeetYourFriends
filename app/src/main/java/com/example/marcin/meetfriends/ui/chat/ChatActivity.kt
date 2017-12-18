@@ -30,6 +30,10 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
     setUpRecyclerView()
   }
 
+  override fun setUpActionBarTitle(title: String) {
+    supportActionBar?.title = title
+  }
+
   private fun setUpRecyclerView() {
     chatRecyclerView.layoutManager = LinearLayoutManager(this)
     chatRecyclerView.adapter = chatAdapter

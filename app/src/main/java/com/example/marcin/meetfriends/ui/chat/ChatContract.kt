@@ -18,6 +18,7 @@ interface ChatContract {
 
     fun showChosenDateSnackBar(selectedDate: DateTime, userId: String)
 
+    fun setUpActionBarTitle(title: String)
 //    fun startUpdateDateTimeService(params: EventBasicInfoParams)
   }
 

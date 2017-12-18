@@ -26,8 +26,8 @@ class LoginPresenter @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) : BasePresenter<LoginContract.View>(), LoginContract.Presenter {
 
-  override fun registerlogin(observableLoginResult: Observable<LoginResult>) {
-    val disposableObserver = observableLoginResult
+  override fun registerlogin(observableLoginRsult: Observable<LoginResult>) {
+    val disposableObserver = observableLoginRsult
         .subscribe({ loginResult ->
           handleFacebookAccessToken(loginResult.accessToken)
         }, { error ->

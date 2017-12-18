@@ -32,6 +32,7 @@ class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), Creat
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_create_event)
+    supportActionBar?.title = " ${getString(R.string.create_new_event)}"
     onIconSelected(EventIconEnum.BEER)
     createEventButton.setOnClickListener {
       presenter.tryToCreateEvent()

@@ -25,7 +25,6 @@ class MyScheduleFragment : Fragment() {
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    (activity as AppCompatActivity).supportActionBar?.title = " ${getString(R.string.create_new_event)}"
     eventsViewPager.adapter = PageAdapter(childFragmentManager)
     tabs.setupWithViewPager(eventsViewPager)
   }
