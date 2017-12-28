@@ -10,11 +10,12 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import android.widget.Toast
-import com.example.marci.googlemaps.pojo.Place
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.search_venues.adapter.VenuesAdapter
+import com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_search_venues.*
 
@@ -38,13 +39,20 @@ class SearchVenuesActivity : BaseActivity<SearchVenuesContract.Presenter>(), Sea
     } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
       getLocation()
     }
-
     venuesRecyclerView.layoutManager = LinearLayoutManager(baseContext)
     venuesRecyclerView.adapter = venuesAdapter
   }
 
-  override fun showVenues(venues: List<Place>){
+  override fun showVenues(venues: List<Place>) {
     venuesAdapter.createVenuesList(venues)
+  }
+
+  override fun showProgressBar() {
+    progressBar.visibility = View.VISIBLE
+  }
+
+  override fun hideProgressBar() {
+    progressBar.visibility = View.INVISIBLE
   }
 
   private fun getLocation() {

@@ -2,7 +2,7 @@ package com.example.marcin.meetfriends.ui.search_venues.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.example.marci.googlemaps.pojo.Place
+import com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place
 
 /**
  * Created by marci on 2017-12-27.

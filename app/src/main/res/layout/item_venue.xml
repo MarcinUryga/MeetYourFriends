@@ -24,14 +24,47 @@
             android:scaleType="centerCrop"
             android:src="@drawable/event_icon_beer" />
 
-        <TextView
-            android:id="@+id/placeNameTextView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="Beer event!" />
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/placeNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="Beer Pub" />
+
+                <TextView
+                    android:id="@+id/placeVicinityTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/placeNameTextView"
+                    android:layout_marginTop="-10dp"
+                    android:padding="10dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="ul. something 13" />
+
+            </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/actionButton"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_add" />
+        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"
@@ -39,23 +72,44 @@
             android:layout_margin="10dp"
             android:background="#a3a3a3" />
 
-        <TextView
-            android:id="@+id/openingHoursTextView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="10dp"
-            android:textStyle="bold"
-            android:text="@string/opening_hours" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/distanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_distance"
+                android:padding="10dp"
+                android:text="@string/meters" />
+
+            <TextView
+                android:id="@+id/durationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_car"
+                android:padding="10dp"
+                android:text="@string/minutes" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/placeRatingTextView"
+            android:id="@+id/ratingTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_height="0dp"
             android:layout_marginStart="10dp"
-            android:textStyle="bold"
-            android:text="@string/rating" />
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ic_star"
+            android:padding="10dp"
+            tools:text="4.4" />
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

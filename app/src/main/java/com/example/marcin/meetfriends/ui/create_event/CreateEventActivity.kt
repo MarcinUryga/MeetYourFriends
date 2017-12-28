@@ -85,7 +85,6 @@ class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), Creat
 
   override fun startSearchVenuesActivity() {
     startActivity(SearchVenuesActivity.newIntent(this))
-    finish()
   }
 
   companion object {

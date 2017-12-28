@@ -20,8 +20,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBwRrDYl7nHOy_QK9ERNSsXDJCDaVaPAk0" />
-        <!--AIzaSyBwRrDYl7nHOy_QK9ERNSsXDJCDaVaPAk0-->
+            android:value="@string/google_maps_api_key" />
 
         <activity
             android:name=".ui.launch.LaunchActivity"
@@ -72,8 +71,6 @@
 
         <activity
             android:name=".ui.create_event.CreateEventActivity"
-            android:launchMode="singleTask"
-            android:noHistory="true"
             android:screenOrientation="portrait" />
 
         <activity

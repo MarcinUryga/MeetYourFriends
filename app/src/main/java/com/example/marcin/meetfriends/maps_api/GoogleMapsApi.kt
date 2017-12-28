@@ -1,6 +1,7 @@
 package com.example.marcin.meetfriends.maps_api
 
 import com.example.marci.googlemaps.pojo.NearbyPlaces
+import com.example.marcin.meetfriends.models.nearby_place.DistanceMatrix
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -10,6 +11,13 @@ import retrofit2.http.Query
  */
 interface GoogleMapsApi {
 
-  @GET("api/place/nearbysearch/json?sensor=true&rankby=distance&key=AIzaSyBwRrDYl7nHOy_QK9ERNSsXDJCDaVaPAk0")
+  @GET("api/place/nearbysearch/json?sensor=true&rankby=distance&key=$GOOGLE_MAPS_API_KEY")
   fun getNearbyPlaces(@Query("type") type: String, @Query("location") location: String/*, @Query("radius") radius: Int*/): Single<NearbyPlaces>
+
+  @GET("api/distancematrix/json?units=imperial&key=$GOOGLE_MAPS_API_KEY")
+  fun getDistanceMatrix(@Query("origins") origins: String, @Query("destinations") destinations: String): Single<DistanceMatrix>
+
+  companion object {
+    const val GOOGLE_MAPS_API_KEY = "AIzaSyBwRrDYl7nHOy_QK9ERNSsXDJCDaVaPAk0"
+  }
 }

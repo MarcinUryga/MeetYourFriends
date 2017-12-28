@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MeetYourFriends</string>
     <string name="facebook_app_id">1502871996463931</string>
+    <string name="google_maps_api_key">AIzaSyBwRrDYl7nHOy_QK9ERNSsXDJCDaVaPAk0</string>
     <string name="fb_login_protocol_scheme">fb1502871996463931</string>
     <string name="confirmed_event">Confirmed Events</string>
     <string name="planned_events">Planned Events</string>
@@ -61,6 +62,9 @@
     <string name="manage_your_events">Manage Your Events!</string>
     <string name="opening_hours">Opening Hours: %s</string>
     <string name="rating">Rating: %d</string>
+    <string name="meters">%s m</string>
+    <string name="minutes">%d min</string>
+    <string name="kilometers">%s km</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>
