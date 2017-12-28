@@ -28,6 +28,8 @@ import com.example.marcin.meetfriends.ui.my_schedule.planned_event.PlannedEvents
 import com.example.marcin.meetfriends.ui.my_schedule.planned_event.PlannedEventsModule
 import com.example.marcin.meetfriends.ui.questionnaires.QuestionnairesFragment
 import com.example.marcin.meetfriends.ui.questionnaires.QuestionnairesModule
+import com.example.marcin.meetfriends.ui.search_venues.SearchVenuesActivity
+import com.example.marcin.meetfriends.ui.search_venues.SearchVenuesModule
 import com.example.marcin.meetfriends.ui.venues.VenuesFragment
 import com.example.marcin.meetfriends.ui.venues.VenuesModule
 import dagger.Module
@@ -99,4 +101,8 @@ abstract class InjectorsModule {
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(ChooseEventIconModule::class))
   abstract fun chooseEventIconFragment(): ChooseEventIconDialogFragment
+
+  @ScreenScope
+  @ContributesAndroidInjector(modules = arrayOf(SearchVenuesModule::class))
+  abstract fun searchVenuesActivity(): SearchVenuesActivity
 }

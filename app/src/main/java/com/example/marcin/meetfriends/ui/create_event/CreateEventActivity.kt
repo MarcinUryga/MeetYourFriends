@@ -11,6 +11,7 @@ import com.example.marcin.meetfriends.ui.choose_event_icon.OnIconSelectedListene
 import com.example.marcin.meetfriends.ui.choose_event_icon.viewmodel.EventIconEnum
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity
+import com.example.marcin.meetfriends.ui.search_venues.SearchVenuesActivity
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
@@ -42,6 +43,9 @@ class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), Creat
     }
     eventIconButton.setOnClickListener {
       presenter.clickedEventIconButton()
+    }
+    findVenuesButton.setOnClickListener {
+      presenter.searchVenues()
     }
   }
 
@@ -77,6 +81,11 @@ class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), Creat
   override fun startSelectEventIconDialog() {
     val createEventDialogFragment = ChooseEventIconDialogFragment()
     createEventDialogFragment.show(supportFragmentManager, ChooseEventIconDialogFragment::class.java.toString())
+  }
+
+  override fun startSearchVenuesActivity() {
+    startActivity(SearchVenuesActivity.newIntent(this))
+    finish()
   }
 
   companion object {

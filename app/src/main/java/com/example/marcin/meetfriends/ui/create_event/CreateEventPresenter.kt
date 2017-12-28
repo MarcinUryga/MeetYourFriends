@@ -32,6 +32,10 @@ class CreateEventPresenter @Inject constructor(
     view.startSelectEventIconDialog()
   }
 
+  override fun searchVenues() {
+    view.startSearchVenuesActivity()
+  }
+
   private fun createEvent() {
     val eventId = firebaseDatabase.reference.push().key
     val event = Event(

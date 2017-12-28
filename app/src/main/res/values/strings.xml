@@ -59,6 +59,8 @@
     <string name="empty_event_description">Please, precized event description</string>
     <string name="please_choose_icon_for_your_event">Please choose icon for your event!</string>
     <string name="manage_your_events">Manage Your Events!</string>
+    <string name="opening_hours">Opening Hours: %s</string>
+    <string name="rating">Rating: %d</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>

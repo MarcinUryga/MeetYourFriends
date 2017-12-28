@@ -55,6 +55,10 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
     //joda time
     implementation "joda-time:joda-time:$joda_version"
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     //tests
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "com.android.support.test:runner:$runner_version"

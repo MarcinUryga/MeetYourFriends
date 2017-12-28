@@ -24,6 +24,8 @@ interface CreateEventContract {
     fun startSelectEventIconDialog()
 
     fun getEventIconId(): String?
+
+    fun startSearchVenuesActivity()
   }
 
   interface Presenter : MvpPresenter {
@@ -31,5 +33,7 @@ interface CreateEventContract {
     fun tryToCreateEvent()
 
     fun clickedEventIconButton()
+
+    fun searchVenues()
   }
 }

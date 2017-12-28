@@ -7,11 +7,15 @@ import com.beltaief.reactivefb.SimpleFacebookConfiguration
 import com.beltaief.reactivefb.util.PermissionHelper
 import com.example.marcin.meetfriends.MeetFriendsApplication
 import com.example.marcin.meetfriends.R
+import com.example.marcin.meetfriends.maps_api.GoogleMapsApi
 import com.facebook.login.DefaultAudience
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 /**
@@ -76,5 +80,22 @@ class ApplicationModule {
   @Provides
   fun providesSharedPreferences(app: MeetFriendsApplication): SharedPreferences {
     return PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
+  }
+
+  @Provides
+  fun provideRetrofit(): Retrofit {
+    return Retrofit.Builder()
+        .baseUrl(googleApiUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+  }
+
+  @Provides
+  fun provideGoogleMApsApi(retrofit: Retrofit) = retrofit.create(GoogleMapsApi::class.java)
+
+  companion object {
+
+    private val googleApiUrl = "https://maps.googleapis.com/maps/"
   }
 }
