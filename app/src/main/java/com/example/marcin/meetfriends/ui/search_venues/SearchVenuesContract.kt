@@ -1,5 +1,6 @@
 package com.example.marcin.meetfriends.ui.search_venues
 
+import com.example.marci.googlemaps.pojo.Location
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
 import com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place
@@ -15,8 +16,13 @@ interface SearchVenuesContract {
 
     fun hideProgressBar()
 
-    fun showVenues(venues: List<Place>)
+    fun showEmptyVenuesList(type: String)
+
+    fun showVenues(venues: MutableList<Place>)
   }
 
-  interface Presenter : MvpPresenter
+  interface Presenter : MvpPresenter {
+
+    fun getNearbyPlaces(type: String, location: Location)
+  }
 }

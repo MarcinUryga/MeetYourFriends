@@ -3,21 +3,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--  <EditText
-          android:id="@+id/placeTypeEditText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="10dp" />-->
+    <TextView
+        android:id="@+id/activityTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:padding="12dp"
+        android:text="@string/find_venues_for_your_event"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activityTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp">
+
+        <EditText
+            android:id="@+id/placeTypeEditText"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+
+        <ImageButton
+            android:id="@+id/searchVenuesButton"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/placeTypeEditText"
+            android:src="@drawable/ic_search" />
+
+    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchLayout"
+        android:layout_margin="20dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/venuesRecyclerView"
@@ -25,5 +51,39 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+
+        <RelativeLayout
+            android:id="@+id/emptyVenuesListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/noVenuesImage"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_venues_red" />
+
+            <TextView
+                android:id="@+id/noVenuesTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/noVenuesImage"
+                android:layout_margin="10dp"
+                android:text="@string/no_results_for_type_and_kayword"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
     </FrameLayout>
 </RelativeLayout>

@@ -9,10 +9,16 @@ import com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place
  */
 class VenuesAdapter : RecyclerView.Adapter<VenuesViewHolder>() {
 
-  private var venues = listOf<Place>()
+  private var venues = mutableListOf<Place>()
 
-  fun createVenuesList(venues: List<Place>) {
+  fun createVenuesList(venues: MutableList<Place>) {
     this.venues = venues
+    this.venues.sortBy { it.distance.value }
+    notifyDataSetChanged()
+  }
+
+  fun clearVenuesList() {
+    venues.clear()
     notifyDataSetChanged()
   }
 

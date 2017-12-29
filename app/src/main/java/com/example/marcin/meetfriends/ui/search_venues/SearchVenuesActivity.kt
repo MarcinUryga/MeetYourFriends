@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
+import com.example.marci.googlemaps.pojo.Location
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.search_venues.adapter.VenuesAdapter
@@ -26,8 +27,9 @@ import kotlinx.android.synthetic.main.activity_search_venues.*
 class SearchVenuesActivity : BaseActivity<SearchVenuesContract.Presenter>(), SearchVenuesContract.View {
 
   private val REQUEST_LOCATION = 1
+  private var location = Location(0.0, 0.0)
   private lateinit var locationManager: LocationManager
-  private val venuesAdapter = VenuesAdapter()
+  private var venuesAdapter = VenuesAdapter()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     AndroidInjection.inject(this)
@@ -39,16 +41,26 @@ class SearchVenuesActivity : BaseActivity<SearchVenuesContract.Presenter>(), Sea
     } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
       getLocation()
     }
+    searchVenuesButton.setOnClickListener {
+      venuesAdapter.clearVenuesList()
+      presenter.getNearbyPlaces(placeTypeEditText.text.toString(), location)
+    }
     venuesRecyclerView.layoutManager = LinearLayoutManager(baseContext)
     venuesRecyclerView.adapter = venuesAdapter
   }
 
-  override fun showVenues(venues: List<Place>) {
+  override fun showVenues(venues: MutableList<Place>) {
+    emptyVenuesListLayout.visibility = View.INVISIBLE
     venuesAdapter.createVenuesList(venues)
   }
 
   override fun showProgressBar() {
     progressBar.visibility = View.VISIBLE
+  }
+
+  override fun showEmptyVenuesList(type: String) {
+    noVenuesTextView.text = getString(R.string.no_results_for_type_and_kayword, type)
+    emptyVenuesListLayout.visibility = View.VISIBLE
   }
 
   override fun hideProgressBar() {
@@ -64,17 +76,13 @@ class SearchVenuesActivity : BaseActivity<SearchVenuesContract.Presenter>(), Sea
       val location2 = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
       when {
         location != null -> {
-          val lat = location!!.getLatitude()
-          val lng = location!!.getLongitude()
+          Location(location.latitude, location.longitude)
         }
         location1 != null -> {
-          val lat = location1!!.getLatitude()
-          val lng = location1!!.getLongitude()
-
+          Location(location1.latitude, location1.longitude)
         }
         location2 != null -> {
-          val lat = location2!!.getLatitude()
-          val lng = location2!!.getLongitude()
+          Location(location2.latitude, location2.longitude)
         }
         else -> Toast.makeText(this, "Unble to Trace your location", Toast.LENGTH_SHORT).show()
       }

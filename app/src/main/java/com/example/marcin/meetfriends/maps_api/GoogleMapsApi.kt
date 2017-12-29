@@ -12,9 +12,9 @@ import retrofit2.http.Query
 interface GoogleMapsApi {
 
   @GET("api/place/nearbysearch/json?sensor=true&rankby=distance&key=$GOOGLE_MAPS_API_KEY")
-  fun getNearbyPlaces(@Query("type") type: String, @Query("location") location: String/*, @Query("radius") radius: Int*/): Single<NearbyPlaces>
+  fun getNearbyPlaces(@Query("type") type: String, @Query("keyword") keyword: String, @Query("location") location: String): Single<NearbyPlaces>
 
-  @GET("api/distancematrix/json?units=imperial&key=$GOOGLE_MAPS_API_KEY")
+  @GET("api/distancematrix/json?units=imperial&language=pl&key=$GOOGLE_MAPS_API_KEY")
   fun getDistanceMatrix(@Query("origins") origins: String, @Query("destinations") destinations: String): Single<DistanceMatrix>
 
   companion object {

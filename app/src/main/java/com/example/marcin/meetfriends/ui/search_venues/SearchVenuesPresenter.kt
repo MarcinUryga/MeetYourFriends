@@ -1,5 +1,6 @@
 package com.example.marcin.meetfriends.ui.search_venues
 
+import com.example.marci.googlemaps.pojo.Location
 import com.example.marci.googlemaps.pojo.Place
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
@@ -18,15 +19,17 @@ class SearchVenuesPresenter @Inject constructor(
 
   lateinit var nearbyPlaces: MutableList<com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place>
 
-  override fun resume() {
-    super.resume()
-    val disposable = getNearbyPlacesUseCase.getPlaces("restaurant", "49.767151,20.4531756")
+  override fun getNearbyPlaces(type: String, location: Location) {
+    val disposable = getNearbyPlacesUseCase.getPlaces(type, type, "49.767151,20.4531756")
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ venues ->
           nearbyPlaces = mutableListOf()
           venues.places.forEach {
             getPlaceDistanceMatrix("49.767151,20.4531756", it)
+          }
+          if (nearbyPlaces.isEmpty()) {
+            view.showEmptyVenuesList(type)
           }
         }, { error ->
           Timber.e(SearchVenuesActivity::class.java.simpleName, error.printStackTrace())
@@ -51,7 +54,7 @@ class SearchVenuesPresenter @Inject constructor(
               duration = distanceMatrix.rows.first().elements.first().duration,
               photos = place.photos
           ))
-          view.showVenues(nearbyPlaces.sortedBy { it.distance.value })
+          view.showVenues(nearbyPlaces)
         })
     disposables?.add(disposable)
   }

@@ -13,8 +13,8 @@ class GetNearbyPlacesUseCase @Inject constructor(
     private val googleMapsApi: GoogleMapsApi
 ) {
 
-  fun getPlaces(type: String, location: String): Single<NearbyPlaces> {
-    return googleMapsApi.getNearbyPlaces(type, location)
+  fun getPlaces(type: String, keyword: String, location: String): Single<NearbyPlaces> {
+    return googleMapsApi.getNearbyPlaces(type, keyword, location)
   }
 
   fun getDistanceMatrix(origins: String, destinations: String): Single<DistanceMatrix> {

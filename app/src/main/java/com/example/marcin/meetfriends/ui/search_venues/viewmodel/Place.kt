@@ -17,7 +17,7 @@ data class Place(
     val name: String,
     val rating: Double,
     val location: Location,
-    val vicinity: String,
+    val vicinity: String?,
     val distance: Distance,
     val duration: Duration,
     var photos: List<Photo>? = null,

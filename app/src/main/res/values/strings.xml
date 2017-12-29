@@ -65,6 +65,8 @@
     <string name="meters">%s m</string>
     <string name="minutes">%d min</string>
     <string name="kilometers">%s km</string>
+    <string name="find_venues_for_your_event">Find venues for your Event!</string>
+    <string name="no_results_for_type_and_kayword">No results for type and kayword: %s</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>
