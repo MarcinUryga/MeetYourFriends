@@ -19,8 +19,8 @@ public abstract class SearchVenuesModule {
   @Binds
   abstract SearchVenuesContract.Presenter bindPresenter(SearchVenuesPresenter presenter);
 
-/*  @Provides
-  LocationManager provideLocationManager(SearchVenuesActivity view) {
+  @Provides
+  public static LocationManager provideLocationManager(SearchVenuesActivity view) {
     return (LocationManager) view.getSystemService(Context.LOCATION_SERVICE);
-  }*/
+  }
 }

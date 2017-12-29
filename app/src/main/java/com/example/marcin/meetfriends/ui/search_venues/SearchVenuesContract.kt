@@ -1,6 +1,5 @@
 package com.example.marcin.meetfriends.ui.search_venues
 
-import com.example.marci.googlemaps.pojo.Location
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
 import com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place
@@ -19,10 +18,12 @@ interface SearchVenuesContract {
     fun showEmptyVenuesList(type: String)
 
     fun showVenues(venues: MutableList<Place>)
+
+    fun buildAlertMessageNoGps()
   }
 
   interface Presenter : MvpPresenter {
 
-    fun getNearbyPlaces(type: String, location: Location)
+    fun getNearbyPlaces(type: String)
   }
 }

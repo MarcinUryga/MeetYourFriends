@@ -1,5 +1,7 @@
 package com.example.marcin.meetfriends.ui.search_venues
 
+import android.app.Activity
+import android.location.LocationManager
 import com.example.marci.googlemaps.pojo.Location
 import com.example.marci.googlemaps.pojo.Place
 import com.example.marcin.meetfriends.di.ScreenScope
@@ -14,19 +16,31 @@ import javax.inject.Inject
  */
 @ScreenScope
 class SearchVenuesPresenter @Inject constructor(
-    private val getNearbyPlacesUseCase: GetNearbyPlacesUseCase
+    private val getNearbyPlacesUseCase: GetNearbyPlacesUseCase,
+    private val locationManager: LocationManager,
+    private val getDeviceLocationUseCase: GetDeviceLocationUseCase
 ) : BasePresenter<SearchVenuesContract.View>(), SearchVenuesContract.Presenter {
 
+  private var currentLocation = Location(0.0, 0.0)
   lateinit var nearbyPlaces: MutableList<com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place>
 
-  override fun getNearbyPlaces(type: String, location: Location) {
-    val disposable = getNearbyPlacesUseCase.getPlaces(type, type, "49.767151,20.4531756")
+  override fun resume() {
+    super.resume()
+    if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+      view.buildAlertMessageNoGps()
+    } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+      currentLocation = getDeviceLocationUseCase.get(view as Activity)
+    }
+  }
+
+  override fun getNearbyPlaces(type: String) {
+    val disposable = getNearbyPlacesUseCase.getPlaces(type, type, "${currentLocation.lat},${currentLocation.lng}")
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ venues ->
           nearbyPlaces = mutableListOf()
           venues.places.forEach {
-            getPlaceDistanceMatrix("49.767151,20.4531756", it)
+            getPlaceDistanceMatrix("${currentLocation.lat},${currentLocation.lng}", it)
           }
           if (nearbyPlaces.isEmpty()) {
             view.showEmptyVenuesList(type)
