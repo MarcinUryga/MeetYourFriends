@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_create_event.*
 
-
 /**
  * Created by marci on 2017-11-27.
  */

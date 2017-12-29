@@ -6,6 +6,7 @@ import com.example.marci.googlemaps.pojo.Location
 import com.example.marci.googlemaps.pojo.Place
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
+import com.example.marcin.meetfriends.ui.common.GetNearbyPlacesUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -37,12 +38,15 @@ class SearchVenuesPresenter @Inject constructor(
     val disposable = getNearbyPlacesUseCase.getPlaces(type, type, "${currentLocation.lat},${currentLocation.lng}")
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+        .doOnSubscribe { view.showProgressBar() }
+        .doFinally { view.hideProgressBar() }
         .subscribe({ venues ->
           nearbyPlaces = mutableListOf()
-          venues.places.forEach {
-            getPlaceDistanceMatrix("${currentLocation.lat},${currentLocation.lng}", it)
-          }
-          if (nearbyPlaces.isEmpty()) {
+          if (venues.places.isNotEmpty()) {
+            venues.places.forEach {
+              getPlaceDistanceMatrix("${currentLocation.lat},${currentLocation.lng}", it)
+            }
+          } else {
             view.showEmptyVenuesList(type)
           }
         }, { error ->
