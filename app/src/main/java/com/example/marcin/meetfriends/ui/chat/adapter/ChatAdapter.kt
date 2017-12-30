@@ -3,7 +3,7 @@ package com.example.marcin.meetfriends.ui.chat.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.ui.chat.viewmodel.Message
-import com.example.marcin.meetfriends.ui.common.BaseViewHolder
+import com.example.marcin.meetfriends.ui.common.adapter.BaseViewHolder
 
 /**
  * Created by marci on 2017-11-21.

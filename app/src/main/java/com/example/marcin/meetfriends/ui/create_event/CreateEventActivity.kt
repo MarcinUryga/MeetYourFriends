@@ -3,13 +3,17 @@ package com.example.marcin.meetfriends.ui.create_event
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.OrientationHelper
 import android.widget.Toast
 import com.example.marcin.meetfriends.R
+import com.example.marcin.meetfriends.models.Place
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.choose_event_icon.ChooseEventIconDialogFragment
 import com.example.marcin.meetfriends.ui.choose_event_icon.OnIconSelectedListener
 import com.example.marcin.meetfriends.ui.choose_event_icon.viewmodel.EventIconEnum
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.places_adapter.PlacesAdapter
 import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity
 import com.example.marcin.meetfriends.ui.search_venues.SearchVenuesActivity
 import com.example.marcin.meetfriends.utils.CircleTransform
@@ -21,6 +25,8 @@ import kotlinx.android.synthetic.main.activity_create_event.*
  * Created by marci on 2017-11-27.
  */
 class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), CreateEventContract.View, OnIconSelectedListener {
+
+  var placesAdapter = PlacesAdapter(false)
 
   override fun onIconSelected(icon: EventIconEnum) {
     eventIconButton.tag = icon.resourceId
@@ -46,6 +52,8 @@ class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), Creat
     findVenuesButton.setOnClickListener {
       presenter.searchVenues()
     }
+    venuesRecyclerView.layoutManager = LinearLayoutManager(this, OrientationHelper.HORIZONTAL, false)
+    setupAdapter()
   }
 
   override fun validateEventName(): Boolean {
@@ -64,6 +72,24 @@ class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), Creat
       return false
     }
     return true
+  }
+
+  fun setupAdapter() {
+    venuesRecyclerView.adapter = placesAdapter
+    presenter.handleClickedActionButton(placesAdapter.getClickedActionButtonEvent())
+  }
+
+  override fun addPlaceToAdapter(venue: Place) {
+    placesAdapter.addPlace(venue)
+  }
+
+  override fun removePlaceFromAdapter(place: Place) {
+    placesAdapter.removePlace(place)
+    Toast.makeText(baseContext, "Removed: ${place.name}", Toast.LENGTH_SHORT).show()
+  }
+
+  override fun clearAdapter() {
+    placesAdapter.clearPlaceList()
   }
 
   override fun getEventName() = eventNameEditText.text.toString()

@@ -34,6 +34,10 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
     navigateWithBottomView()
   }
 
+  public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+    super.onRestoreInstanceState(savedInstanceState)
+  }
+
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.main_menu, menu)
     return super.onCreateOptionsMenu(menu)

@@ -9,11 +9,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.example.marcin.meetfriends.R
+import com.example.marcin.meetfriends.models.Place
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.common.PlaceIdParams
+import com.example.marcin.meetfriends.ui.common.places_adapter.PlacesAdapter
 import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsActivity
-import com.example.marcin.meetfriends.ui.search_venues.adapter.VenuesAdapter
-import com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place
+import com.example.marcin.meetfriends.utils.KeyboardUtils
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_search_venues.*
 
@@ -22,29 +23,29 @@ import kotlinx.android.synthetic.main.activity_search_venues.*
  */
 class SearchVenuesActivity : BaseActivity<SearchVenuesContract.Presenter>(), SearchVenuesContract.View {
 
-  private lateinit var venuesAdapter: VenuesAdapter
+  private val placesAdapter = PlacesAdapter()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_search_venues)
     searchVenuesButton.setOnClickListener {
+      hideKeyboard()
       presenter.getNearbyPlaces(placeTypeEditText.text.toString())
     }
     venuesRecyclerView.layoutManager = LinearLayoutManager(this)
+    venuesRecyclerView.adapter = placesAdapter
+    setUpAdapter()
   }
 
-  override fun showVenues(venues: List<Place>) {
+  override fun addPlaceToAdapter(place: Place) {
     emptyVenuesListLayout.visibility = View.INVISIBLE
-    venuesAdapter = setUpVenuesAdapter(venues)
-    venuesRecyclerView.adapter = venuesAdapter
+    placesAdapter.addPlace(place)
   }
 
-  private fun setUpVenuesAdapter(venues: List<Place>): VenuesAdapter {
-    val adapter = VenuesAdapter(venues)
-    presenter.handleChosenPlace(adapter.getClickEvent())
-    presenter.handleClickedActionButton(adapter.getClickedActionButtonEvent())
-    return adapter
+  fun setUpAdapter() {
+    presenter.handleChosenPlace(placesAdapter.getClickEvent())
+    presenter.handleClickedActionButton(placesAdapter.getClickedActionButtonEvent())
   }
 
   override fun showProgressBar() {
@@ -73,8 +74,12 @@ class SearchVenuesActivity : BaseActivity<SearchVenuesContract.Presenter>(), Sea
     startActivity(PlaceDetailsActivity.newIntent(baseContext, params))
   }
 
-  override fun addedPlace(place: Place) {
-    Toast.makeText(baseContext, place.name, Toast.LENGTH_SHORT).show()
+  override fun showToast(text: String) {
+    Toast.makeText(baseContext, text, Toast.LENGTH_SHORT).show()
+  }
+
+  private fun hideKeyboard() {
+    KeyboardUtils.hide(this.currentFocus)
   }
 
   companion object {

@@ -3,7 +3,7 @@ package com.example.marcin.meetfriends.ui.search_venues
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
 import com.example.marcin.meetfriends.ui.common.PlaceIdParams
-import com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place
+import com.example.marcin.meetfriends.models.Place
 import io.reactivex.Observable
 
 /**
@@ -19,13 +19,13 @@ interface SearchVenuesContract {
 
     fun showEmptyVenuesList(type: String)
 
-    fun showVenues(venues: List<Place>)
+    fun addPlaceToAdapter(place: Place)
 
     fun buildAlertMessageNoGps()
 
     fun startPlaceDetailsActivity(params: PlaceIdParams)
 
-    fun addedPlace(place: Place)
+    fun showToast(text: String)
   }
 
   interface Presenter : MvpPresenter {

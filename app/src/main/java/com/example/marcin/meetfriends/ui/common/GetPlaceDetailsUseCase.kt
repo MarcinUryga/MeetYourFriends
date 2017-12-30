@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.place_details
+package com.example.marcin.meetfriends.ui.common
 
 import com.example.marcin.meetfriends.maps_api.GoogleMapsApi
 import com.example.marcin.meetfriends.models.nearby_place.PlaceDetails

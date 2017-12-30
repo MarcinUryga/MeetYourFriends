@@ -8,6 +8,7 @@ import com.beltaief.reactivefb.util.PermissionHelper
 import com.example.marcin.meetfriends.MeetFriendsApplication
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.maps_api.GoogleMapsApi
+import com.example.marcin.meetfriends.prefs.PrefsManager
 import com.facebook.login.DefaultAudience
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -35,6 +36,15 @@ class ApplicationModule {
   fun provideContext(meetFriendsApplication: MeetFriendsApplication): Context {
     return meetFriendsApplication
   }
+
+  @Provides
+  @Singleton
+  fun providePrefsManager(app: MeetFriendsApplication) = PrefsManager(app)
+
+/*
+  @Provides
+  fun provideDefaultPrefsStorage(manager: PrefsManager) = manager.createDefault()
+*/
 
   @Provides
   @Singleton

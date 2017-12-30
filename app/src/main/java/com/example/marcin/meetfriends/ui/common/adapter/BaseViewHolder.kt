@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.common
+package com.example.marcin.meetfriends.ui.common.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.search_venues.viewmodel
+package com.example.marcin.meetfriends.models
 
 import android.content.Context
 import com.example.marci.googlemaps.pojo.Location
@@ -18,15 +18,15 @@ data class Place(
     val rating: Double,
     val location: Location,
     val vicinity: String?,
-    val distance: Distance,
-    val duration: Duration,
+    val distance: Distance? = null,
+    val duration: Duration? = null,
     var photos: List<Photo>? = null,
     var isAdded: Boolean = false
 ) {
 
   fun transformDistance(context: Context): String {
-    val distanceInMeters = distance.value
-    if (distanceInMeters >= 1000) {
+    val distanceInMeters = distance?.value
+    if (distanceInMeters != null && distanceInMeters >= 1000) {
       return context.getString(R.string.kilometers, DecimalFormat(".##").format(distanceInMeters.toDouble() / 1000)
       )
     }
@@ -35,7 +35,7 @@ data class Place(
 
   fun getPhotosUrl(): List<String> {
     val photosUrl = mutableListOf<String>()
-   photos?.forEach {
+    photos?.forEach {
       photosUrl.add("https://maps.googleapis.com/maps/api/place/photo?maxwidth=${it.width}&photoreference=${it.photoReference}&key=$GOOGLE_MAPS_API_KEY")
     }
     return photosUrl

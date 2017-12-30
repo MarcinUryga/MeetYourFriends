@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.ui.chat.viewmodel.Message
-import com.example.marcin.meetfriends.ui.common.BaseViewHolder
+import com.example.marcin.meetfriends.ui.common.adapter.BaseViewHolder
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_other_chat_message.view.*
