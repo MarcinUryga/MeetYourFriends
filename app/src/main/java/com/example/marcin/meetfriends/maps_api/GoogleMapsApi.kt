@@ -22,6 +22,6 @@ interface GoogleMapsApi {
   fun getPlaceDetails(@Query("placeid") placeId: String): Single<PlaceDetails>
 
   companion object {
-    const val GOOGLE_MAPS_API_KEY = "AIzaSyBwRrDYl7nHOy_QK9ERNSsXDJCDaVaPAk0"
+    const val GOOGLE_MAPS_API_KEY = "AIzaSyDSduchQQv2t1Zsp1VTwFtM4ec-IjqfdjA"
   }
 }

@@ -1,9 +1,9 @@
 package com.example.marcin.meetfriends.ui.event_detail.event_questionnaire
 
 import com.example.marcin.meetfriends.di.ScreenScope
+import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.common.GetParticipantsUseCase
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -22,9 +22,32 @@ import javax.inject.Inject
 class EventQuestionnairePresenter @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
     private val eventBasicInfoParams: EventBasicInfoParams,
-    private val getParticipantsUseCase: GetParticipantsUseCase,
+    private val getEventVenuesUseCase: GetEventVenuesUseCase,
     private val auth: FirebaseAuth
 ) : BasePresenter<EventQuestionnaireContract.View>(), EventQuestionnaireContract.Presenter {
+
+  val venuesList = mutableListOf<FirebasePlace>()
+
+  override fun resume() {
+    super.resume()
+    getVenues()
+  }
+
+  fun getVenues() {
+    val disposable = RxFirebaseDatabase
+        .observeChildEvent(firebaseDatabase.reference
+            .child(Constants.FIREBASE_EVENTS)
+            .child(eventBasicInfoParams.event.id)
+            .child(Constants.FIREBASE_VENUES))
+        .subscribe({ dataSnapshot ->
+          Timber.d(dataSnapshot.toString())
+          venuesList.add(dataSnapshot.value.getValue(FirebasePlace::class.java).let { it!! })
+          venuesList.forEach {
+            Timber.d(it.toString())
+          }
+        })
+    disposables?.add(disposable)
+  }
 
   override fun sendDateVote(selectedDate: DateTime) {
     val disposable = RxFirebaseDatabase

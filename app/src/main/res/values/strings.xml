@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">MeetYourFriends</string>
     <string name="facebook_app_id">1502871996463931</string>
-    <string name="google_maps_api_key">AIzaSyBwRrDYl7nHOy_QK9ERNSsXDJCDaVaPAk0</string>
+    <!--<string name="google_maps_api_key">AIzaSyBwRrDYl7nHOy_QK9ERNSsXDJCDaVaPAk0</string>-->
+    <string name="google_maps_api_key">AIzaSyDSduchQQv2t1Zsp1VTwFtM4ec-IjqfdjA</string>
     <string name="fb_login_protocol_scheme">fb1502871996463931</string>
     <string name="confirmed_event">Confirmed Events</string>
     <string name="planned_events">Planned Events</string>

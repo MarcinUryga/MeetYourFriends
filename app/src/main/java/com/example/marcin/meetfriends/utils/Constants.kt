@@ -13,6 +13,7 @@ object Constants {
   const val FIREBASE_CHAT = "chat"
   const val FIREBASE_DATE = "date"
   const val FIREBASE_QUESTIONNAIRE = "questionnaire"
+  const val FIREBASE_VENUES = "venues"
   const val FIREBASE_EVENT_DESCRIPTION = "description"
   const val FIREBASE_ID = "id"
 

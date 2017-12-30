@@ -3,6 +3,7 @@ package com.example.marcin.meetfriends.ui.create_event
 import com.example.marci.googlemaps.pojo.Location
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
+import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.models.Place
 import com.example.marcin.meetfriends.models.nearby_place.Distance
 import com.example.marcin.meetfriends.mvp.BasePresenter
@@ -30,6 +31,8 @@ class CreateEventPresenter @Inject constructor(
     private val auth: FirebaseAuth
 ) : BasePresenter<CreateEventContract.View>(), CreateEventContract.Presenter {
 
+  private val venuesList = mutableListOf<Place>()
+
   override fun onViewCreated() {
     super.onViewCreated()
     view.clearAdapter()
@@ -51,7 +54,7 @@ class CreateEventPresenter @Inject constructor(
     }
   }
 
-  fun mockVenues() {
+  private fun mockVenues() {
     var i = 0
     venuesStorage.add("sadsadsad", "631")
     venuesStorage.add("asdsadsad", "123213")
@@ -59,8 +62,8 @@ class CreateEventPresenter @Inject constructor(
     if (venuesStorage.getAll().isNotEmpty()) {
       venuesStorage.getAll().forEach {
         val venue = Place(
-            id = i.toString(),
-            name = "name &i",
+            id = it.key,
+            name = "name $i",
             rating = i.toDouble(),
             location = Location(i.toDouble(), i.toDouble()),
             vicinity = i.toString(),
@@ -70,6 +73,7 @@ class CreateEventPresenter @Inject constructor(
             isAdded = true
         )
         view.addPlaceToAdapter(venue)
+        venuesList.add(venue)
         i++
       }
     }
@@ -92,6 +96,7 @@ class CreateEventPresenter @Inject constructor(
               isAdded = true
           )
           view.addPlaceToAdapter(venue)
+          venuesList.add(venue)
         })
     disposables?.add(disposable)
   }
@@ -125,7 +130,19 @@ class CreateEventPresenter @Inject constructor(
         iconId = view.getEventIconId(),
         organizerId = auth.uid,
         name = view.getEventName(),
-        description = view.getEventDescription()
+        description = view.getEventDescription(),
+        venues = venuesList.filter { venue ->
+          venuesStorage.getAll().mapNotNull { it.key }.any { it == venue.id }
+        }.map {
+          FirebasePlace(
+              id = it.id,
+              name = it.name,
+              rating = it.rating,
+              latLng = "${it.location.lat},${it.location.lng}",
+              vicinity = it.vicinity,
+              photos = it.getPhotosUrl()
+          )
+        }
     )
     val disposable = RxFirebaseDatabase
         .setValue(

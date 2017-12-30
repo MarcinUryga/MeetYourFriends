@@ -31,6 +31,7 @@ class SearchVenuesActivity : BaseActivity<SearchVenuesContract.Presenter>(), Sea
     setContentView(R.layout.activity_search_venues)
     searchVenuesButton.setOnClickListener {
       hideKeyboard()
+      placesAdapter.clearPlaceList()
       presenter.getNearbyPlaces(placeTypeEditText.text.toString())
     }
     venuesRecyclerView.layoutManager = LinearLayoutManager(this)

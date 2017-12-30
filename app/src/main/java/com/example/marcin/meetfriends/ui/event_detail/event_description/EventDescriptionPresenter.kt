@@ -48,7 +48,7 @@ class EventDescriptionPresenter @Inject constructor(
   }
 
   private fun loadParticipants() {
-    var participantsMutableList = mutableListOf<String>()
+    val participantsMutableList = mutableListOf<String>()
     view.showNoParticipantsLayout()
     view.hideParticipantsProgressBar()
     val disposable = RxFirebaseDatabase

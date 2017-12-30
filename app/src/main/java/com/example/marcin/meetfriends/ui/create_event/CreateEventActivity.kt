@@ -3,6 +3,7 @@ package com.example.marcin.meetfriends.ui.create_event
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
 import android.widget.Toast
