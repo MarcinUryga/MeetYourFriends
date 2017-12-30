@@ -1,9 +1,8 @@
-package com.example.marcin.meetfriends.ui.common
+package com.example.marcin.meetfriends.ui.search_venues
 
 import com.example.marci.googlemaps.pojo.NearbyPlaces
 import com.example.marcin.meetfriends.maps_api.GoogleMapsApi
 import com.example.marcin.meetfriends.models.nearby_place.DistanceMatrix
-import com.example.marcin.meetfriends.models.nearby_place.PlaceDetails
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -20,9 +19,5 @@ class GetNearbyPlacesUseCase @Inject constructor(
 
   fun getDistanceMatrix(origins: String, destinations: String): Single<DistanceMatrix> {
     return googleMapsApi.getDistanceMatrix(origins, destinations)
-  }
-
-  fun getPlaceDetails(placeId: String): Single<PlaceDetails> {
-    return googleMapsApi.getPlaceDetails(placeId)
   }
 }

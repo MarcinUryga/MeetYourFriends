@@ -35,9 +35,7 @@ data class Place(
 
   fun getPhotosUrl(): List<String> {
     val photosUrl = mutableListOf<String>()
-    val width = 400
-    val ref = "CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU"
-    photos?.forEach {
+   photos?.forEach {
       photosUrl.add("https://maps.googleapis.com/maps/api/place/photo?maxwidth=${it.width}&photoreference=${it.photoReference}&key=$GOOGLE_MAPS_API_KEY")
     }
     return photosUrl

@@ -6,7 +6,8 @@ import com.example.marci.googlemaps.pojo.Location
 import com.example.marci.googlemaps.pojo.Place
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.ui.common.GetNearbyPlacesUseCase
+import com.example.marcin.meetfriends.ui.common.PlaceIdParams
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -23,7 +24,7 @@ class SearchVenuesPresenter @Inject constructor(
 ) : BasePresenter<SearchVenuesContract.View>(), SearchVenuesContract.Presenter {
 
   private var currentLocation = Location(0.0, 0.0)
-  lateinit var nearbyPlaces: MutableList<com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place>
+  private var nearbyPlaces = mutableListOf<com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place>()
 
   override fun resume() {
     super.resume()
@@ -31,6 +32,9 @@ class SearchVenuesPresenter @Inject constructor(
       view.buildAlertMessageNoGps()
     } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
       currentLocation = getDeviceLocationUseCase.get(view as Activity)
+    }
+    if (nearbyPlaces.isNotEmpty()) {
+      view.showVenues(nearbyPlaces.sortedBy { it.distance.value })
     }
   }
 
@@ -55,6 +59,20 @@ class SearchVenuesPresenter @Inject constructor(
     disposables?.add(disposable)
   }
 
+  override fun handleChosenPlace(clickEvent: Observable<com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place>) {
+    val disposable = clickEvent.subscribe({ place ->
+      view.startPlaceDetailsActivity(PlaceIdParams(placeId = place.id))
+    })
+    disposables?.add(disposable)
+  }
+
+  override fun handleClickedActionButton(clickedActionButtonEvent: Observable<com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place>) {
+    val disposable = clickedActionButtonEvent.subscribe({ place ->
+      view.addedPlace(place)
+    })
+  }
+
+
   private fun getPlaceDistanceMatrix(origins: String, place: Place) {
     val disposable = getNearbyPlacesUseCase.getDistanceMatrix(origins, "${place.geometry.location.lat},${place.geometry.location.lng}")
         .subscribeOn(Schedulers.io())
@@ -63,7 +81,7 @@ class SearchVenuesPresenter @Inject constructor(
         .doFinally { view.hideProgressBar() }
         .subscribe({ distanceMatrix ->
           nearbyPlaces.add(com.example.marcin.meetfriends.ui.search_venues.viewmodel.Place(
-              id = place.id,
+              id = place.placeId,
               name = place.name,
               rating = place.rating,
               location = place.geometry.location,
@@ -72,7 +90,7 @@ class SearchVenuesPresenter @Inject constructor(
               duration = distanceMatrix.rows.first().elements.first().duration,
               photos = place.photos
           ))
-          view.showVenues(nearbyPlaces)
+          view.showVenues(nearbyPlaces.sortedBy { it.distance.value })
         })
     disposables?.add(disposable)
   }

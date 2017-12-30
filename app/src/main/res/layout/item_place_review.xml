@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/authorImageView"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_margin="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/authorImageView"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/authorNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="Michał Pl" />
+
+        <TextView
+            android:id="@+id/opinionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Jakość produktów nie powala, na szybko coś zjeść - może być." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ratingTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_star"
+                android:textSize="16sp"
+                tools:text="4.4" />
+
+            <TextView
+                android:id="@+id/relativeTimeDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="3 miesiące temu" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#a3a3a3" />
+
+    </LinearLayout>
+
+</RelativeLayout>

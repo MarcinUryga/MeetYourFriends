@@ -1,6 +1,8 @@
 package com.example.marcin.meetfriends.models.nearby_place
 
 import com.example.marci.googlemaps.pojo.Geometry
+import com.example.marci.googlemaps.pojo.OpeningHours
+import com.example.marci.googlemaps.pojo.Photo
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -15,6 +17,9 @@ data class Result(
     val formattedAddress: String,
     @SerializedName("formatted_phone_number")
     val formattedPhoneNumber: String,
+    @SerializedName("opening_hours")
+    val openingHours: OpeningHours? = null,
+    val photos: List<Photo>,
     val geometry: Geometry,
     val icon: String,
     val id: String,

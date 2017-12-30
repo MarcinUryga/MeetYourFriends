@@ -1,5 +1,6 @@
 package com.example.marci.googlemaps.pojo
 
+import com.example.marcin.meetfriends.models.nearby_place.Period
 import com.google.gson.annotations.SerializedName
 
 
@@ -10,5 +11,6 @@ data class OpeningHours(
     @SerializedName("open_now")
     var openNow: Boolean? = null,
     @SerializedName("weekday_text")
-    val weekdayText: List<String>
+    val weekdayText: List<String>? = null,
+    val periods: List<Period>
 )

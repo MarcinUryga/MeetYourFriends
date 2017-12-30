@@ -22,6 +22,11 @@ class VenuesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     itemView.ratingTextView.text = venue.rating.toString()
     if (venue.photos != null)
       Picasso.with(itemView.context).load(venue.getPhotosUrl().first()).placeholder(R.drawable.placeholder).into(itemView.placeImage)
+    if (!venue.isAdded) {
+      itemView.actionButton.setImageDrawable(itemView.context.getDrawable(R.drawable.ic_add))
+    } else {
+      itemView.actionButton.setImageDrawable(itemView.context.getDrawable(R.drawable.ic_remove_circle))
+    }
   }
 
   companion object {

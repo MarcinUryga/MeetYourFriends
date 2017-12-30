@@ -60,13 +60,16 @@
     <string name="empty_event_description">Please, precized event description</string>
     <string name="please_choose_icon_for_your_event">Please choose icon for your event!</string>
     <string name="manage_your_events">Manage Your Events!</string>
-    <string name="opening_hours">Opening Hours: %s</string>
+    <string name="opening_hours">Opening Hours</string>
     <string name="rating">Rating: %d</string>
     <string name="meters">%s m</string>
     <string name="minutes">%d min</string>
     <string name="kilometers">%s km</string>
     <string name="find_venues_for_your_event">Find venues for your Event!</string>
     <string name="no_results_for_type_and_kayword">No results for type and kayword: %s</string>
+    <string name="please_turn_on_gps">Please Turn ON your GPS Connection</string>
+    <string name="review">Review</string>
+    <string name="opening_hours_is_not_precized">Opening hours is not precized for this event</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>
