@@ -11,6 +11,6 @@ data class FirebasePlace(
     val rating: Double? = null,
     val latLng: String? = null,
     val vicinity: String? = null,
-    var distance: Distance? = Distance("0", 0),
+    var distance: Distance? = null,
     val photos: List<String> = emptyList()
 )
