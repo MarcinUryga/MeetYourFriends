@@ -91,6 +91,7 @@ class SearchVenuesPresenter @Inject constructor(
               distance = distanceMatrix.rows.first().elements.first().distance,
               duration = distanceMatrix.rows.first().elements.first().duration,
               photos = place.photos,
+              placeIcon = place.icon,
               isAdded = venuesStorage.getAll().mapNotNull { it.key }.any { it == place.placeId }
           )
           view.addPlaceToAdapter(venue)

@@ -140,6 +140,7 @@ class CreateEventPresenter @Inject constructor(
               rating = it.rating,
               latLng = "${it.location.lat},${it.location.lng}",
               vicinity = it.vicinity,
+              placeIcon = it.placeIcon,
               photos = it.getPhotosUrl()
           )
         }.distinctBy { it.id }

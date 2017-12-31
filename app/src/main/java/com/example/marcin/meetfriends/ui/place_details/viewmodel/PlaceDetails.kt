@@ -16,6 +16,7 @@ data class PlaceDetails(
     val location: Location,
     val name: String,
     val address: String,
+    val placeIcon: String,
     val phoneNumber: String? = null,
     val websiteUrl: String? = null,
     val rating: Double,

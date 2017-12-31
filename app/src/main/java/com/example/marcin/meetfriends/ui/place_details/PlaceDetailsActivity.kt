@@ -51,7 +51,11 @@ class PlaceDetailsActivity : BaseActivity<PlaceDetailsContract.Presenter>(), Pla
     websiteUrlTextView.movementMethod = LinkMovementMethod.getInstance()
     ratingTextView.text = placeDetails.rating.toString()
     openingHoursTextView.text = placeDetails.getWeekDayOpeningHoursString(baseContext)
-    Picasso.with(baseContext).load(placeDetails.getPhotosUrl().first()).placeholder(R.drawable.placeholder).into(venueImage)
+    if (placeDetails.getPhotosUrl().isNotEmpty()) {
+      Picasso.with(baseContext).load(placeDetails.getPhotosUrl().first()).placeholder(R.drawable.placeholder).into(venueImage)
+    } else {
+      Picasso.with(baseContext).load(placeDetails.placeIcon).placeholder(R.drawable.placeholder).into(venueImage)
+    }
     toolbar.title = placeDetails.name
     setSupportActionBar(toolbar)
     reviewRecyclerView.adapter = ReviewAdapter(placeDetails.reviews)
@@ -75,6 +79,5 @@ class PlaceDetailsActivity : BaseActivity<PlaceDetailsContract.Presenter>(), Pla
       intent.putExtras(placeIdParams.data)
       return intent
     }
-
   }
 }

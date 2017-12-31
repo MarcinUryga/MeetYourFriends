@@ -20,7 +20,11 @@ class VenuesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     itemView.distanceTextView.text = venue.distance?.transformDistance(itemView.context)
     itemView.ratingTextView.text = venue.rating.toString()
     itemView.venueVicinityTextView.text = venue.vicinity
-    Picasso.with(itemView.context).load(venue.photos.first()).placeholder(itemView.context.getDrawable(R.drawable.placeholder)).into(itemView.venueImage)
+    if (venue.photos.isNotEmpty()) {
+      Picasso.with(itemView.context).load(venue.photos.first()).placeholder(itemView.context.getDrawable(R.drawable.placeholder)).into(itemView.venueImage)
+    } else {
+      Picasso.with(itemView.context).load(venue.placeIcon).placeholder(itemView.context.getDrawable(R.drawable.placeholder)).into(itemView.venueImage)
+    }
   }
 
   companion object {

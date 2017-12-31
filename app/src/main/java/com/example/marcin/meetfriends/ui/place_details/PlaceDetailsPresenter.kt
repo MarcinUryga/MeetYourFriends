@@ -37,6 +37,7 @@ class PlaceDetailsPresenter @Inject constructor(
           view.showPlaceDetails(PlaceDetails(
               id = placeDetails.result.placeId,
               photos = placeDetails.result.photos,
+              placeIcon = placeDetails.result.icon,
               location = placeDetails.result.geometry.location,
               name = placeDetails.result.name,
               address = placeDetails.result.formattedAddress,
