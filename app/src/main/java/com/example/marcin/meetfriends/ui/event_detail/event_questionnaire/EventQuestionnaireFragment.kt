@@ -110,7 +110,7 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
       DatePickerDialog(
           context,
           DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-            selectedDate = DateTime(year, monthOfYear, dayOfMonth, selectedDate.hourOfDay, selectedDate.minuteOfHour, 0, 0)
+            selectedDate = DateTime(year, monthOfYear + 1, dayOfMonth, selectedDate.hourOfDay, selectedDate.minuteOfHour, 0, 0)
             dateSuggestionTextView.text = getString(R.string.your_date_suggestion, DateTimeFormatters.formatToShortDate(selectedDate))
           },
           selectedDate.year,
