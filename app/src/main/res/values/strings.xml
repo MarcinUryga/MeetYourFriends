@@ -72,6 +72,7 @@
     <string name="opening_hours_is_not_precized">Opening hours is not precized for this event</string>
     <string name="venues">Venues</string>
     <string name="vote_for_this_place">vote for this place !</string>
+    <string name="chosen_venue">You choose %s</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>

@@ -1,10 +1,11 @@
 package com.example.marcin.meetfriends.ui.event_detail.event_questionnaire
 
 import android.app.Activity
-import android.support.v4.app.FragmentActivity
 import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
+import com.example.marcin.meetfriends.ui.common.PlaceIdParams
+import io.reactivex.Observable
 import org.joda.time.DateTime
 
 /**
@@ -16,13 +17,19 @@ interface EventQuestionnaireContract {
 
     fun showChosenDateSnackBar(selectedDate: DateTime, userId: String)
 
-    fun setupVenuesAdapter(venuesList: List<FirebasePlace>)
+    fun initializeVenuesAdapter(venues: List<FirebasePlace>)
+
+    fun setUpAdapterListeners()
 
     fun showProgressBar()
 
     fun hideProgressBar()
 
     fun buildAlertMessageNoGps()
+
+    fun startPlaceDetailsActivity(placeIdParams: PlaceIdParams)
+
+    fun showChosenVenueSnackBar(venue: FirebasePlace, userId: String)
 
     fun getActivity(): Activity
   }
@@ -33,6 +40,10 @@ interface EventQuestionnaireContract {
 
     fun removeChosenDateFromEvent(selectedDate: DateTime, userId: String)
 
-    fun getCurrentLocation(activity: FragmentActivity?)
+    fun handleChosenPlace(clickEvent: Observable<FirebasePlace>)
+
+    fun handleClickedActionButton(clickedActionButtonEvent: Observable<FirebasePlace>)
+
+    fun removeChosenVenueFromEvent(venueId: String, userId: String)
   }
 }

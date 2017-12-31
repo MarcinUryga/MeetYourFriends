@@ -15,7 +15,9 @@ import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.mvp.BaseFragment
+import com.example.marcin.meetfriends.ui.common.PlaceIdParams
 import com.example.marcin.meetfriends.ui.event_detail.event_questionnaire.adapter.VenuesAdapter
+import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsActivity
 import com.example.marcin.meetfriends.utils.DateTimeFormatters
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_event_questionnaire.*
@@ -28,7 +30,7 @@ import org.joda.time.chrono.ISOChronology
 class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Presenter>(), EventQuestionnaireContract.View {
 
   private var selectedDate: DateTime = DateTime().withChronology(ISOChronology.getInstance())
-  lateinit var venuesAdapter: VenuesAdapter
+  private val venuesAdapter = VenuesAdapter()
 
   override fun onAttach(context: Context?) {
     AndroidSupportInjection.inject(this)
@@ -45,11 +47,21 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
     timeSuggestionTextView.text = getString(R.string.your_time_suggestion, DateTimeFormatters.formatToShortTime(selectedDate))
     setUpDateChooserButton()
     setUpTimeChooserButton()
-    presenter.getCurrentLocation(activity)
+//    presenter.getCurrentLocation(activity)
     venuesRecyclerView.layoutManager = GridLayoutManager(context, 2)
+    venuesRecyclerView.adapter = venuesAdapter
     confirmDateSuggestionButton.setOnClickListener {
       presenter.sendDateVote(selectedDate)
     }
+  }
+
+  override fun initializeVenuesAdapter(venues: List<FirebasePlace>) {
+    venuesAdapter.addVenuesList(venues)
+  }
+
+  override fun setUpAdapterListeners() {
+    presenter.handleChosenPlace(venuesAdapter.getClickEvent())
+    presenter.handleClickedActionButton(venuesAdapter.getClickedActionButtonEvent())
   }
 
   override fun buildAlertMessageNoGps() {
@@ -59,12 +71,6 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
         .setPositiveButton("Yes", { _, _ -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) })
         .setNegativeButton("No", { dialog, _ -> dialog.cancel() })
         .show()
-  }
-
-
-  override fun setupVenuesAdapter(venuesList: List<FirebasePlace>) {
-    venuesAdapter = VenuesAdapter(venuesList)
-    venuesRecyclerView.adapter = venuesAdapter
   }
 
   override fun showProgressBar() {
@@ -83,6 +89,20 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
         .setAction(getString(R.string.undo), {
           presenter.removeChosenDateFromEvent(selectedDate, userId)
         }).show()
+  }
+
+  override fun showChosenVenueSnackBar(venue: FirebasePlace, userId: String) {
+    Snackbar.make(
+        this.snackBarContainer,
+        getString(R.string.chosen_venue, venue.name.let { it!! }),
+        Snackbar.LENGTH_LONG)
+        .setAction(getString(R.string.undo), {
+          presenter.removeChosenVenueFromEvent(venue.id.let { it!! }, userId)
+        }).show()
+  }
+
+  override fun startPlaceDetailsActivity(placeIdParams: PlaceIdParams) {
+    startActivity(PlaceDetailsActivity.newIntent(context, placeIdParams))
   }
 
   private fun setUpDateChooserButton() {
