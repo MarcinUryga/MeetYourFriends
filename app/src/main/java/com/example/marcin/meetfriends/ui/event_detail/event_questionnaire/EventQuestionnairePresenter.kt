@@ -1,9 +1,14 @@
 package com.example.marcin.meetfriends.ui.event_detail.event_questionnaire
 
+import android.location.LocationManager
+import android.support.v4.app.FragmentActivity
+import com.example.marci.googlemaps.pojo.Location
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.GetDeviceLocationUseCase
+import com.example.marcin.meetfriends.ui.common.GetNearbyPlacesUseCase
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -11,6 +16,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import durdinapps.rxfirebase2.RxFirebaseDatabase
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.joda.time.DateTime
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,17 +27,28 @@ import javax.inject.Inject
  */
 @ScreenScope
 class EventQuestionnairePresenter @Inject constructor(
+    private val auth: FirebaseAuth,
+    private val locationManager: LocationManager,
     private val firebaseDatabase: FirebaseDatabase,
     private val eventBasicInfoParams: EventBasicInfoParams,
     private val getEventVenuesUseCase: GetEventVenuesUseCase,
-    private val auth: FirebaseAuth
+    private val getNearbyPlacesUseCase: GetNearbyPlacesUseCase,
+    private val getDeviceLocationUseCase: GetDeviceLocationUseCase
 ) : BasePresenter<EventQuestionnaireContract.View>(), EventQuestionnaireContract.Presenter {
+  private var currentLocation = Location(0.0, 0.0)
 
   val venuesList = mutableListOf<FirebasePlace>()
-
   override fun resume() {
     super.resume()
     getVenues()
+  }
+
+  override fun getCurrentLocation(activity: FragmentActivity?) {
+    if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+      view.buildAlertMessageNoGps()
+    } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+      currentLocation = getDeviceLocationUseCase.get(view.getActivity())
+    }
   }
 
   fun getVenues() {
@@ -39,12 +57,27 @@ class EventQuestionnairePresenter @Inject constructor(
             .child(Constants.FIREBASE_EVENTS)
             .child(eventBasicInfoParams.event.id)
             .child(Constants.FIREBASE_VENUES))
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnSubscribe { view.showProgressBar() }
         .subscribe({ dataSnapshot ->
-          Timber.d(dataSnapshot.toString())
           venuesList.add(dataSnapshot.value.getValue(FirebasePlace::class.java).let { it!! })
-          venuesList.forEach {
-            Timber.d(it.toString())
-          }
+          venuesList.forEach { getDistanceMatrix(it) }
+        })
+    disposables?.add(disposable)
+  }
+
+  private fun getDistanceMatrix(venue: FirebasePlace) {
+    val disposable = getNearbyPlacesUseCase
+        .getDistanceMatrix("${currentLocation.lat},${currentLocation.lng}", venue.latLng.let { it!! })
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doFinally {
+          view.hideProgressBar()
+          view.setupVenuesAdapter(venuesList.sortedBy { it.distance?.value })
+        }
+        .subscribe({ distance ->
+          venue.distance = distance.rows.first().elements.first().distance
         })
     disposables?.add(disposable)
   }

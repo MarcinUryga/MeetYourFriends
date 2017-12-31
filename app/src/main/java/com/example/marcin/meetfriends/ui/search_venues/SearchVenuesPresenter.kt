@@ -6,6 +6,8 @@ import com.example.marci.googlemaps.pojo.Location
 import com.example.marci.googlemaps.pojo.Place
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
+import com.example.marcin.meetfriends.ui.common.GetDeviceLocationUseCase
+import com.example.marcin.meetfriends.ui.common.GetNearbyPlacesUseCase
 import com.example.marcin.meetfriends.ui.common.PlaceIdParams
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -40,7 +42,6 @@ class SearchVenuesPresenter @Inject constructor(
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSubscribe { view.showProgressBar() }
-        .doFinally { view.hideProgressBar() }
         .subscribe({ venues ->
           if (venues.places.isNotEmpty()) {
             venues.places.forEach {
@@ -79,7 +80,6 @@ class SearchVenuesPresenter @Inject constructor(
     val disposable = getNearbyPlacesUseCase.getDistanceMatrix(origins, "${place.geometry.location.lat},${place.geometry.location.lng}")
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe { view.showProgressBar() }
         .doFinally { view.hideProgressBar() }
         .subscribe({ distanceMatrix ->
           val venue = com.example.marcin.meetfriends.models.Place(

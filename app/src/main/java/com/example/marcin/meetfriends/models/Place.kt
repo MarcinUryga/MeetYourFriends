@@ -24,15 +24,6 @@ data class Place(
     var isAdded: Boolean = false
 ) {
 
-  fun transformDistance(context: Context): String {
-    val distanceInMeters = distance?.value
-    if (distanceInMeters != null && distanceInMeters >= 1000) {
-      return context.getString(R.string.kilometers, DecimalFormat(".##").format(distanceInMeters.toDouble() / 1000)
-      )
-    }
-    return context.getString(R.string.meters, distanceInMeters.toString())
-  }
-
   fun getPhotosUrl(): List<String> {
     val photosUrl = mutableListOf<String>()
     photos?.forEach {

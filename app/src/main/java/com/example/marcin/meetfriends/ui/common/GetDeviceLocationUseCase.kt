@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.search_venues
+package com.example.marcin.meetfriends.ui.common
 
 import android.app.Activity
 import android.content.Context

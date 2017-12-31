@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
+import com.example.marcin.meetfriends.extensions.transformDistance
 import com.example.marcin.meetfriends.models.Place
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_place.view.*
@@ -15,9 +16,9 @@ import kotlinx.android.synthetic.main.item_place.view.*
 class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
   fun bind(venue: Place) {
-    itemView.placeNameTextView.text = venue.name
-    itemView.placeVicinityTextView.text = venue.vicinity
-    itemView.distanceTextView.text = venue.transformDistance(itemView.context)
+    itemView.venueNameTextView.text = venue.name
+    itemView.venueVicinityTextView.text = venue.vicinity
+    itemView.distanceTextView.text = venue.distance?.transformDistance(itemView.context)
     if (venue.duration != null) {
       itemView.durationTextView.text = venue.duration.text
     } else {
@@ -25,7 +26,7 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
     itemView.ratingTextView.text = venue.rating.toString()
     if (venue.photos != null)
-      Picasso.with(itemView.context).load(venue.getPhotosUrl().first()).placeholder(R.drawable.placeholder).into(itemView.placeImage)
+      Picasso.with(itemView.context).load(venue.getPhotosUrl().first()).placeholder(R.drawable.placeholder).into(itemView.venueImage)
     if (!venue.isAdded) {
       itemView.actionButton.setImageDrawable(itemView.context.getDrawable(R.drawable.ic_add))
     } else {
