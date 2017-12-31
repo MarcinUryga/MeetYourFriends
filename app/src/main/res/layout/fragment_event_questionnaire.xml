@@ -3,10 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/dateTimeChartsButton"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:src="@drawable/circle_charts_icon" />
+
     <LinearLayout
         android:id="@+id/dateHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/dateTimeChartsButton"
         android:layout_margin="10dp"
         android:orientation="horizontal">
 
@@ -55,10 +65,8 @@
                 android:id="@+id/dateSuggestionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/timeSuggestionTextView"
                 android:layout_alignTop="@+id/dateChooserButton"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="14dp"
-                android:layout_toEndOf="@+id/dateChooserButton"
                 android:text="@string/your_date_suggestion" />
 
             <ImageButton
@@ -74,21 +82,12 @@
                 android:id="@+id/timeSuggestionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/timeChooserButton"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="14dp"
-                android:layout_toEndOf="@+id/dateChooserButton"
+                android:layout_marginStart="90dp"
                 android:text="@string/your_time_suggestion" />
 
         </RelativeLayout>
-
-        <ImageButton
-            android:id="@+id/dateTimeChartsButton"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/circle_charts_icon" />
 
     </LinearLayout>
 

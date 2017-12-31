@@ -17,7 +17,7 @@ class VenuesAdapter : RecyclerView.Adapter<VenuesViewHolder>() {
   private val publishSubjectClickedActionButton = PublishSubject.create<FirebasePlace>()
 
   fun addVenuesList(venuesList: List<FirebasePlace>) {
-    this.venuesList = venuesList
+    this.venuesList = venuesList.distinct()
     notifyDataSetChanged()
   }
 

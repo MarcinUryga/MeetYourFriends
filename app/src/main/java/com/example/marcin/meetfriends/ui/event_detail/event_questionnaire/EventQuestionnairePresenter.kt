@@ -66,7 +66,6 @@ class EventQuestionnairePresenter @Inject constructor(
             .child(Constants.FIREBASE_VENUES))
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe { view.showProgressBar() }
         .subscribe({ dataSnapshot ->
           venuesList.add(dataSnapshot.value.getValue(FirebasePlace::class.java).let { it!! })
           venuesList.forEach { getDistanceMatrix(it) }
@@ -79,6 +78,7 @@ class EventQuestionnairePresenter @Inject constructor(
         .getDistanceMatrix("${currentLocation.lat},${currentLocation.lng}", venue.latLng.let { it!! })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+        .doOnSubscribe { view.showProgressBar() }
         .doFinally {
           view.hideProgressBar()
           view.initializeVenuesAdapter(venuesList.sortedBy { it.distance?.value })

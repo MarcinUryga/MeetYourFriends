@@ -142,7 +142,7 @@ class CreateEventPresenter @Inject constructor(
               vicinity = it.vicinity,
               photos = it.getPhotosUrl()
           )
-        }
+        }.distinctBy { it.id }
     )
     val disposable = RxFirebaseDatabase
         .setValue(
