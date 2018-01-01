@@ -21,10 +21,11 @@ class VenuesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     itemView.ratingTextView.text = venue.rating.toString()
     itemView.venueVicinityTextView.text = venue.vicinity
     if (venue.photos.isNotEmpty()) {
-      Picasso.with(itemView.context).load(venue.photos.first()).placeholder(itemView.context.getDrawable(R.drawable.placeholder)).into(itemView.venueImage)
+      Picasso.with(itemView.context).load(venue.photos.first()).placeholder(itemView.context.getDrawable(R.drawable.placeholder)).fit().into(itemView.venueImage)
     } else {
-      Picasso.with(itemView.context).load(venue.placeIcon).placeholder(itemView.context.getDrawable(R.drawable.placeholder)).into(itemView.venueImage)
+      Picasso.with(itemView.context).load(venue.placeIcon).placeholder(itemView.context.getDrawable(R.drawable.placeholder)).fit().into(itemView.venueImage)
     }
+    itemView.voteSectionLayout.visibility = View.VISIBLE
   }
 
   companion object {

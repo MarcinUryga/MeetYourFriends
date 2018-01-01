@@ -20,8 +20,8 @@ data class PlaceDetails(
     val phoneNumber: String? = null,
     val websiteUrl: String? = null,
     val rating: Double,
-    val weekdayOpeningHours: List<String>? = null,
-    val reviews: List<Review>
+    val weekdayOpeningHours: List<String>? = emptyList(),
+    val reviews: List<Review>? = emptyList()
 ) {
 
   fun getPhotosUrl(): List<String> {

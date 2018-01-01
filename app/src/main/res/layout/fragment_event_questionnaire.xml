@@ -10,7 +10,8 @@
         android:layout_height="72dp"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:src="@drawable/circle_charts_icon" />
+        android:src="@drawable/circle_charts_icon"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/dateHeader"
@@ -48,64 +49,106 @@
         android:layout_below="@+id/dateHeader"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/dateChooserButton"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_date_range_primary_color_48dp" />
+            <RelativeLayout
+                android:id="@+id/dateChooserLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/dateSuggestionTextView"
-                android:layout_width="wrap_content"
+                <ImageButton
+                    android:id="@+id/dateChooserButton"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_date_range_primary_color_48dp" />
+
+                <TextView
+                    android:id="@+id/dateSuggestionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/timeSuggestionTextView"
+                    android:layout_alignTop="@+id/dateChooserButton"
+                    android:text="@string/your_date_suggestion" />
+
+                <ImageButton
+                    android:id="@+id/timeChooserButton"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_below="@id/dateChooserButton"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_time_primary_color_48dp" />
+
+                <TextView
+                    android:id="@+id/timeSuggestionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/timeChooserButton"
+                    android:layout_marginStart="90dp"
+                    android:text="@string/your_time_suggestion" />
+
+                <Button
+                    android:id="@+id/confirmDateSuggestionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/timeSuggestionTextView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/confirm_button_selector"
+                    android:text="@string/confirm_date"
+                    android:textColor="@android:color/white" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/filledDateLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/timeSuggestionTextView"
-                android:layout_alignTop="@+id/dateChooserButton"
-                android:text="@string/your_date_suggestion" />
+                android:visibility="invisible">
 
-            <ImageButton
-                android:id="@+id/timeChooserButton"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_below="@id/dateChooserButton"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_time_primary_color_48dp" />
+                <ImageView
+                    android:id="@+id/acceptedDateImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_check_circle" />
 
-            <TextView
-                android:id="@+id/timeSuggestionTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/timeChooserButton"
-                android:layout_marginStart="90dp"
-                android:text="@string/your_time_suggestion" />
+                <TextView
+                    android:id="@+id/chosenDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/acceptedDateImage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/your_vote_for_event_date" />
 
-        </RelativeLayout>
+                <Button
+                    android:id="@+id/changeDateVoteButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/chosenDateTextView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/confirm_button_selector"
+                    android:text="@string/change_your_vote"
+                    android:textColor="@android:color/white" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/confirmDateSuggestionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/dateTimeChooserLayout"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/confirm_button_selector"
-        android:text="@string/confirm_date"
-        android:textColor="@android:color/white" />
 
     <LinearLayout
         android:id="@+id/venuesHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/confirmDateSuggestionButton"
+        android:layout_below="@+id/dateTimeChooserLayout"
         android:layout_margin="10dp"
         android:orientation="horizontal">
 
@@ -134,6 +177,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/venuesHeader">
+
+        <RelativeLayout
+            android:id="@+id/filledVenueLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/acceptedVenueImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_check_circle" />
+
+            <TextView
+                android:id="@+id/chosenVenueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/acceptedVenueImage"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/your_vote_for_venue" />
+
+            <include
+                android:id="@+id/venueCardView"
+                layout="@layout/item_venue"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chosenVenueTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:id="@+id/changeVenueVoteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/venueCardView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/confirm_button_selector"
+                android:text="@string/change_your_vote"
+                android:textColor="@android:color/white" />
+
+        </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/venuesRecyclerView"

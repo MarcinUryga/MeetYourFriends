@@ -2,6 +2,7 @@ package com.example.marcin.meetfriends.ui.questionnaires
 
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
+import com.example.marcin.meetfriends.models.Questionnaire
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.event_detail.viewmodel.EventBasicInfo
@@ -55,7 +56,7 @@ class QuestionnairesPresenter @Inject constructor(
         .subscribe({ dataSnapshot ->
           val organizerIdPath = dataSnapshot.value.child(Constants.FIREBASE_ORGANIZER_ID)
           if ((organizerIdPath.getValue(String::class.java) == auth.uid)) {
-            addEvent(dataSnapshot)
+            tryToAddEvent(dataSnapshot)
           } else {
             findParticipants(dataSnapshot)
           }
@@ -78,27 +79,44 @@ class QuestionnairesPresenter @Inject constructor(
         .subscribe({ participantsIdDataSnapshot ->
           val participantsIdPath = participantsIdDataSnapshot.value
           if (participantsIdPath.value == auth.uid) {
-            addEvent(dataSnapshot)
+            tryToAddEvent(dataSnapshot)
           }
         })
     disposables?.add(disposable)
   }
 
-  private fun addEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
+  private fun tryToAddEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
     val disposable = getFilledQuestionnairesUseCase.get(dataSnapshot.key)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSubscribe { view.showLoading() }
         .doFinally { view.hideLoading() }
-        .subscribe { filledQuestionnaires ->
-          val dateQuestionnaire = filledQuestionnaires.firstOrNull { it.userId == auth.currentUser?.uid }
-          if (dateQuestionnaire == null) {
-            view.manageEvent(dataSnapshot)
-            view.hideEmptyQuestionnairesToFillScreen()
-          } else if (view.getEventItemsSizeFromAdapter() == 0) {
-            view.showEmptyQuestionnairesToFillScreen()
+        .subscribe({ questionnaires ->
+          if (!isQuestionnaireExisting(questionnaires)) {
+            addEvent(dataSnapshot)
+          } else {
+            if (!isVotingFinishedForCurrentUser(questionnaires as Questionnaire)) {
+              addEvent(dataSnapshot)
+            } else if (view.getEventItemsSizeFromAdapter() == 0) {
+              view.showEmptyQuestionnairesToFillScreen()
+            }
           }
-        }
+        }, { error ->
+          Timber.d(error.localizedMessage)
+        })
     disposables?.add(disposable)
+  }
+
+  private fun addEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
+    view.manageEvent(dataSnapshot)
+    view.hideEmptyQuestionnairesToFillScreen()
+  }
+
+  private fun isQuestionnaireExisting(questionnaires: Any) = questionnaires != -1
+
+  private fun isVotingFinishedForCurrentUser(questionnaires: Questionnaire): Boolean {
+    val userDateVote = questionnaires.dateQuestionnaire?.map { it.value }?.firstOrNull { it.userId == auth.currentUser?.uid }
+    val userVenueVote = questionnaires.venueQuestionnaire?.map { it.value }?.firstOrNull { it.userId == auth.currentUser?.uid }
+    return userDateVote != null && userVenueVote != null
   }
 }

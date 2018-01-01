@@ -1,9 +1,8 @@
 package com.example.marcin.meetfriends.models
 
 /**
- * Created by marci on 2017-12-30.
+ * Created by marci on 2018-01-01.
  */
-data class VenueQuestionnaire(
-    val userId: String? = null,
-    val venueId: String
-)
+class VenueQuestionnaire {
+  val venues: List<VenueVote>? = null
+}

@@ -32,6 +32,14 @@ interface EventQuestionnaireContract {
     fun showChosenVenueSnackBar(venue: FirebasePlace, userId: String)
 
     fun getActivity(): Activity
+
+    fun showFilledDateQuestionnaire(date: String)
+
+    fun showDateChoserLayout()
+
+    fun showFilledVenueQuestionnaire(venue: FirebasePlace)
+
+    fun showVenueChoserLayout()
   }
 
   interface Presenter : MvpPresenter {
@@ -45,5 +53,9 @@ interface EventQuestionnaireContract {
     fun handleClickedActionButton(clickedActionButtonEvent: Observable<FirebasePlace>)
 
     fun removeChosenVenueFromEvent(venueId: String, userId: String)
+
+    fun clickedChangeDateButton()
+
+    fun clickedChangeVenueButton()
   }
 }

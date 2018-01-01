@@ -13,14 +13,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
+import com.example.marcin.meetfriends.extensions.transformDistance
 import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.mvp.BaseFragment
 import com.example.marcin.meetfriends.ui.common.PlaceIdParams
 import com.example.marcin.meetfriends.ui.event_detail.event_questionnaire.adapter.VenuesAdapter
 import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsActivity
 import com.example.marcin.meetfriends.utils.DateTimeFormatters
+import com.squareup.picasso.Picasso
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_event_questionnaire.*
+import kotlinx.android.synthetic.main.item_venue.*
 import org.joda.time.DateTime
 import org.joda.time.chrono.ISOChronology
 
@@ -52,6 +55,12 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
     venuesRecyclerView.adapter = venuesAdapter
     confirmDateSuggestionButton.setOnClickListener {
       presenter.sendDateVote(selectedDate)
+    }
+    changeDateVoteButton.setOnClickListener {
+      presenter.clickedChangeDateButton()
+    }
+    changeVenueVoteButton.setOnClickListener {
+      presenter.clickedChangeVenueButton()
     }
   }
 
@@ -103,6 +112,36 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
         .setAction(getString(R.string.undo), {
           presenter.removeChosenVenueFromEvent(venue.id.let { it!! }, userId)
         }).show()
+  }
+
+  override fun showFilledDateQuestionnaire(date: String) {
+    dateChooserLayout.visibility = View.INVISIBLE
+    filledDateLayout.visibility = View.VISIBLE
+    chosenDateTextView.text = getString(R.string.your_vote_for_event_date, date)
+  }
+
+  override fun showFilledVenueQuestionnaire(venue: FirebasePlace) {
+    venuesRecyclerView.visibility = View.GONE
+    filledVenueLayout.visibility = View.VISIBLE
+    venueNameTextView.text = venue.name
+    distanceTextView.text = venue.distance?.transformDistance(context)
+    ratingTextView.text = venue.rating.toString()
+    venueVicinityTextView.text = venue.vicinity
+    if (venue.photos.isNotEmpty()) {
+      Picasso.with(context).load(venue.photos.first()).placeholder(context.getDrawable(R.drawable.placeholder)).into(venueImage)
+    } else {
+      Picasso.with(context).load(venue.placeIcon).placeholder(context.getDrawable(R.drawable.placeholder)).into(venueImage)
+    }
+  }
+
+  override fun showDateChoserLayout() {
+    filledDateLayout.visibility = View.INVISIBLE
+    dateChooserLayout.visibility = View.VISIBLE
+  }
+
+  override fun showVenueChoserLayout() {
+    filledVenueLayout.visibility = View.GONE
+    venuesRecyclerView.visibility = View.VISIBLE
   }
 
   override fun startPlaceDetailsActivity(placeIdParams: PlaceIdParams) {

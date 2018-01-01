@@ -58,7 +58,9 @@ class PlaceDetailsActivity : BaseActivity<PlaceDetailsContract.Presenter>(), Pla
     }
     toolbar.title = placeDetails.name
     setSupportActionBar(toolbar)
-    reviewRecyclerView.adapter = ReviewAdapter(placeDetails.reviews)
+    if (placeDetails.reviews != null && placeDetails.reviews.isNotEmpty()) {
+      reviewRecyclerView.adapter = ReviewAdapter(placeDetails.reviews)
+    }
   }
 
   override fun startGoogleMaps(placeLocation: Location) {

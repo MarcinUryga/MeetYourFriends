@@ -1,9 +1,8 @@
 package com.example.marcin.meetfriends.models
 
 /**
- * Created by marci on 2017-12-12.
+ * Created by marci on 2018-01-01.
  */
-data class DateQuestionnaire(
-    val userId: String,
-    val timestamp: String
-)
+class DateQuestionnaire {
+  val date: List<DateVote>? = null
+}

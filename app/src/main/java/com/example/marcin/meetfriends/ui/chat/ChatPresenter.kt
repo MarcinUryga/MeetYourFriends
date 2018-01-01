@@ -111,7 +111,7 @@ class ChatPresenter @Inject constructor(
             .child(Constants.FIREBASE_EVENTS)
             .child(getEventBasicInfoParams.event.id)
             .child(Constants.FIREBASE_QUESTIONNAIRE)
-            .child(Constants.FIREBASE_DATE)
+            .child(Constants.FIREBASE_DATE_QUESTIONNAIRE)
             .child(auth.currentUser?.uid.let { it!! }), selectedDate.millis.toString())
         .doFinally { view.showChosenDateSnackBar(selectedDate, auth.uid!!) }
         .subscribe()
@@ -122,7 +122,7 @@ class ChatPresenter @Inject constructor(
     firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS)
         .child(getEventBasicInfoParams.event.id)
         .child(Constants.FIREBASE_QUESTIONNAIRE)
-        .child(Constants.FIREBASE_DATE)
+        .child(Constants.FIREBASE_DATE_QUESTIONNAIRE)
         .orderByValue()
         .addListenerForSingleValueEvent(object : ValueEventListener {
           override fun onDataChange(dataSnapshot: DataSnapshot) {

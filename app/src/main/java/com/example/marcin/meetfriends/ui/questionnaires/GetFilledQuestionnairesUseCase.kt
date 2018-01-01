@@ -1,6 +1,6 @@
 package com.example.marcin.meetfriends.ui.questionnaires
 
-import com.example.marcin.meetfriends.models.DateQuestionnaire
+import com.example.marcin.meetfriends.models.Questionnaire
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseDatabase
@@ -14,19 +14,14 @@ class GetFilledQuestionnairesUseCase @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) {
 
-  fun get(eventId: String): Maybe<MutableList<DateQuestionnaire>> {
+  fun get(eventId: String): Maybe<Any> {
     return RxFirebaseDatabase.observeSingleValueEvent(
         firebaseDatabase.reference
             .child(Constants.FIREBASE_EVENTS)
             .child(eventId)
-            .child(Constants.FIREBASE_QUESTIONNAIRE)
-            .child(Constants.FIREBASE_DATE))
+            .child(Constants.FIREBASE_QUESTIONNAIRE))
     { dataSnapshot ->
-      val dateQuestionnaires = mutableListOf<DateQuestionnaire>()
-      dataSnapshot.children.forEach {
-        dateQuestionnaires.add(DateQuestionnaire(it.key, it.value.toString()))
-      }
-      return@observeSingleValueEvent dateQuestionnaires
+      return@observeSingleValueEvent dataSnapshot.getValue(Questionnaire::class.java) ?: -1
     }
   }
 }
