@@ -74,11 +74,15 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
   }
 
   override fun showProgressBar() {
-    progressBar.visibility = View.VISIBLE
+    if (progressBar != null) {
+      progressBar.visibility = View.VISIBLE
+    }
   }
 
   override fun hideProgressBar() {
-    progressBar.visibility = View.INVISIBLE
+    if (progressBar != null) {
+      progressBar.visibility = View.INVISIBLE
+    }
   }
 
   override fun showChosenDateSnackBar(selectedDate: DateTime, userId: String) {
