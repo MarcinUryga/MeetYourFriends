@@ -67,6 +67,9 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
     dateTimeChartsButton.setOnClickListener {
       presenter.clickedChartsButton()
     }
+    venueCardView.setOnClickListener {
+      presenter.onClickSelectedVenue()
+    }
   }
 
   override fun initializeVenuesAdapter(venues: List<FirebasePlace>) {
@@ -87,15 +90,27 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
         .show()
   }
 
-  override fun showProgressBar() {
-    if (progressBar != null) {
-      progressBar.visibility = View.VISIBLE
+  override fun showDateSectionProgressBar() {
+    dateSectionProgressBar.visibility = View.VISIBLE
+  }
+
+  override fun hideDateSectionProgressBar() {
+    dateSectionProgressBar.visibility = View.INVISIBLE
+  }
+
+  override fun showDateChooserLayout() {
+    dateChooserLayout.visibility = View.VISIBLE
+  }
+
+  override fun showVenuesSectionProgressBar() {
+    if (venuesSectionProgressBar != null) {
+      venuesSectionProgressBar.visibility = View.VISIBLE
     }
   }
 
-  override fun hideProgressBar() {
-    if (progressBar != null) {
-      progressBar.visibility = View.INVISIBLE
+  override fun hideVenuesSectionProgressBar() {
+    if (venuesSectionProgressBar != null) {
+      venuesSectionProgressBar.visibility = View.INVISIBLE
     }
   }
 

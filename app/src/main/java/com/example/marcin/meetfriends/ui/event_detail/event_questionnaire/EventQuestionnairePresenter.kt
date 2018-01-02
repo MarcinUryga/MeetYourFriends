@@ -5,6 +5,7 @@ import com.example.marci.googlemaps.pojo.Location
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.DateVote
 import com.example.marcin.meetfriends.models.FirebasePlace
+import com.example.marcin.meetfriends.models.Questionnaire
 import com.example.marcin.meetfriends.models.VenueVote
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.ui.common.*
@@ -32,7 +33,8 @@ class EventQuestionnairePresenter @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
     private val eventBasicInfoParams: EventBasicInfoParams,
     private val getNearbyPlacesUseCase: GetNearbyPlacesUseCase,
-    private val getDeviceLocationUseCase: GetDeviceLocationUseCase
+    private val getDeviceLocationUseCase: GetDeviceLocationUseCase,
+    private val getFilledQuestionnairesUseCase: GetFilledQuestionnairesUseCase
 ) : BasePresenter<EventQuestionnaireContract.View>(), EventQuestionnaireContract.Presenter {
 
   private var currentLocation = Location(0.0, 0.0)
@@ -48,48 +50,63 @@ class EventQuestionnairePresenter @Inject constructor(
   override fun resume() {
     super.resume()
     view.setUpAdapterListeners()
-    checkFilledDateQuestionnaire()
-    checkFilledVenueQuestionnaire()
+    checkFilledQuestionnaire()
   }
 
   override fun clickedChartsButton() {
     view.startChartsDialogFragment(EventIdParams(eventBasicInfoParams.event.id.let { it!! }))
   }
 
-  private fun checkFilledDateQuestionnaire() {
-    val disposable = RxFirebaseDatabase
-        .observeChildEvent(firebaseDatabase.reference
-            .child(Constants.FIREBASE_EVENTS)
-            .child(eventBasicInfoParams.event.id)
-            .child(Constants.FIREBASE_QUESTIONNAIRE)
-            .child(Constants.FIREBASE_DATE_QUESTIONNAIRE))
+  override fun onClickSelectedVenue() {
+//    view.startPlaceDetailsActivity(PlaceIdParams(placeId = place.id.let { it!! }))
+  }
+
+  private fun checkFilledQuestionnaire() {
+    val disposable = getFilledQuestionnairesUseCase.get(eventBasicInfoParams.event.id.let { it!! })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe({ dataSnapshot ->
-          val vote = dataSnapshot.value.getValue(DateVote::class.java).let { it!! }
-          if (vote.userId == auth.currentUser?.uid.let { it!! }) {
-            view.showFilledDateQuestionnaire(DateTime(vote.timestamp?.toLong()))
+        .doOnSubscribe { showQuestionnairesProgressBars() }
+        .doFinally { hideQuestionnairesProgressBars() }
+        .subscribe({ questionnaires ->
+          if (ifQuestionnairesExisting(questionnaires)) {
+            checkDateQuestionnaire(questionnaires)
+            checkVenueQuestionnaire(questionnaires)
+          } else {
+            view.showDateChooserLayout()
+            view.showVenueChoserLayout()
           }
         })
     disposables?.add(disposable)
   }
 
-  private fun checkFilledVenueQuestionnaire() {
-    val disposable = RxFirebaseDatabase
-        .observeChildEvent(firebaseDatabase.reference
-            .child(Constants.FIREBASE_EVENTS)
-            .child(eventBasicInfoParams.event.id)
-            .child(Constants.FIREBASE_QUESTIONNAIRE)
-            .child(Constants.FIREBASE_VENUE_QUESTIONNAIRE))
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe({ dataSnapshot ->
-          val venue = dataSnapshot.value.getValue(VenueVote::class.java).let { it!! }
-          if (venue.userId == auth.currentUser?.uid.let { it!! }) {
-            view.showFilledVenueQuestionnaire(venuesList.first { it.id == venue.venueId })
-          }
-        })
-    disposables?.add(disposable)
+  private fun checkVenueQuestionnaire(questionnaires: Any) {
+    val currentUserVenueVote = (questionnaires as Questionnaire).venueQuestionnaire?.values?.firstOrNull { it.userId == auth.currentUser?.uid }
+    if (currentUserVenueVote != null) {
+      view.showFilledVenueQuestionnaire(venuesList.first { it.id == currentUserVenueVote?.venueId })
+    } else {
+      view.showVenueChoserLayout()
+    }
+  }
+
+  private fun checkDateQuestionnaire(questionnaires: Any) {
+    val currentUserDateVote = (questionnaires as Questionnaire).dateQuestionnaire?.values?.firstOrNull { it.userId == auth.currentUser?.uid }
+    if (currentUserDateVote != null) {
+      view.showFilledDateQuestionnaire(DateTime(currentUserDateVote.timestamp?.toLong()))
+    } else {
+      view.showDateChooserLayout()
+    }
+  }
+
+  private fun ifQuestionnairesExisting(questionnaires: Any) = questionnaires != -1
+
+  private fun hideQuestionnairesProgressBars() {
+    view.hideDateSectionProgressBar()
+    view.hideVenuesSectionProgressBar()
+  }
+
+  private fun showQuestionnairesProgressBars() {
+    view.showDateSectionProgressBar()
+    view.showVenuesSectionProgressBar()
   }
 
   fun getCurrentLocation() {
@@ -120,9 +137,9 @@ class EventQuestionnairePresenter @Inject constructor(
         .getDistanceMatrix("${currentLocation.lat},${currentLocation.lng}", venue.latLng.let { it!! })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe { view.showProgressBar() }
+        .doOnSubscribe { view.showVenuesSectionProgressBar() }
         .doFinally {
-          view.hideProgressBar()
+          view.hideVenuesSectionProgressBar()
           view.initializeVenuesAdapter(venuesList.sortedBy { it.distance?.value })
         }
         .subscribe({ distance ->
@@ -143,7 +160,10 @@ class EventQuestionnairePresenter @Inject constructor(
                 userId = auth.currentUser?.uid,
                 timestamp = selectedDate.millis.toString())
         )
-        .doFinally { view.showChosenDateSnackBar(selectedDate, auth.uid!!) }
+        .doFinally {
+          view.showChosenDateSnackBar(selectedDate, auth.uid!!)
+          view.showFilledDateQuestionnaire(selectedDate)
+        }
         .subscribe()
     disposables?.add(disposable)
   }
@@ -216,7 +236,10 @@ class EventQuestionnairePresenter @Inject constructor(
                 userId = auth.currentUser?.uid.let { it!! },
                 venueId = venue.id.let { it!! })
         )
-        .doFinally { view.showChosenVenueSnackBar(venue, auth.uid!!) }
+        .doFinally {
+          view.showChosenVenueSnackBar(venue, auth.uid!!)
+          view.showFilledVenueQuestionnaire(venue)
+        }
         .subscribe()
     disposables?.add(disposable)
   }

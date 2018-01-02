@@ -39,7 +39,7 @@ abstract class BaseFragmentDialog<P : MvpPresenter> : DialogFragment() {
   }
 
   override fun dismiss() {
-    super.dismiss()
+//    super.dismiss()
     dialog.dismiss()
   }
 

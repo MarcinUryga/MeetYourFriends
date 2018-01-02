@@ -22,9 +22,15 @@ interface EventQuestionnaireContract {
 
     fun setUpAdapterListeners()
 
-    fun showProgressBar()
+    fun showDateSectionProgressBar()
 
-    fun hideProgressBar()
+    fun hideDateSectionProgressBar()
+
+    fun showDateChooserLayout()
+
+    fun showVenuesSectionProgressBar()
+
+    fun hideVenuesSectionProgressBar()
 
     fun buildAlertMessageNoGps()
 
@@ -62,5 +68,7 @@ interface EventQuestionnaireContract {
     fun clickedChangeVenueButton()
 
     fun clickedChartsButton()
+
+    fun onClickSelectedVenue()
   }
 }
