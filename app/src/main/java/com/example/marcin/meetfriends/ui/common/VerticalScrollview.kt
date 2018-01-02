@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.create_event
+package com.example.marcin.meetfriends.ui.common
 
 /**
  * Created by marci on 2017-12-14.

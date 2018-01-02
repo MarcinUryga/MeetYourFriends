@@ -1,10 +1,7 @@
 package com.example.marcin.meetfriends.ui.charts
 
 import com.example.marcin.meetfriends.di.ScreenScope
-import com.example.marcin.meetfriends.models.ChartRow
-import com.example.marcin.meetfriends.models.DateVote
-import com.example.marcin.meetfriends.models.Questionnaire
-import com.example.marcin.meetfriends.models.Voter
+import com.example.marcin.meetfriends.models.*
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.common.GetFilledQuestionnairesUseCase
@@ -21,6 +18,7 @@ import javax.inject.Inject
 class ChartsPresenter @Inject constructor(
     private val getFilledQuestionnairesUseCase: GetFilledQuestionnairesUseCase,
     private val getFriendsFromFirebase: GetFriendsFromFirebase,
+    private val getEventVenuesUseCase: GetEventVenuesUseCase,
     private val firebaseDatabase: FirebaseDatabase,
     private val eventIdParams: EventIdParams
 ) : BasePresenter<ChartsContract.View>(), ChartsContract.Presenter {
@@ -31,44 +29,98 @@ class ChartsPresenter @Inject constructor(
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ questionnaires ->
-          val chartRows = mutableListOf<ChartRow>()
-          var users = mutableListOf<Voter>()
           if (questionnaires != -1) {
-            val dateQuestionnaires = (questionnaires as Questionnaire).dateQuestionnaire?.mapNotNull { it.value }?.sortedBy { it.timestamp }
-            var chartRow = ChartRow("", emptyList())
-            dateQuestionnaires?.forEach { dateVote ->
-              if (isTheSameDateInVoting(chartRow, dateVote)) {
-                addUserToChartRow(users, dateVote, chartRows, chartRow)
-              } else {
-                users = mutableListOf(Voter(userId = dateVote.userId.let { it!! }))
-                chartRow = ChartRow(dateVote.timestamp.let { it!! }, users)
-                chartRows.add(chartRow)
-              }
-            }
-            getVotersData(chartRows.sortedBy { it.timestamp })
+            getDateQuestionnaires((questionnaires as Questionnaire).dateQuestionnaire?.mapNotNull { it.value }?.sortedBy { it.timestamp }.let { it!! })
+            getVenueQuestionnaires(questionnaires.venueQuestionnaire?.mapNotNull { it.value }?.sortedBy { it.venueId }.let { it!! })
           }
         })
     disposables?.add(disposable)
   }
 
-  private fun getVotersData(chartRows: List<ChartRow>) {
+  private fun getDateQuestionnaires(dateVotes: List<DateVote>) {
+    val chartRows = mutableListOf<DateRow>()
+    var users = mutableListOf<Voter>()
+    var chartRow = DateRow("", emptyList())
+    dateVotes.forEach { dateVote ->
+      if (isTheSameDateInVoting(chartRow, dateVote)) {
+        chartRows.first { isRightDateRow(it, chartRow) }.voters = addUserToList(users, dateVote.userId.let { it!! })
+      } else {
+        users = mutableListOf(Voter(userId = dateVote.userId.let { it!! }))
+        chartRow = DateRow(dateVote.timestamp.let { it!! }, users)
+        chartRows.add(chartRow)
+      }
+    }
+    getDateVotersData(chartRows.sortedBy { it.timestamp })
+  }
+
+  private fun isTheSameDateInVoting(dateRow: DateRow, dateVote: DateVote) = dateRow.timestamp == dateVote.timestamp
+
+  private fun isRightDateRow(dateRow: DateRow, chartRow: DateRow) = dateRow.timestamp == chartRow.timestamp
+
+  private fun getDateVotersData(dateRows: List<DateRow>) {
     val disposable = getFriendsFromFirebase.get()
+        .doFinally { view.hideDateQuestionnaireProgressBar() }
         .subscribe({ users ->
-          chartRows.forEach { rows ->
+          dateRows.forEach { rows ->
             val voters = users.filter { user -> rows.voters.any { it.userId == user.uid } }
             rows.voters.forEach { voter ->
               voter.userPhotoUrl = voters.first { it.uid == voter.userId }.photoUrl.let { it!! }
             }
           }
-          view.showQuestionnairesResult(chartRows)
+          view.showDateQuestionnairesResult(dateRows)
         })
     disposables?.add(disposable)
   }
 
-  private fun addUserToChartRow(users: MutableList<Voter>, dateVote: DateVote, chartRows: MutableList<ChartRow>, chartRow: ChartRow) {
-    users.add(Voter(userId = dateVote.userId.let { it!! }))
-    chartRows.first { it.timestamp == chartRow.timestamp }.voters = users
+  private fun getVenueQuestionnaires(venueVotes: List<VenueVote>) {
+    val chartRows = mutableListOf<VenueRow>()
+    var users = mutableListOf<Voter>()
+    var chartRow = VenueRow(FirebasePlace(), emptyList())
+    venueVotes.forEach { venueVote ->
+      if (isTheSameVenueInVoting(chartRow, venueVote)) {
+        chartRows.first { isRightVenueRow(it, chartRow) }.voters = addUserToList(users, venueVote.userId.let { it!! })
+      } else {
+        users = mutableListOf(Voter(userId = venueVote.userId.let { it!! }))
+        chartRow = VenueRow(FirebasePlace(id = venueVote.venueId.let { it!! }), users)
+        chartRows.add(chartRow)
+      }
+    }
+    getVenueVotersData(chartRows)
   }
 
-  private fun isTheSameDateInVoting(chartRow: ChartRow, dateVote: DateVote) = chartRow.timestamp == dateVote.timestamp
+  private fun isTheSameVenueInVoting(venueRow: VenueRow, venueVote: VenueVote) = venueRow.venue.id == venueVote.venueId
+
+  private fun isRightVenueRow(venueRow: VenueRow, chartRow: VenueRow) = venueRow.venue.id == chartRow.venue.id
+
+  private fun getVenueVotersData(venueRows: List<VenueRow>) {
+    val disposable = getFriendsFromFirebase.get()
+        .subscribe({ users ->
+          venueRows.forEach { rows ->
+            val voters = users.filter { user -> rows.voters.any { it.userId == user.uid } }
+            rows.voters.forEach { voter ->
+              voter.userPhotoUrl = voters.first { it.uid == voter.userId }.photoUrl.let { it!! }
+            }
+          }
+          getVenueData(venueRows)
+        })
+    disposables?.add(disposable)
+  }
+
+  private fun getVenueData(venueRows: List<VenueRow>) {
+    val disposable = getEventVenuesUseCase.get(eventIdParams.eventId)
+        .doFinally { view.hideVenueQuestionnaireProgressBar() }
+        .subscribe({ venues ->
+          val venuesList = venues.filter { venue -> venueRows.any { venue.id == it.venue.id } }
+          venueRows.forEach { venueRow ->
+            venueRow.venue = venuesList.first { it.id == venueRow.venue.id }
+          }
+          view.showVenueQuestionnairesResult(venueRows)
+        })
+    disposables?.add(disposable)
+  }
+
+  private fun addUserToList(users: MutableList<Voter>, userId: String): MutableList<Voter> {
+    users.add(Voter(userId = userId))
+    return users
+  }
 }

@@ -10,7 +10,7 @@ import javax.inject.Inject
 /**
  * Created by marci on 2017-12-30.
  */
-class GetEventVenuesUseCase @Inject constructor(
+class GetEventVenueVotesUseCase @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) {
 

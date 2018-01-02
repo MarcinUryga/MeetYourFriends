@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.event_detail.EventDetailActivity">
 
-    <com.example.marcin.meetfriends.ui.create_event.VerticalScrollview
+    <com.example.marcin.meetfriends.ui.common.VerticalScrollview
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minWidth="300dp"
@@ -165,7 +165,7 @@
 
         </LinearLayout>
 
-    </com.example.marcin.meetfriends.ui.create_event.VerticalScrollview>
+    </com.example.marcin.meetfriends.ui.common.VerticalScrollview>
 
 
 </android.support.design.widget.CoordinatorLayout>

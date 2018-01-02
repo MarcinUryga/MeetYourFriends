@@ -1,6 +1,7 @@
 package com.example.marcin.meetfriends.ui.charts
 
-import com.example.marcin.meetfriends.models.ChartRow
+import com.example.marcin.meetfriends.models.DateRow
+import com.example.marcin.meetfriends.models.VenueRow
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
 
@@ -11,7 +12,17 @@ interface ChartsContract {
 
   interface View : MvpView {
 
-    fun showQuestionnairesResult(chartRowsList: List<ChartRow>)
+    fun showDateQuestionnaireProgressBar()
+
+    fun hideDateQuestionnaireProgressBar()
+
+    fun showVenueQuestionnaireProgressBar()
+
+    fun hideVenueQuestionnaireProgressBar()
+
+    fun showDateQuestionnairesResult(dateRowsList: List<DateRow>)
+
+    fun showVenueQuestionnairesResult(venueRowsList: List<VenueRow>)
   }
 
   interface Presenter : MvpPresenter {

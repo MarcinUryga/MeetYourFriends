@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.charts.adapter
+package com.example.marcin.meetfriends.ui.charts.adapter.voters
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

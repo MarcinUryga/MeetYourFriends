@@ -8,9 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import com.example.marcin.meetfriends.R
-import com.example.marcin.meetfriends.models.ChartRow
+import com.example.marcin.meetfriends.models.DateRow
+import com.example.marcin.meetfriends.models.VenueRow
 import com.example.marcin.meetfriends.mvp.BaseFragmentDialog
-import com.example.marcin.meetfriends.ui.charts.adapter.DateQuestionnaireAdapter
+import com.example.marcin.meetfriends.ui.charts.adapter.chart.ChartAdapter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_charts.*
 
@@ -19,7 +20,8 @@ import kotlinx.android.synthetic.main.fragment_charts.*
  */
 class ChartsDialogFragment : BaseFragmentDialog<ChartsContract.Presenter>(), ChartsContract.View {
 
-  private val dateQuestionnaireAdapter = DateQuestionnaireAdapter()
+  private val dateQuestionnaireAdapter = ChartAdapter()
+  private val venueQuestionnaireAdapter = ChartAdapter()
 
   override fun onAttach(context: Context?) {
     AndroidSupportInjection.inject(this)
@@ -35,9 +37,31 @@ class ChartsDialogFragment : BaseFragmentDialog<ChartsContract.Presenter>(), Cha
     super.onViewCreated(view, savedInstanceState)
     dateQuestionnaireRecyclerView.layoutManager = LinearLayoutManager(context)
     dateQuestionnaireRecyclerView.adapter = dateQuestionnaireAdapter
+    venueQuestionnaireRecyclerView.layoutManager = LinearLayoutManager(context)
+    venueQuestionnaireRecyclerView.adapter = venueQuestionnaireAdapter
   }
 
-  override fun showQuestionnairesResult(chartRowsList: List<ChartRow>) {
-    dateQuestionnaireAdapter.initChartRowsList(chartRowsList)
+  override fun showDateQuestionnaireProgressBar() {
+    dateChartProgressBar.visibility = View.VISIBLE
+  }
+
+  override fun hideDateQuestionnaireProgressBar() {
+    dateChartProgressBar.visibility = View.INVISIBLE
+  }
+
+  override fun showVenueQuestionnaireProgressBar() {
+    venuesChartProgressBar.visibility = View.VISIBLE
+  }
+
+  override fun hideVenueQuestionnaireProgressBar() {
+    venuesChartProgressBar.visibility = View.INVISIBLE
+  }
+
+  override fun showDateQuestionnairesResult(dateRowsList: List<DateRow>) {
+    dateQuestionnaireAdapter.initChartRowsList(dateRowsList)
+  }
+
+  override fun showVenueQuestionnairesResult(venueRowsList: List<VenueRow>) {
+    venueQuestionnaireAdapter.initChartRowsList(venueRowsList)
   }
 }
