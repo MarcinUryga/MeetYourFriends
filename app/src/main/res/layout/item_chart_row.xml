@@ -8,10 +8,10 @@
 
     <TextView
         android:id="@+id/dateVote"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:maxLines="2"
-        tools:text="18:45 24.05.2017" />
+        tools:text="02.01.2018 2:58 PM" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/votersRecyclerView"
