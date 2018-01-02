@@ -3,6 +3,7 @@ package com.example.marcin.meetfriends.ui.friends
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.ui.common.EventIdParams
+import com.example.marcin.meetfriends.ui.common.GetFriendsFromFirebase
 import com.example.marcin.meetfriends.ui.friends.viewmodel.Friend
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.database.DataSnapshot

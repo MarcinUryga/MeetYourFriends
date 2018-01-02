@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.friends
+package com.example.marcin.meetfriends.ui.common
 
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.utils.Constants

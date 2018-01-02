@@ -16,6 +16,8 @@ import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.extensions.transformDistance
 import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.mvp.BaseFragment
+import com.example.marcin.meetfriends.ui.charts.ChartsDialogFragment
+import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.common.PlaceIdParams
 import com.example.marcin.meetfriends.ui.event_detail.event_questionnaire.adapter.VenuesAdapter
 import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsActivity
@@ -62,6 +64,9 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
     changeVenueVoteButton.setOnClickListener {
       presenter.clickedChangeVenueButton()
     }
+    dateTimeChartsButton.setOnClickListener {
+      presenter.clickedChartsButton()
+    }
   }
 
   override fun initializeVenuesAdapter(venues: List<FirebasePlace>) {
@@ -97,7 +102,7 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
   override fun showChosenDateSnackBar(selectedDate: DateTime, userId: String) {
     Snackbar.make(
         this.snackBarContainer,
-        getString(R.string.chosen_date, "${DateTimeFormatters.formatToShortDate(selectedDate)} ${DateTimeFormatters.formatToShortTime(selectedDate)}"),
+        getString(R.string.chosen_date, DateTimeFormatters.formatToShortTimeDate(selectedDate)),
         Snackbar.LENGTH_LONG)
         .setAction(getString(R.string.undo), {
           presenter.removeChosenDateFromEvent(selectedDate, userId)
@@ -114,10 +119,10 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
         }).show()
   }
 
-  override fun showFilledDateQuestionnaire(date: String) {
+  override fun showFilledDateQuestionnaire(date: DateTime) {
     dateChooserLayout.visibility = View.INVISIBLE
     filledDateLayout.visibility = View.VISIBLE
-    chosenDateTextView.text = getString(R.string.your_vote_for_event_date, date)
+    chosenDateTextView.text = getString(R.string.your_vote_for_event_date, DateTimeFormatters.formatToShortTimeDate(selectedDate))
   }
 
   override fun showFilledVenueQuestionnaire(venue: FirebasePlace) {
@@ -146,6 +151,12 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
 
   override fun startPlaceDetailsActivity(placeIdParams: PlaceIdParams) {
     startActivity(PlaceDetailsActivity.newIntent(context, placeIdParams))
+  }
+
+  override fun startChartsDialogFragment(eventIdParams: EventIdParams) {
+    val chartsDialogFragment = ChartsDialogFragment()
+    chartsDialogFragment.arguments = eventIdParams.data
+    chartsDialogFragment.show(activity.supportFragmentManager, ChartsDialogFragment::class.java.toString())
   }
 
   private fun setUpDateChooserButton() {

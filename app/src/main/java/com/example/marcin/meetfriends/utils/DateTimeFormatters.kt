@@ -23,4 +23,8 @@ object DateTimeFormatters {
   fun formatToShortTime(dateTime: DateTime): String {
     return shortTimeFormatter.print(dateTime)
   }
+
+  fun formatToShortTimeDate(dateTime: DateTime): String {
+    return "${DateTimeFormatters.formatToShortDate(dateTime)} ${DateTimeFormatters.formatToShortTime(dateTime)}"
+  }
 }

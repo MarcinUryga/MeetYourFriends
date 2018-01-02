@@ -54,7 +54,7 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
   override fun showChosenDateSnackBar(selectedDate: DateTime, userId: String) {
     Snackbar.make(
         this.snackBarContainer,
-        getString(R.string.chosen_date, "${DateTimeFormatters.formatToShortDate(selectedDate)} ${DateTimeFormatters.formatToShortTime(selectedDate)}"),
+        getString(R.string.chosen_date, DateTimeFormatters.formatToShortTimeDate(selectedDate)),
         Snackbar.LENGTH_LONG)
         .setAction(getString(R.string.undo), {
           presenter.removeChosenDateFromEvent(selectedDate, userId)

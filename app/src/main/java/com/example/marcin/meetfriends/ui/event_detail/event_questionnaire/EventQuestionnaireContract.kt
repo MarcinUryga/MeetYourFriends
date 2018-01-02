@@ -4,6 +4,7 @@ import android.app.Activity
 import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
+import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.common.PlaceIdParams
 import io.reactivex.Observable
 import org.joda.time.DateTime
@@ -33,13 +34,15 @@ interface EventQuestionnaireContract {
 
     fun getActivity(): Activity
 
-    fun showFilledDateQuestionnaire(date: String)
+    fun showFilledDateQuestionnaire(date: DateTime)
 
     fun showDateChoserLayout()
 
     fun showFilledVenueQuestionnaire(venue: FirebasePlace)
 
     fun showVenueChoserLayout()
+
+    fun startChartsDialogFragment(eventIdParams: EventIdParams)
   }
 
   interface Presenter : MvpPresenter {
@@ -57,5 +60,7 @@ interface EventQuestionnaireContract {
     fun clickedChangeDateButton()
 
     fun clickedChangeVenueButton()
+
+    fun clickedChartsButton()
   }
 }

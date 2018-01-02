@@ -38,6 +38,11 @@ abstract class BaseFragmentDialog<P : MvpPresenter> : DialogFragment() {
     presenter.stop()
   }
 
+  override fun dismiss() {
+    super.dismiss()
+    dialog.dismiss()
+  }
+
   override fun onDestroy() {
     super.onDestroy()
     presenter.destroy()

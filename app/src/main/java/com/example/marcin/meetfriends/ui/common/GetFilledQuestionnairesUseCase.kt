@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.questionnaires
+package com.example.marcin.meetfriends.ui.common
 
 import com.example.marcin.meetfriends.models.Questionnaire
 import com.example.marcin.meetfriends.utils.Constants

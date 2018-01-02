@@ -10,8 +10,7 @@
         android:layout_height="72dp"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:src="@drawable/circle_charts_icon"
-        android:visibility="gone" />
+        android:src="@drawable/circle_charts_icon" />
 
     <LinearLayout
         android:id="@+id/dateHeader"

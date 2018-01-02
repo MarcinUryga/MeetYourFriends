@@ -45,8 +45,4 @@ class ChooseEventIconDialogFragment : BaseFragmentDialog<ChooseEventIconContract
     }
 //    eventIconsGridView.onItemClickListener = OnItemClickListener { adapterView, view, i, l ->  }
   }
-
-  override fun dismiss() {
-    dialog.dismiss()
-  }
 }

@@ -7,12 +7,8 @@ import com.example.marcin.meetfriends.models.DateVote
 import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.models.VenueVote
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.common.GetDeviceLocationUseCase
-import com.example.marcin.meetfriends.ui.common.GetNearbyPlacesUseCase
-import com.example.marcin.meetfriends.ui.common.PlaceIdParams
+import com.example.marcin.meetfriends.ui.common.*
 import com.example.marcin.meetfriends.utils.Constants
-import com.example.marcin.meetfriends.utils.DateTimeFormatters
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -56,6 +52,10 @@ class EventQuestionnairePresenter @Inject constructor(
     checkFilledVenueQuestionnaire()
   }
 
+  override fun clickedChartsButton() {
+    view.startChartsDialogFragment(EventIdParams(eventBasicInfoParams.event.id.let { it!! }))
+  }
+
   private fun checkFilledDateQuestionnaire() {
     val disposable = RxFirebaseDatabase
         .observeChildEvent(firebaseDatabase.reference
@@ -68,7 +68,7 @@ class EventQuestionnairePresenter @Inject constructor(
         .subscribe({ dataSnapshot ->
           val vote = dataSnapshot.value.getValue(DateVote::class.java).let { it!! }
           if (vote.userId == auth.currentUser?.uid.let { it!! }) {
-            view.showFilledDateQuestionnaire(DateTimeFormatters.formatToShortDate(DateTime(vote.timestamp?.toLong())))
+            view.showFilledDateQuestionnaire(DateTime(vote.timestamp?.toLong()))
           }
         })
     disposables?.add(disposable)
@@ -138,7 +138,11 @@ class EventQuestionnairePresenter @Inject constructor(
             .child(eventBasicInfoParams.event.id)
             .child(Constants.FIREBASE_QUESTIONNAIRE)
             .child(Constants.FIREBASE_DATE_QUESTIONNAIRE)
-            .child(auth.currentUser?.uid.let { it!! }), DateVote(auth.currentUser?.uid.let { it!! }, selectedDate.millis.toString()))
+            .child(auth.currentUser?.uid.let { it!! }),
+            DateVote(
+                userId = auth.currentUser?.uid,
+                timestamp = selectedDate.millis.toString())
+        )
         .doFinally { view.showChosenDateSnackBar(selectedDate, auth.uid!!) }
         .subscribe()
     disposables?.add(disposable)
@@ -207,7 +211,11 @@ class EventQuestionnairePresenter @Inject constructor(
             .child(eventBasicInfoParams.event.id)
             .child(Constants.FIREBASE_QUESTIONNAIRE)
             .child(Constants.FIREBASE_VENUE_QUESTIONNAIRE)
-            .child(auth.currentUser?.uid.let { it!! }), VenueVote(auth.currentUser?.uid.let { it!! }, venue.id.let { it!! }))
+            .child(auth.currentUser?.uid.let { it!! }),
+            VenueVote(
+                userId = auth.currentUser?.uid.let { it!! },
+                venueId = venue.id.let { it!! })
+        )
         .doFinally { view.showChosenVenueSnackBar(venue, auth.uid!!) }
         .subscribe()
     disposables?.add(disposable)
