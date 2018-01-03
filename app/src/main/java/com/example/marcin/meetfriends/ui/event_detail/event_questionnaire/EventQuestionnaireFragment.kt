@@ -52,7 +52,6 @@ class EventQuestionnaireFragment : BaseFragment<EventQuestionnaireContract.Prese
     timeSuggestionTextView.text = getString(R.string.your_time_suggestion, DateTimeFormatters.formatToShortTime(selectedDate))
     setUpDateChooserButton()
     setUpTimeChooserButton()
-//    presenter.getCurrentLocation(activity)
     venuesRecyclerView.layoutManager = GridLayoutManager(context, 2)
     venuesRecyclerView.adapter = venuesAdapter
     confirmDateSuggestionButton.setOnClickListener {

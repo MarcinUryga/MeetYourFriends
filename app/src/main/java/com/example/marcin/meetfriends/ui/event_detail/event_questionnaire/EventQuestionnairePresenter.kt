@@ -32,6 +32,7 @@ class EventQuestionnairePresenter @Inject constructor(
     private val locationManager: LocationManager,
     private val firebaseDatabase: FirebaseDatabase,
     private val eventBasicInfoParams: EventBasicInfoParams,
+    private val selectedVenueStorage: SelectedVenueStorage,
     private val getNearbyPlacesUseCase: GetNearbyPlacesUseCase,
     private val getDeviceLocationUseCase: GetDeviceLocationUseCase,
     private val getFilledQuestionnairesUseCase: GetFilledQuestionnairesUseCase
@@ -58,7 +59,7 @@ class EventQuestionnairePresenter @Inject constructor(
   }
 
   override fun onClickSelectedVenue() {
-//    view.startPlaceDetailsActivity(PlaceIdParams(placeId = place.id.let { it!! }))
+    view.startPlaceDetailsActivity(PlaceIdParams(placeId = selectedVenueStorage.get(eventBasicInfoParams.event.id.let { it!! }).let { it!! }))
   }
 
   private fun checkFilledQuestionnaire() {
@@ -237,6 +238,7 @@ class EventQuestionnairePresenter @Inject constructor(
                 venueId = venue.id.let { it!! })
         )
         .doFinally {
+          selectedVenueStorage.add(eventBasicInfoParams.event.id.let { it!! }, venue.id.let { it!! })
           view.showChosenVenueSnackBar(venue, auth.uid!!)
           view.showFilledVenueQuestionnaire(venue)
         }
