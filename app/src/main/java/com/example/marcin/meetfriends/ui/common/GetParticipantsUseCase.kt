@@ -14,30 +14,30 @@ class GetParticipantsUseCase @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) {
 
-  fun getParticipantsIds(eventId: String): Maybe<MutableMap<String, String>> {
+  fun getParticipantsIds(participantsIds: List<String>): Maybe<List<User>> {
     return RxFirebaseDatabase.observeSingleValueEvent(
         firebaseDatabase.reference
-            .child(Constants.FIREBASE_EVENTS)
-            .child(eventId)
-            .child(Constants.FIREBASE_PARTICIPANTS))
+            .child(Constants.FIREBASE_USERS))
     { dataSnapshot ->
-      val participantsIds = mutableMapOf<String, String>()
-      dataSnapshot.children.forEach {
-        participantsIds.put(it.key, it.getValue(String::class.java).let { it!! })
-      }
-      return@observeSingleValueEvent participantsIds
+      val eventParticipants = mutableListOf<User>()
+      dataSnapshot.children
+          .filter { user ->
+            participantsIds.any { user.key == it }
+          }
+          .forEach {
+            eventParticipants.add(it.getValue(User::class.java).let { it!! })
+          }
+      return@observeSingleValueEvent eventParticipants
     }
   }
 
   fun getOrganizer(organizerId: String): Maybe<User> {
     return RxFirebaseDatabase.observeSingleValueEvent(
-        firebaseDatabase.reference.child(Constants.FIREBASE_USERS))
+        firebaseDatabase.reference
+            .child(Constants.FIREBASE_USERS)
+            .child(organizerId))
     { dataSnapshot ->
-      return@observeSingleValueEvent dataSnapshot.children
-          .firstOrNull {
-            it.key == organizerId
-          }?.getValue(User::class.java).let { it!! }
-
+      return@observeSingleValueEvent dataSnapshot.getValue(User::class.java).let { it!! }
     }
   }
 }

@@ -5,6 +5,7 @@ import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.EventIdParams
 
 /**
  * Created by marci on 2017-11-28.
@@ -31,7 +32,9 @@ interface EventDetailContract {
 
     fun hideFinishVotingButton()
 
-    fun startConfirmedEventActivity()
+    fun startConfirmedEventActivity(eventIdParams: EventIdParams)
+
+    fun showToast(message: String)
   }
 
   interface Presenter : MvpPresenter {

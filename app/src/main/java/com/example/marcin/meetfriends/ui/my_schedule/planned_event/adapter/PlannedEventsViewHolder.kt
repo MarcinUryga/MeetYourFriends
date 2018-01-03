@@ -17,10 +17,10 @@ class PlannedEventsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
   fun bind(event: Event) {
     Picasso.with(itemView.context).load(event.iconId.let { it!! }.toInt()).into(itemView.eventIcon)
     itemView.eventNameTextView.text = event.name
-    itemView.eventDateTextView.text = itemView.context.getString(
+    /*itemView.eventDateTextView.text = itemView.context.getString(
         R.string.date,
-        itemView.resources.getQuantityString(R.plurals.date, event.date?.toInt() ?: 1, event.date?.toInt() ?: 0)
-    )
+        itemView.resources.getQuantityString(R.plurals.date, event.date?.toInt()?: 1, event.date ?: 0)
+    )*/
     itemView.amountOfParticipantsTextView.text = itemView.context.getString(R.string.amount_of_participants, event.participants.size)
   }
 

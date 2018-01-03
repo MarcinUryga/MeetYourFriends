@@ -18,6 +18,8 @@ object Constants {
   const val FIREBASE_EVENT_DESCRIPTION = "description"
   const val FIREBASE_FINISHED_VOTING = "finishedVoting"
   const val FIREBASE_ID = "id"
+  const val FIREBASE_EVENT_DATE = "date"
+  const val FIREBASE_EVENT_VENUE = "venue"
 
   const val EVENT_ID = "eventId"
   const val EMPTY_VALUE = " "

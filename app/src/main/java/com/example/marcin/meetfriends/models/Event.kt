@@ -9,6 +9,7 @@ data class Event(
     val organizerId: String? = null,
     val name: String? = null,
     var date: String? = null,
+    var venue: String? = null,
     var description: String? = null,
     val participants: Map<String, String> = emptyMap(),
     val venues: List<FirebasePlace> = emptyList()

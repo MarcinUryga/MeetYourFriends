@@ -24,7 +24,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/venueImage"
+                android:id="@+id/eventImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:src="@drawable/ic_directions"
+        android:visibility="invisible"
         app:layout_anchor="@id/main.appbar"
         app:layout_anchorGravity="bottom|right|end" />
 </android.support.design.widget.CoordinatorLayout>
