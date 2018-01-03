@@ -1,11 +1,10 @@
-package com.example.marcin.meetfriends.ui.event_detail
+package com.example.marcin.meetfriends.ui.planned_event_detail
 
 import android.content.res.Resources
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.common.EventIdParams
 
 /**
  * Created by marci on 2017-11-28.
@@ -29,6 +28,10 @@ interface EventDetailContract {
     fun openDeleteButtonDialog(message: String)
 
     fun startMainActivity()
+
+    fun hideFinishVotingButton()
+
+    fun startConfirmedEventActivity()
   }
 
   interface Presenter : MvpPresenter {
@@ -42,5 +45,7 @@ interface EventDetailContract {
     fun onDeleteClicked(resources: Resources)
 
     fun deleteEvent()
+
+    fun clickedFinishVotingButton()
   }
 }

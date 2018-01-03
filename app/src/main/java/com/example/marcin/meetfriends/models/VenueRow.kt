@@ -5,5 +5,5 @@ package com.example.marcin.meetfriends.models
  */
 data class VenueRow(
     var venue: FirebasePlace,
-    override var voters: List<Voter>
-) : ChartRow(voters)
+    var voters: List<Voter>
+) : ChartRow

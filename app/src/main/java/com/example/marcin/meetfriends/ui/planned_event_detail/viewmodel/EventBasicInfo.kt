@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail.viewmodel
+package com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel
 
 import android.os.Parcel
 import android.os.Parcelable

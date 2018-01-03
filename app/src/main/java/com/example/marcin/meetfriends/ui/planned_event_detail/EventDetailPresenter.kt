@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail
+package com.example.marcin.meetfriends.ui.planned_event_detail
 
 import android.content.res.Resources
 import com.example.marcin.meetfriends.R
@@ -12,6 +12,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -31,6 +32,23 @@ class EventDetailPresenter @Inject constructor(
   val eventId = eventInfoParams.event.id.let { it!! }
   val organizerId = eventInfoParams.event.organizerId.let { it!! }
 
+  override fun onViewCreated() {
+    super.onViewCreated()
+    if (organizerId != auth.currentUser?.uid) {
+      view.hideFinishVotingButton()
+      val disposable = RxFirebaseDatabase.observeChildEvent(
+          firebaseDatabase.reference
+              .child(Constants.FIREBASE_EVENTS)
+              .child(eventId))
+          .subscribe({ event ->
+            if (event.key == Constants.FIREBASE_FINISHED_VOTING && event.value.getValue(Boolean::class.java) == true) {
+              view.startConfirmedEventActivity()
+            }
+          })
+      disposables?.add(disposable)
+    }
+  }
+
   override fun resume() {
     super.resume()
     loadEvent()
@@ -40,7 +58,6 @@ class EventDetailPresenter @Inject constructor(
     view.setUpToolbarEventName(eventInfoParams.event.name.let { it!! })
     view.setEventImage(eventInfoParams.event.iconId.let { it!! }.toInt())
     getEventOrganizer(organizerId)
-    //          getEventParticipants(event)
   }
 
   private fun getEventOrganizer(organizerId: String) {
@@ -50,6 +67,17 @@ class EventDetailPresenter @Inject constructor(
         .subscribe({ organizer ->
           view.setUpOrganizerData(organizer)
         })
+    disposables?.add(disposable)
+  }
+
+  override fun clickedFinishVotingButton() {
+    val disposable = RxFirebaseDatabase
+        .setValue(firebaseDatabase.reference
+            .child(Constants.FIREBASE_EVENTS)
+            .child(eventId)
+            .child(Constants.FIREBASE_FINISHED_VOTING), true)
+        .doFinally { view.startConfirmedEventActivity() }
+        .subscribe()
     disposables?.add(disposable)
   }
 
@@ -93,6 +121,5 @@ class EventDetailPresenter @Inject constructor(
             }
           })
     }
-
   }
 }

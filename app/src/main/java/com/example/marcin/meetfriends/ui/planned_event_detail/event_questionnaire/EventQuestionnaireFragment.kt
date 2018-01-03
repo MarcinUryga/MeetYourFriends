@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail.event_questionnaire
+package com.example.marcin.meetfriends.ui.planned_event_detail.event_questionnaire
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -19,7 +19,7 @@ import com.example.marcin.meetfriends.mvp.BaseFragment
 import com.example.marcin.meetfriends.ui.charts.ChartsDialogFragment
 import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.common.PlaceIdParams
-import com.example.marcin.meetfriends.ui.event_detail.event_questionnaire.adapter.VenuesAdapter
+import com.example.marcin.meetfriends.ui.planned_event_detail.event_questionnaire.adapter.VenuesAdapter
 import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsActivity
 import com.example.marcin.meetfriends.utils.DateTimeFormatters
 import com.squareup.picasso.Picasso

@@ -6,7 +6,7 @@ import com.example.marcin.meetfriends.models.Questionnaire
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.common.GetFilledQuestionnairesUseCase
-import com.example.marcin.meetfriends.ui.event_detail.viewmodel.EventBasicInfo
+import com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel.EventBasicInfo
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

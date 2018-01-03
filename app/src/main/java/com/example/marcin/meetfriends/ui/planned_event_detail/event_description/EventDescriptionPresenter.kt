@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail.event_description
+package com.example.marcin.meetfriends.ui.planned_event_detail.event_description
 
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.User

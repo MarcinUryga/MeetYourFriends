@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail;
+package com.example.marcin.meetfriends.ui.planned_event_detail;
 
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams;
 

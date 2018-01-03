@@ -8,14 +8,10 @@ import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsFragment
 import com.example.marcin.meetfriends.ui.chat_rooms.ChatRoomsModule
 import com.example.marcin.meetfriends.ui.choose_event_icon.ChooseEventIconDialogFragment
 import com.example.marcin.meetfriends.ui.choose_event_icon.ChooseEventIconModule
+import com.example.marcin.meetfriends.ui.confirmed_event_detail.ConfirmedEventActivity
+import com.example.marcin.meetfriends.ui.confirmed_event_detail.ConfirmedEventModule
 import com.example.marcin.meetfriends.ui.create_event.CreateEventActivity
 import com.example.marcin.meetfriends.ui.create_event.CreateEventModule
-import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity
-import com.example.marcin.meetfriends.ui.event_detail.EventDetailModule
-import com.example.marcin.meetfriends.ui.event_detail.event_description.EventDescriptionFragment
-import com.example.marcin.meetfriends.ui.event_detail.event_description.EventDescriptionModule
-import com.example.marcin.meetfriends.ui.event_detail.event_questionnaire.EventQuestionnaireFragment
-import com.example.marcin.meetfriends.ui.event_detail.event_questionnaire.EventQuestionnaireModule
 import com.example.marcin.meetfriends.ui.friends.FriendsActivity
 import com.example.marcin.meetfriends.ui.friends.FriendsModule
 import com.example.marcin.meetfriends.ui.launch.LaunchActivity
@@ -30,6 +26,12 @@ import com.example.marcin.meetfriends.ui.my_schedule.planned_event.PlannedEvents
 import com.example.marcin.meetfriends.ui.my_schedule.planned_event.PlannedEventsModule
 import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsActivity
 import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsModule
+import com.example.marcin.meetfriends.ui.planned_event_detail.EventDetailActivity
+import com.example.marcin.meetfriends.ui.planned_event_detail.EventDetailModule
+import com.example.marcin.meetfriends.ui.planned_event_detail.event_description.EventDescriptionFragment
+import com.example.marcin.meetfriends.ui.planned_event_detail.event_description.EventDescriptionModule
+import com.example.marcin.meetfriends.ui.planned_event_detail.event_questionnaire.EventQuestionnaireFragment
+import com.example.marcin.meetfriends.ui.planned_event_detail.event_questionnaire.EventQuestionnaireModule
 import com.example.marcin.meetfriends.ui.questionnaires.QuestionnairesFragment
 import com.example.marcin.meetfriends.ui.questionnaires.QuestionnairesModule
 import com.example.marcin.meetfriends.ui.search_venues.SearchVenuesActivity
@@ -117,4 +119,8 @@ abstract class InjectorsModule {
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(ChartsModule::class))
   abstract fun chartDialogFragment(): ChartsDialogFragment
+
+  @ScreenScope
+  @ContributesAndroidInjector(modules = arrayOf(ConfirmedEventModule::class))
+  abstract fun confirmedEventActivity(): ConfirmedEventActivity
 }

@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail.event_description
+package com.example.marcin.meetfriends.ui.planned_event_detail.event_description
 
 import android.content.Context
 import android.os.Bundle
@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseFragment
 import com.example.marcin.meetfriends.ui.common.EventIdParams
-import com.example.marcin.meetfriends.ui.event_detail.adapter.ParticipantsAdapter
+import com.example.marcin.meetfriends.ui.planned_event_detail.adapter.ParticipantsAdapter
 import com.example.marcin.meetfriends.ui.friends.FriendsActivity
 import com.example.marcin.meetfriends.ui.friends.ParticipantsListParams
 import com.google.firebase.database.DataSnapshot
 import dagger.android.support.AndroidSupportInjection
 import durdinapps.rxfirebase2.RxFirebaseChildEvent
-import kotlinx.android.synthetic.main.fragment_event_description.*
+import kotlinx.android.synthetic.main.content_event_description.*
 import kotlinx.android.synthetic.main.item_event_description.*
 import kotlinx.android.synthetic.main.item_event_participants.*
 
@@ -33,7 +33,7 @@ class EventDescriptionFragment : BaseFragment<EventDescriptionContract.Presenter
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.fragment_event_description, container, false)
+    return inflater.inflate(R.layout.content_event_description, container, false)
   }
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

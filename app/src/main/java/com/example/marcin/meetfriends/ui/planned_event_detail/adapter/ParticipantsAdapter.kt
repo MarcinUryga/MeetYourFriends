@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail.adapter
+package com.example.marcin.meetfriends.ui.planned_event_detail.adapter
 
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.models.User

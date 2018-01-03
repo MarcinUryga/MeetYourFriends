@@ -62,8 +62,10 @@ class LoginPresenter @Inject constructor(
   }
 
   private fun saveUser(user: User) {
-    RxFirebaseDatabase
+    val disposable = RxFirebaseDatabase
         .setValue(firebaseDatabase.reference.child(Constants.FIREBASE_USERS).child(user.uid), user)
-        .doFinally { view.showToast("Data saved!") }.subscribe()
+        .doFinally { view.showToast("Data saved!") }
+        .subscribe()
+    disposables?.add(disposable)
   }
 }

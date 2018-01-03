@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail.event_questionnaire
+package com.example.marcin.meetfriends.ui.planned_event_detail.event_questionnaire
 
 import com.example.marcin.meetfriends.prefs.PrefsManager
 import com.example.marcin.meetfriends.prefs.PrefsManager.Companion.SELECTED_VENUES

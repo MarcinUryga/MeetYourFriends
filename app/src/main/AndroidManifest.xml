@@ -49,7 +49,13 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.event_detail.EventDetailActivity"
+            android:name=".ui.planned_event_detail.EventDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar" />
+
+        <activity
+            android:name=".ui.confirmed_event_detail.ConfirmedEventActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar" />

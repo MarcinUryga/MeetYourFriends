@@ -1,7 +1,7 @@
 package com.example.marcin.meetfriends.ui.common
 
 import android.os.Bundle
-import com.example.marcin.meetfriends.ui.event_detail.viewmodel.EventBasicInfo
+import com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel.EventBasicInfo
 
 /**
  * Created by marci on 2017-12-03.

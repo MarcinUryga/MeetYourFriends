@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail.viewmodel
+package com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel
 
 /**
  * Created by marci on 2017-12-13.

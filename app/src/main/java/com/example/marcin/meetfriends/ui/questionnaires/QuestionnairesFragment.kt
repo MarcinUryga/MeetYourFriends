@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseFragment
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity
-import com.example.marcin.meetfriends.ui.event_detail.viewmodel.FragmentsItems
+import com.example.marcin.meetfriends.ui.planned_event_detail.EventDetailActivity
+import com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel.FragmentsItems
 import com.example.marcin.meetfriends.ui.questionnaires.adapter.QuestionnaireAdapter
 import com.google.firebase.database.DataSnapshot
 import dagger.android.support.AndroidSupportInjection

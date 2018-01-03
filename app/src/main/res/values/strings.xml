@@ -76,6 +76,8 @@
     <string name="your_vote_for_event_date">Your vote for event date: %s</string>
     <string name="change_your_vote">change your vote!</string>
     <string name="your_vote_for_venue">Your vote for venue:</string>
+    <string name="finish_voting">finish voting</string>
+    <string name="venue">venue</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>

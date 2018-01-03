@@ -3,7 +3,6 @@ package com.example.marcin.meetfriends.ui.create_event
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
 import android.widget.Toast
@@ -15,7 +14,7 @@ import com.example.marcin.meetfriends.ui.choose_event_icon.OnIconSelectedListene
 import com.example.marcin.meetfriends.ui.choose_event_icon.viewmodel.EventIconEnum
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.common.places_adapter.PlacesAdapter
-import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity
+import com.example.marcin.meetfriends.ui.planned_event_detail.EventDetailActivity
 import com.example.marcin.meetfriends.ui.search_venues.SearchVenuesActivity
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso

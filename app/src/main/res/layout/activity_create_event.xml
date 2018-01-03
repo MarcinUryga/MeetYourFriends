@@ -5,7 +5,7 @@
     style="@style/AppThemeNoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.event_detail.EventDetailActivity">
+    tools:context=".ui.planned_event_detail.EventDetailActivity">
 
     <com.example.marcin.meetfriends.ui.common.VerticalScrollview
         android:layout_width="match_parent"

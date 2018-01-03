@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail.event_questionnaire.adapter
+package com.example.marcin.meetfriends.ui.planned_event_detail.event_questionnaire.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail.event_questionnaire
+package com.example.marcin.meetfriends.ui.planned_event_detail.event_questionnaire
 
 import android.location.LocationManager
 import com.example.marci.googlemaps.pojo.Location

@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.event_detail
+package com.example.marcin.meetfriends.ui.planned_event_detail
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -13,10 +13,11 @@ import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.ChatActivity
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.event_detail.event_description.EventDescriptionFragment
-import com.example.marcin.meetfriends.ui.event_detail.event_questionnaire.EventQuestionnaireFragment
-import com.example.marcin.meetfriends.ui.event_detail.viewmodel.FragmentsItems
+import com.example.marcin.meetfriends.ui.confirmed_event_detail.ConfirmedEventActivity
 import com.example.marcin.meetfriends.ui.main.MainActivity
+import com.example.marcin.meetfriends.ui.planned_event_detail.event_description.EventDescriptionFragment
+import com.example.marcin.meetfriends.ui.planned_event_detail.event_questionnaire.EventQuestionnaireFragment
+import com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel.FragmentsItems
 import com.example.marcin.meetfriends.utils.CircleTransform
 import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
@@ -35,6 +36,9 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     setContentView(R.layout.activity_event_detail)
     setUpNavigateButtons()
     navigateToCurrentFragment()
+    finishVotingButton.setOnClickListener {
+      presenter.clickedFinishVotingButton()
+    }
   }
 
   override fun setEventImage(imageId: Int) {
@@ -52,6 +56,10 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     prepareToolbar(eventName)
   }
 
+  override fun hideFinishVotingButton() {
+    finishVotingButton.visibility = View.GONE
+  }
+
   override fun startEventChatActivity(params: EventBasicInfoParams) {
     startActivity(ChatActivity.newIntent(baseContext, params))
   }
@@ -66,6 +74,10 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     openDescriptionButton.visibility = View.VISIBLE
     openQuestionnaireButton.visibility = View.GONE
     switchCurrentFragmente(EventQuestionnaireFragment(), arguments)
+  }
+
+  override fun startConfirmedEventActivity() {
+    startActivity(ConfirmedEventActivity.newIntent(baseContext))
   }
 
   private fun setUpNavigateButtons() {
@@ -88,9 +100,9 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     setSupportActionBar(toolbar)
   }
 
-  override fun setUpOrganizerData(user: User) {
-    organizerDisplayNameTextView.text = user.displayName
-    Picasso.with(baseContext).load(user.photoUrl).transform(CircleTransform()).into(organizerPhoto)
+  override fun setUpOrganizerData(organizer: User) {
+    organizerDisplayNameTextView.text = organizer.displayName
+    Picasso.with(baseContext).load(organizer.photoUrl).transform(CircleTransform()).into(organizerPhoto)
   }
 
   override fun openDeleteButtonDialog(message: String) {

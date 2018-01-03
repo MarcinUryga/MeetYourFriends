@@ -1,7 +1,6 @@
 package com.example.marcin.meetfriends.ui.chat;
 
 import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams;
-import com.example.marcin.meetfriends.ui.event_detail.EventDetailActivity;
 
 import dagger.Binds;
 import dagger.Module;

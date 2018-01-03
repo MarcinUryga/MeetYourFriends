@@ -21,7 +21,7 @@ class OtherMessageChatViewHolder(itemView: View) : BaseViewHolder(itemView) {
       itemView.messageTextView.underlineDate(message.dateHandler.let { it!! })
     }
     Picasso.with(itemView.context)
-        .load(message.user?.photoUrl)
+        .load(message.user.photoUrl)
         .placeholder(R.drawable.circle_chat_user_placeholder)
         .transform(CircleTransform())
         .into(itemView.userPhotoImageView)
