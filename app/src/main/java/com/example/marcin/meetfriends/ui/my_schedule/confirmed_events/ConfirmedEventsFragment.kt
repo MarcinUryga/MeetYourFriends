@@ -2,18 +2,16 @@ package com.example.marcin.meetfriends.ui.my_schedule.confirmed_events
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.marcin.meetfriends.R
-import com.example.marcin.meetfriends.mvp.BaseFragment
+import com.example.marcin.meetfriends.ui.common.EventIdParams
+import com.example.marcin.meetfriends.ui.confirmed_event_detail.ConfirmedEventActivity
+import com.example.marcin.meetfriends.ui.my_schedule.BaseMyScheduleFragment
 import dagger.android.support.AndroidSupportInjection
 
 /**
  * Created by MARCIN on 2017-11-13.
  */
-class ConfirmedEventsFragment : BaseFragment<ConfirmedEventsContract.Presenter>(), ConfirmedEventsContract.View {
+
+class ConfirmedEventsFragment : BaseMyScheduleFragment<ConfirmedEventsContract.Presenter>(), ConfirmedEventsContract.View {
 
   @SuppressLint("CheckResult")
   override fun onAttach(context: Context?) {
@@ -21,7 +19,7 @@ class ConfirmedEventsFragment : BaseFragment<ConfirmedEventsContract.Presenter>(
     super.onAttach(context)
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.fragment_confirmed_events, container, false)
+  override fun startConfirmedEventActivity(eventIdParams: EventIdParams) {
+    startActivity(ConfirmedEventActivity.newIntent(context, eventIdParams))
   }
 }

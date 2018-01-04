@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.my_schedule.planned_event.adapter
+package com.example.marcin.meetfriends.ui.my_schedule.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

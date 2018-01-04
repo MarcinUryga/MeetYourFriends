@@ -1,7 +1,14 @@
 package com.example.marcin.meetfriends.ui.my_schedule.confirmed_events
 
 import com.example.marcin.meetfriends.di.ScreenScope
-import com.example.marcin.meetfriends.mvp.BasePresenter
+import com.example.marcin.meetfriends.models.Event
+import com.example.marcin.meetfriends.ui.common.EventIdParams
+import com.example.marcin.meetfriends.ui.my_schedule.BaseMySchedulePresenter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.FirebaseDatabase
+import durdinapps.rxfirebase2.RxFirebaseChildEvent
+import io.reactivex.Observable
 import javax.inject.Inject
 
 /**
@@ -9,8 +16,21 @@ import javax.inject.Inject
  * */
 @ScreenScope
 class ConfirmedEventsPresenter @Inject constructor(
+    auth: FirebaseAuth,
+    firebaseDatabase: FirebaseDatabase
+) : BaseMySchedulePresenter<ConfirmedEventsContract.View>(auth, firebaseDatabase), ConfirmedEventsContract.Presenter {
 
-) : BasePresenter<ConfirmedEventsContract.View>(), ConfirmedEventsContract.Presenter {
+  override fun resume() {
+    super.resume()
+    loadEvents()
+  }
 
+  override fun handleChosenEvent(eventChatRoom: Observable<Event>) {
+    val disposable = eventChatRoom.subscribe({ event ->
+      view.startConfirmedEventActivity(EventIdParams(eventId = event.id.let { it!! }))
+    })
+    disposables?.add(disposable)
+  }
 
+  override fun isFinishedVoting(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) = !dataSnapshot.value.getValue(Event::class.java)?.finishedVoting.let { it!! }
 }

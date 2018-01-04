@@ -1,14 +1,17 @@
 package com.example.marcin.meetfriends.ui.my_schedule.confirmed_events
 
-import com.example.marcin.meetfriends.mvp.MvpPresenter
-import com.example.marcin.meetfriends.mvp.MvpView
+import com.example.marcin.meetfriends.ui.common.EventIdParams
+import com.example.marcin.meetfriends.ui.my_schedule.BaseMyScheduleContract
 
 /**
  * Created by MARCIN on 2017-11-13.
  **/
 interface ConfirmedEventsContract {
 
-  interface View : MvpView
+  interface View : BaseMyScheduleContract.View {
 
-  interface Presenter : MvpPresenter
+    fun startConfirmedEventActivity(eventIdParams: EventIdParams)
+  }
+
+  interface Presenter : BaseMyScheduleContract.Presenter
 }

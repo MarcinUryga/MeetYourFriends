@@ -11,6 +11,7 @@ data class Event(
     var date: String? = null,
     var venue: String? = null,
     var description: String? = null,
+    var finishedVoting: Boolean? = false,
     val participants: Map<String, String> = emptyMap(),
     val venues: List<FirebasePlace> = emptyList()
 )

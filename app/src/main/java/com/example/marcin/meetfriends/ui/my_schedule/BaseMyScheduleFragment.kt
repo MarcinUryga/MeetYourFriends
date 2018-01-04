@@ -1,6 +1,5 @@
-package com.example.marcin.meetfriends.ui.my_schedule.planned_event
+package com.example.marcin.meetfriends.ui.my_schedule
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -8,26 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseFragment
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.planned_event_detail.EventDetailActivity
-import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.PlannedEventsContract
-import com.example.marcin.meetfriends.ui.my_schedule.planned_event.adapter.PlannedEventsAdapter
+import com.example.marcin.meetfriends.ui.my_schedule.adapter.PlannedEventsAdapter
 import com.google.firebase.database.DataSnapshot
-import dagger.android.support.AndroidSupportInjection
 import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import kotlinx.android.synthetic.main.fragment_planned_events.*
 
 /**
- * Created by MARCIN on 2017-11-13.
+ * Created by marci on 2018-01-04.
  */
-class PlannedEventsFragment : BaseFragment<PlannedEventsContract.Presenter>(), PlannedEventsContract.View {
+abstract class BaseMyScheduleFragment<P : BaseMyScheduleContract.Presenter> : BaseFragment<P>(), BaseMyScheduleContract.View {
 
   private val eventsAdapter = PlannedEventsAdapter()
-
-  override fun onAttach(context: Context?) {
-    AndroidSupportInjection.inject(this)
-    super.onAttach(context)
-  }
 
   override fun onResume() {
     super.onResume()
@@ -45,7 +35,4 @@ class PlannedEventsFragment : BaseFragment<PlannedEventsContract.Presenter>(), P
     presenter.handleChosenEvent(eventsAdapter.getClickEvent())
   }
 
-  override fun startEventDetailActivity(params: EventBasicInfoParams) {
-    startActivity(EventDetailActivity.newIntent(context, params))
-  }
 }

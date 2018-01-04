@@ -22,8 +22,8 @@ import com.example.marcin.meetfriends.ui.main.MainActivity
 import com.example.marcin.meetfriends.ui.main.MainModule
 import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.ConfirmedEventsFragment
 import com.example.marcin.meetfriends.ui.my_schedule.confirmed_events.ConfirmedEventsModule
-import com.example.marcin.meetfriends.ui.my_schedule.planned_event.PlannedEventsFragment
-import com.example.marcin.meetfriends.ui.my_schedule.planned_event.PlannedEventsModule
+import com.example.marcin.meetfriends.ui.my_schedule.planned_events.PlannedEventsFragment
+import com.example.marcin.meetfriends.ui.my_schedule.planned_events.PlannedEventsModule
 import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsActivity
 import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsModule
 import com.example.marcin.meetfriends.ui.planned_event_detail.EventDetailActivity

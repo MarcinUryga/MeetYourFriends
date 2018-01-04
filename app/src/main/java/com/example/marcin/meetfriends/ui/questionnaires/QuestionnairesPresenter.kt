@@ -94,11 +94,11 @@ class QuestionnairesPresenter @Inject constructor(
         .doFinally { view.hideLoading() }
         .subscribe({ questionnaires ->
           if (!isQuestionnaireExisting(questionnaires)) {
-            addEvent(dataSnapshot)
+            manageEventItem(dataSnapshot)
           } else {
             if (!isVotingFinishedForCurrentUser(questionnaires as Questionnaire)) {
-              addEvent(dataSnapshot)
-            } else if (view.getEventItemsSizeFromAdapter() == 0) {
+              manageEventItem(dataSnapshot)
+            } else /*if (view.getEventItemsSizeFromAdapter() == 0)*/ {
               view.showEmptyQuestionnairesToFillScreen()
             }
           }
@@ -106,6 +106,27 @@ class QuestionnairesPresenter @Inject constructor(
           Timber.d(error.localizedMessage)
         })
     disposables?.add(disposable)
+  }
+
+  private fun manageEventItem(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
+    if (isFinishedVoting(dataSnapshot)) {
+      removeEvent(dataSnapshot)
+    } else if (!isFinishedVoting(dataSnapshot)) {
+      addEvent(dataSnapshot)
+    }
+  }
+
+  private fun isFinishedVoting(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) = dataSnapshot.value.getValue(Event::class.java)?.finishedVoting.let { it!! }
+
+  private fun removeEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
+    view.manageEvent(
+        RxFirebaseChildEvent(
+            dataSnapshot.key,
+            dataSnapshot.value,
+            dataSnapshot.previousChildName,
+            RxFirebaseChildEvent.EventType.REMOVED
+        )
+    )
   }
 
   private fun addEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
