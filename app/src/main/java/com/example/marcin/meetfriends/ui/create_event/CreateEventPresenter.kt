@@ -83,6 +83,7 @@ class CreateEventPresenter @Inject constructor(
     val disposable = getPlaceDetailsUseCase.get(it.key)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+        .doOnSubscribe { view.showVenuesProgressBar() }
         .doFinally {
           if (view.getEventItemsSizeFromAdapter() != 0) {
             view.hideVenuesProgressBar()

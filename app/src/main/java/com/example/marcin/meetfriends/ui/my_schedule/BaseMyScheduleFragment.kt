@@ -10,7 +10,7 @@ import com.example.marcin.meetfriends.mvp.BaseFragment
 import com.example.marcin.meetfriends.ui.my_schedule.adapter.PlannedEventsAdapter
 import com.google.firebase.database.DataSnapshot
 import durdinapps.rxfirebase2.RxFirebaseChildEvent
-import kotlinx.android.synthetic.main.fragment_planned_events.*
+import kotlinx.android.synthetic.main.fragment_available_events.*
 
 /**
  * Created by marci on 2018-01-04.
@@ -27,7 +27,7 @@ abstract class BaseMyScheduleFragment<P : BaseMyScheduleContract.Presenter> : Ba
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.fragment_planned_events, container, false)
+    return inflater.inflate(R.layout.fragment_available_events, container, false)
   }
 
   override fun showLoadingProgressBar() {

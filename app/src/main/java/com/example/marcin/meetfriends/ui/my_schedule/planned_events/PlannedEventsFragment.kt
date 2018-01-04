@@ -8,7 +8,7 @@ import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.my_schedule.BaseMyScheduleFragment
 import com.example.marcin.meetfriends.ui.planned_event_detail.EventDetailActivity
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_planned_events.*
+import kotlinx.android.synthetic.main.fragment_available_events.*
 
 /**
  * Created by marci on 2018-01-04.

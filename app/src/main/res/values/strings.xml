@@ -65,7 +65,7 @@
     <string name="meters">%s m</string>
     <string name="minutes">%d min</string>
     <string name="kilometers">%s km</string>
-    <string name="find_venues_for_your_event">Find placesList for your Event!</string>
+    <string name="find_venues_for_your_event">Find places for your Event!</string>
     <string name="no_results_for_type_and_kayword">No results for type and kayword: %s</string>
     <string name="please_turn_on_gps">Please Turn ON your GPS Connection</string>
     <string name="review">Review</string>
@@ -82,6 +82,7 @@
     <string name="no_planned_events_yet">No planned events yet!</string>
     <string name="firstly_add_places">Firstly, add places for this event</string>
     <string name="loading">Loading</string>
+    <string name="search_all_nearby_places">Search all nearby places</string>
 
     <plurals name="events">
         <item quantity="one">the event, you can invite more friends to it!</item>
