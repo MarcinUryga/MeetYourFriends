@@ -51,7 +51,6 @@ class LoginPresenter @Inject constructor(
               displayName = result.user.displayName,
               photoUrl = result.user.photoUrl.toString(),
               phoneNumber = result.user.phoneNumber,
-              email = result.user.email,
               firebaseToken = accesToken.token
           )
           saveUser(user)

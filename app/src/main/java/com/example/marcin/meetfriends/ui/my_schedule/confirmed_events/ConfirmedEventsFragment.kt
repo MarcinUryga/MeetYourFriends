@@ -24,6 +24,7 @@ class ConfirmedEventsFragment : BaseMyScheduleFragment<ConfirmedEventsContract.P
 
   override fun showNoEventsView() {
     noEventsLayout.visibility = View.VISIBLE
+    progressBar.visibility = View.INVISIBLE
     noEventsTextView.text = getString(R.string.no_confirmed_events_yet)
   }
 

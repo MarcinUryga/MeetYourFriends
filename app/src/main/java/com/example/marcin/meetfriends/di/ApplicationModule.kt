@@ -3,6 +3,7 @@ package com.example.marcin.meetfriends.di
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.beltaief.reactivefb.ReactiveFB
 import com.beltaief.reactivefb.SimpleFacebookConfiguration
 import com.beltaief.reactivefb.util.PermissionHelper
 import com.example.marcin.meetfriends.MeetFriendsApplication
@@ -39,19 +40,24 @@ class ApplicationModule {
 
   @Provides
   @Singleton
-  fun providePrefsManager(app: MeetFriendsApplication) = PrefsManager(app)
+  fun provideFacebookConfiguration(permissions: Array<PermissionHelper>): SimpleFacebookConfiguration {
+    return SimpleFacebookConfiguration.Builder()
+        .setAppId(R.string.facebook_app_id.toString())
+        .setPermissions(permissions)
+        .setDefaultAudience(DefaultAudience.FRIENDS)
+        .setAskForAllPermissionsAtOnce(false)
+        .build()
+  }
 
-/*
   @Provides
-  fun provideDefaultPrefsStorage(manager: PrefsManager) = manager.createDefault()
-*/
+  @Singleton
+  fun providePrefsManager(app: MeetFriendsApplication) = PrefsManager(app)
 
   @Provides
   @Singleton
   fun provideFacebookPermissionHelper(): Array<PermissionHelper> {
     return arrayOf(
         PermissionHelper.USER_ABOUT_ME,
-        PermissionHelper.EMAIL,
         PermissionHelper.USER_PHOTOS,
         PermissionHelper.USER_EVENTS,
         PermissionHelper.USER_ACTIONS_MUSIC,
@@ -64,16 +70,6 @@ class ApplicationModule {
     )
   }
 
-  @Provides
-  @Singleton
-  fun provideFacebookConfiguration(permissions: Array<PermissionHelper>): SimpleFacebookConfiguration {
-    return SimpleFacebookConfiguration.Builder()
-        .setAppId(R.string.facebook_app_id.toString())
-        .setPermissions(permissions)
-        .setDefaultAudience(DefaultAudience.FRIENDS)
-        .setAskForAllPermissionsAtOnce(false)
-        .build()
-  }
 
   @Provides
   @Singleton

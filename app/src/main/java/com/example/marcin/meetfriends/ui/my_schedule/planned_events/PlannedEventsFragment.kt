@@ -24,6 +24,7 @@ class PlannedEventsFragment : BaseMyScheduleFragment<PlannedEventsContract.Prese
 
   override fun showNoEventsView() {
     noEventsLayout.visibility = View.VISIBLE
+    progressBar.visibility = View.INVISIBLE
     noEventsTextView.text = getString(R.string.no_planned_events_yet)
   }
 

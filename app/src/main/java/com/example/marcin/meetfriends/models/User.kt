@@ -12,6 +12,5 @@ data class User(
     val displayName: String? = null,
     val phoneNumber: String? = null,
     val photoUrl: String? = null,
-    val email: String? = null,
     val firebaseToken: String? = null
 ) : Serializable

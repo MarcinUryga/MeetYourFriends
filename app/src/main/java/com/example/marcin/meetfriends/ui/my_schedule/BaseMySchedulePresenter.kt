@@ -51,16 +51,15 @@ abstract class BaseMySchedulePresenter<T : BaseMyScheduleContract.View>(
   private fun manageEventItem(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
     if (isFinishedVoting(dataSnapshot)) {
       removeEvent(dataSnapshot)
-      view.hideLoadingProgressBar()
     } else if (!isFinishedVoting(dataSnapshot)) {
       addEvent(dataSnapshot)
-      view.hideLoadingProgressBar()
     }
     if (view.getEventItemsSizeFromAdapter() == 0) {
       view.showNoEventsView()
     } else {
       view.hideNoEventsLayout()
     }
+    view.hideLoadingProgressBar()
   }
 
   private fun databaseReferencePath() = firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS)
