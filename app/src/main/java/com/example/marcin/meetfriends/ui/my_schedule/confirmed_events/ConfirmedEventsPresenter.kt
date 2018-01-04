@@ -25,8 +25,8 @@ class ConfirmedEventsPresenter @Inject constructor(
     loadEvents()
   }
 
-  override fun handleChosenEvent(eventChatRoom: Observable<Event>) {
-    val disposable = eventChatRoom.subscribe({ event ->
+  override fun handleChosenEvent(clickEvent: Observable<Event>) {
+    val disposable = clickEvent.subscribe({ event ->
       view.startConfirmedEventActivity(EventIdParams(eventId = event.id.let { it!! }))
     })
     disposables?.add(disposable)

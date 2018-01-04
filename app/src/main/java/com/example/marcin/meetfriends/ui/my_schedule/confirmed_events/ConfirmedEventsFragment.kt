@@ -2,10 +2,13 @@ package com.example.marcin.meetfriends.ui.my_schedule.confirmed_events
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.View
+import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.confirmed_event_detail.ConfirmedEventActivity
 import com.example.marcin.meetfriends.ui.my_schedule.BaseMyScheduleFragment
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_planned_events.*
 
 /**
  * Created by MARCIN on 2017-11-13.
@@ -17,6 +20,11 @@ class ConfirmedEventsFragment : BaseMyScheduleFragment<ConfirmedEventsContract.P
   override fun onAttach(context: Context?) {
     AndroidSupportInjection.inject(this)
     super.onAttach(context)
+  }
+
+  override fun showNoEventsView() {
+    noEventsLayout.visibility = View.VISIBLE
+    noEventsTextView.text = getString(R.string.no_confirmed_events_yet)
   }
 
   override fun startConfirmedEventActivity(eventIdParams: EventIdParams) {

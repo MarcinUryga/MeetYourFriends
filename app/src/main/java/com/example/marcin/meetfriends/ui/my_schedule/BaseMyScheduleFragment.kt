@@ -30,9 +30,24 @@ abstract class BaseMyScheduleFragment<P : BaseMyScheduleContract.Presenter> : Ba
     return inflater.inflate(R.layout.fragment_planned_events, container, false)
   }
 
-  override fun manageEvent(post: RxFirebaseChildEvent<DataSnapshot>) {
-    eventsAdapter.manageChildItem(post)
-    presenter.handleChosenEvent(eventsAdapter.getClickEvent())
+  override fun showLoadingProgressBar() {
+    progressBar.visibility = View.VISIBLE
   }
 
+  override fun hideLoadingProgressBar() {
+    progressBar.visibility = View.INVISIBLE
+  }
+
+  abstract override fun showNoEventsView()
+
+  override fun hideNoEventsLayout() {
+    noEventsLayout.visibility = View.INVISIBLE
+  }
+
+  override fun getEventItemsSizeFromAdapter() = eventsAdapter.itemCount
+
+  override fun manageEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
+    eventsAdapter.manageChildItem(dataSnapshot)
+    presenter.handleChosenEvent(eventsAdapter.getClickEvent())
+  }
 }

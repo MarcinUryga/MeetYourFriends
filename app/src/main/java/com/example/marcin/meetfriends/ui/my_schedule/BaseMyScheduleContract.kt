@@ -14,7 +14,17 @@ interface BaseMyScheduleContract {
 
   interface View : MvpView {
 
-    fun manageEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>)
+    fun getEventItemsSizeFromAdapter(): Int
+
+    fun showLoadingProgressBar()
+
+    fun hideLoadingProgressBar()
+
+    fun showNoEventsView()
+
+    fun manageEvent(rxFirebaseChildEvent: RxFirebaseChildEvent<DataSnapshot>)
+
+    fun hideNoEventsLayout()
   }
 
   interface Presenter : MvpPresenter {

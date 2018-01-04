@@ -37,21 +37,33 @@ abstract class BaseMySchedulePresenter<T : BaseMyScheduleContract.View>(
                   }
                 })
           }
+          if (view.getEventItemsSizeFromAdapter() == 0) {
+            view.showNoEventsView()
+          } else {
+            view.hideNoEventsLayout()
+          }
         }, { error ->
           Timber.e(error.localizedMessage)
         })
     disposables?.add(disposable)
   }
 
-  private fun databaseReferencePath() = firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS)
-
   private fun manageEventItem(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
     if (isFinishedVoting(dataSnapshot)) {
       removeEvent(dataSnapshot)
+      view.hideLoadingProgressBar()
     } else if (!isFinishedVoting(dataSnapshot)) {
       addEvent(dataSnapshot)
+      view.hideLoadingProgressBar()
+    }
+    if (view.getEventItemsSizeFromAdapter() == 0) {
+      view.showNoEventsView()
+    } else {
+      view.hideNoEventsLayout()
     }
   }
+
+  private fun databaseReferencePath() = firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS)
 
   abstract fun isFinishedVoting(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>): Boolean
 

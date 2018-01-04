@@ -98,7 +98,7 @@ class QuestionnairesPresenter @Inject constructor(
           } else {
             if (!isVotingFinishedForCurrentUser(questionnaires as Questionnaire)) {
               manageEventItem(dataSnapshot)
-            } else /*if (view.getEventItemsSizeFromAdapter() == 0)*/ {
+            } else if (view.getEventItemsSizeFromAdapter() == 0) {
               view.showEmptyQuestionnairesToFillScreen()
             }
           }
@@ -113,6 +113,9 @@ class QuestionnairesPresenter @Inject constructor(
       removeEvent(dataSnapshot)
     } else if (!isFinishedVoting(dataSnapshot)) {
       addEvent(dataSnapshot)
+    }
+    if (view.getEventItemsSizeFromAdapter() == 0) {
+      view.showEmptyQuestionnairesToFillScreen()
     }
   }
 
