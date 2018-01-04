@@ -2,6 +2,7 @@ package com.example.marcin.meetfriends.ui.planned_event_detail
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -31,6 +32,8 @@ import kotlinx.android.synthetic.main.content_event_details.*
  */
 class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), EventDetailContract.View {
 
+  lateinit var progressDialog: ProgressDialog
+
   @SuppressLint("CheckResult")
   override fun onCreate(savedInstanceState: Bundle?) {
     AndroidInjection.inject(this)
@@ -41,10 +44,26 @@ class EventDetailActivity : BaseActivity<EventDetailContract.Presenter>(), Event
     finishVotingButton.setOnClickListener {
       presenter.clickedFinishVotingButton()
     }
+    prepareProgressDialog()
   }
 
   override fun setEventImage(imageId: Int) {
     Picasso.with(baseContext).load(imageId).into(eventImage)
+  }
+
+  private fun prepareProgressDialog() {
+    progressDialog = ProgressDialog(this)
+    progressDialog.setMessage(getString(R.string.loading))
+    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+    progressDialog.setCancelable(false)
+  }
+
+  override fun showProgressDialog() {
+    progressDialog.show()
+  }
+
+  override fun hideProgressDialog() {
+    progressDialog.cancel()
   }
 
   private fun navigateToCurrentFragment() {

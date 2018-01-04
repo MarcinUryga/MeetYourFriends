@@ -1,10 +1,12 @@
 package com.example.marcin.meetfriends.ui.create_event
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
+import android.view.View
 import android.widget.Toast
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.Place
@@ -26,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_create_event.*
  */
 class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), CreateEventContract.View, OnIconSelectedListener {
 
+  lateinit var progressDialog: ProgressDialog
   var placesAdapter = PlacesAdapter(false)
 
   override fun onIconSelected(icon: EventIconEnum) {
@@ -40,6 +43,7 @@ class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), Creat
     setContentView(R.layout.activity_create_event)
     supportActionBar?.title = " ${getString(R.string.create_new_event)}"
     onIconSelected(EventIconEnum.BEER)
+    prepareProgressDialog()
     createEventButton.setOnClickListener {
       presenter.tryToCreateEvent()
     }
@@ -72,6 +76,35 @@ class CreateEventActivity : BaseActivity<CreateEventContract.Presenter>(), Creat
       return false
     }
     return true
+  }
+
+  override fun getEventItemsSizeFromAdapter() = placesAdapter.itemCount
+
+  override fun showVenuesProgressBar() {
+    venuesProgressBar.visibility = View.VISIBLE
+  }
+
+  override fun hideVenuesProgressBar() {
+    venuesProgressBar.visibility = View.INVISIBLE
+  }
+
+  override fun showNoPlacsToast() {
+    Toast.makeText(baseContext, getString(R.string.firstly_add_places), Toast.LENGTH_SHORT).show()
+  }
+
+  private fun prepareProgressDialog() {
+    progressDialog = ProgressDialog(this)
+    progressDialog.setMessage(getString(R.string.loading))
+    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+    progressDialog.setCancelable(false)
+  }
+
+  override fun showProgressDialog() {
+    progressDialog.show()
+  }
+
+  override fun hideProgressDialog() {
+    progressDialog.cancel()
   }
 
   fun setupAdapter() {

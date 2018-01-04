@@ -108,9 +108,9 @@ class ConfirmedEventActivity : BaseActivity<ConfirmedEventContract.Presenter>(),
     venueCardView.visibility = View.VISIBLE
     openGoogleMapsButton.visibility = View.VISIBLE
     if (venue.photos.isNotEmpty()) {
-      Picasso.with(baseContext).load(venue.photos.first()).fit().into(venueImage)
+      Picasso.with(baseContext).load(venue.photos.first()).into(venueImage)
     } else if (venue.placeIcon != null) {
-      Picasso.with(baseContext).load(venue.photos.first()).fit().into(venueImage)
+      Picasso.with(baseContext).load(venue.photos.first()).into(venueImage)
     }
     venueNameTextView.text = venue.name
     venueVicinityTextView.text = venue.vicinity

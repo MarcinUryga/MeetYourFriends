@@ -21,6 +21,8 @@ interface CreateEventContract {
 
     fun getEventDescription(): String
 
+    fun getEventItemsSizeFromAdapter(): Int
+
     fun openEventDetailsActivity(eventBasicInfoParams: EventBasicInfoParams)
 
     fun startSelectEventIconDialog()
@@ -34,6 +36,16 @@ interface CreateEventContract {
     fun clearAdapter()
 
     fun removePlaceFromAdapter(place: Place)
+
+    fun showVenuesProgressBar()
+
+    fun hideVenuesProgressBar()
+
+    fun showNoPlacsToast()
+
+    fun showProgressDialog()
+
+    fun hideProgressDialog()
   }
 
   interface Presenter : MvpPresenter {

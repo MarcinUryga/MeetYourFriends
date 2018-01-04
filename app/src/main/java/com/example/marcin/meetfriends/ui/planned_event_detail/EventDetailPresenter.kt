@@ -78,6 +78,8 @@ class EventDetailPresenter @Inject constructor(
     val disposable = getFilledQuestionnairesUseCase.get(eventInfoParams.event.id.let { it!! })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+        .doOnSubscribe { view.showProgressDialog() }
+        .doFinally { view.hideProgressDialog() }
         .subscribe({ questionnaire ->
           if (questionnaire != -1) {
             val sortedDateByVotes = (questionnaire as Questionnaire)

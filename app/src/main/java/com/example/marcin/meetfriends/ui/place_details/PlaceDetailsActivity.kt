@@ -52,7 +52,7 @@ class PlaceDetailsActivity : BaseActivity<PlaceDetailsContract.Presenter>(), Pla
     ratingTextView.text = placeDetails.rating.toString()
     openingHoursTextView.text = placeDetails.getWeekDayOpeningHoursString(baseContext)
     if (placeDetails.getPhotosUrl().isNotEmpty()) {
-      Picasso.with(baseContext).load(placeDetails.getPhotosUrl().first()).fit().placeholder(R.drawable.placeholder).into(venueImage)
+      Picasso.with(baseContext).load(placeDetails.getPhotosUrl().first()).placeholder(R.drawable.placeholder).into(venueImage)
     } else {
       Picasso.with(baseContext).load(placeDetails.placeIcon).placeholder(R.drawable.placeholder).into(venueImage)
     }

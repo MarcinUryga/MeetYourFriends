@@ -26,9 +26,9 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
     itemView.ratingTextView.text = venue.rating.toString()
     if (venue.photos != null) {
-      Picasso.with(itemView.context).load(venue.getPhotosUrl().first()).placeholder(R.drawable.placeholder).fit().into(itemView.venueImage)
+      Picasso.with(itemView.context).load(venue.getPhotosUrl().first()).placeholder(R.drawable.placeholder).into(itemView.venueImage)
     } else {
-      Picasso.with(itemView.context).load(venue.placeIcon).placeholder(R.drawable.placeholder).fit().into(itemView.venueImage)
+      Picasso.with(itemView.context).load(venue.placeIcon).placeholder(R.drawable.placeholder).into(itemView.venueImage)
     }
     if (!venue.isAdded) {
       itemView.actionButton.setImageDrawable(itemView.context.getDrawable(R.drawable.ic_add))

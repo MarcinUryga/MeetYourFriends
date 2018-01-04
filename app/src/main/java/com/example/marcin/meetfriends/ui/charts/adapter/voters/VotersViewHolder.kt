@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.item_voter.view.*
 class VotersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
   fun bind(voter: Voter) {
-    Picasso.with(itemView.context).load(voter.userPhotoUrl).fit().transform(CircleTransform()).into(itemView.voterImage)
+    Picasso.with(itemView.context).load(voter.userPhotoUrl).transform(CircleTransform()).into(itemView.voterImage)
   }
 
   companion object {

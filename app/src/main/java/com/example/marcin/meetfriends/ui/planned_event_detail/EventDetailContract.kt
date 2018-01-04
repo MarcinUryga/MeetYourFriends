@@ -35,6 +35,10 @@ interface EventDetailContract {
     fun startConfirmedEventActivity(eventIdParams: EventIdParams)
 
     fun showToast(message: String)
+
+    fun showProgressDialog()
+
+    fun hideProgressDialog()
   }
 
   interface Presenter : MvpPresenter {

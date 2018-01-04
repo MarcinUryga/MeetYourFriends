@@ -83,6 +83,11 @@ class CreateEventPresenter @Inject constructor(
     val disposable = getPlaceDetailsUseCase.get(it.key)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+        .doFinally {
+          if (view.getEventItemsSizeFromAdapter() != 0) {
+            view.hideVenuesProgressBar()
+          }
+        }
         .subscribe({ place ->
           val venue = Place(
               id = place.result.placeId,
@@ -103,7 +108,11 @@ class CreateEventPresenter @Inject constructor(
 
   override fun tryToCreateEvent() {
     if (view.validateEventName() && view.validateEventDescription()) {
-      createEvent()
+      if (view.getEventItemsSizeFromAdapter() == 0) {
+        view.showNoPlacsToast()
+      } else {
+        createEvent()
+      }
     }
   }
 
@@ -151,8 +160,10 @@ class CreateEventPresenter @Inject constructor(
                 .child(Constants.FIREBASE_EVENTS)
                 .child(eventId), event)
         .subscribeOn(Schedulers.io())
+        .doOnSubscribe { view.showProgressDialog() }
         .observeOn(AndroidSchedulers.mainThread())
         .doFinally {
+          view.hideProgressDialog()
           view.openEventDetailsActivity(EventBasicInfoParams(event = EventBasicInfo(
               id = event.id,
               iconId = event.iconId,
