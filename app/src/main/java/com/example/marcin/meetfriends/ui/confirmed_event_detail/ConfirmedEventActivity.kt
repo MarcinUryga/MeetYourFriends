@@ -67,6 +67,8 @@ class ConfirmedEventActivity : BaseActivity<ConfirmedEventContract.Presenter>(),
   override fun showEventData(event: Event) {
     eventDataLayout.visibility = View.VISIBLE
     eventDescriptionLayout.visibility = View.VISIBLE
+    toolbar.title = event.name
+    setSupportActionBar(toolbar)
     eventDescriptionTextView.text = event.description
     Picasso.with(baseContext).load(event.iconId).into(eventImage)
     eventDateTextView.text = DateTimeFormatters.formatToShortTimeDate(DateTime(event.date?.toLong()))

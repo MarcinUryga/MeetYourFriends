@@ -1,9 +1,7 @@
 package com.example.marcin.meetfriends.ui.main
 
-import android.content.SharedPreferences
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.storage.SharedPref
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
@@ -13,11 +11,8 @@ import javax.inject.Inject
  */
 @ScreenScope
 class MainPresenter @Inject constructor(
-    private val auth: FirebaseAuth,
-    sharedPreferences: SharedPreferences
+    private val auth: FirebaseAuth
 ) : BasePresenter<MainContract.View>(), MainContract.Presenter {
-
-  private val sharedPref = SharedPref(sharedPreferences)
 
   override fun onViewCreated() {
     super.onViewCreated()
@@ -34,7 +29,6 @@ class MainPresenter @Inject constructor(
 
   override fun logout() {
     LoginManager.getInstance().logOut()
-    sharedPref.clearSharedPref()
     auth.signOut()
     view.startLoginActivity()
   }

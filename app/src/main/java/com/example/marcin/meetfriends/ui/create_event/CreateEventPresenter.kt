@@ -13,6 +13,7 @@ import com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel.EventBas
 import com.example.marcin.meetfriends.ui.search_venues.VenuesStorage
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
@@ -134,9 +135,35 @@ class CreateEventPresenter @Inject constructor(
   }
 
   private fun createEvent() {
-    val eventId = firebaseDatabase.reference.push().key
-    val event = Event(
-        id = eventId,
+    val event = createEventModel()
+    val disposable = RxFirebaseDatabase
+        .setValue(createNewEventPath(event.id.let { it!! }), event)
+        .subscribeOn(Schedulers.io())
+        .doOnSubscribe { view.showProgressDialog() }
+        .observeOn(AndroidSchedulers.mainThread())
+        .doFinally {
+          view.hideProgressDialog()
+          view.openEventDetailsActivity(EventBasicInfoParams(event = EventBasicInfo(
+              id = event.id,
+              iconId = event.iconId,
+              organizerId = event.organizerId,
+              name = event.name,
+              description = event.description
+          )))
+        }
+        .subscribe()
+    disposables?.add(disposable)
+  }
+
+  private fun createNewEventPath(eventId: String): DatabaseReference {
+    return firebaseDatabase.reference
+        .child(Constants.FIREBASE_EVENTS)
+        .child(eventId)
+  }
+
+  private fun createEventModel(): Event {
+    return Event(
+        id = firebaseDatabase.reference.push().key,
         iconId = view.getEventIconId(),
         organizerId = auth.uid,
         name = view.getEventName(),
@@ -155,25 +182,5 @@ class CreateEventPresenter @Inject constructor(
           )
         }.distinctBy { it.id }
     )
-    val disposable = RxFirebaseDatabase
-        .setValue(
-            firebaseDatabase.reference
-                .child(Constants.FIREBASE_EVENTS)
-                .child(eventId), event)
-        .subscribeOn(Schedulers.io())
-        .doOnSubscribe { view.showProgressDialog() }
-        .observeOn(AndroidSchedulers.mainThread())
-        .doFinally {
-          view.hideProgressDialog()
-          view.openEventDetailsActivity(EventBasicInfoParams(event = EventBasicInfo(
-              id = event.id,
-              iconId = event.iconId,
-              organizerId = event.organizerId,
-              name = event.name,
-              description = event.description
-          )))
-        }
-        .subscribe()
-    disposables?.add(disposable)
   }
 }

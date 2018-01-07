@@ -133,13 +133,18 @@ class ConfirmedEventPresenter @Inject constructor(
   }
 
   private fun getVenueDistanceMatrix(venue: FirebasePlace) {
-    val disposable = getNearbyPlacesUseCase.getDistanceMatrix("${currentLocation.lat},${currentLocation.lng}", venue.latLng.let { it!! })
+    val disposable = getNearbyPlacesUseCase
+        .getDistanceMatrix(
+            origins = "${currentLocation.lat},${currentLocation.lng}",
+            destinations = venue.latLng.let { it!! }
+        )
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ distance ->
-          Timber.d(distance.toString())
           venue.distance = distance.rows.first().elements.first().distance
           view.showEventVenueCardView(venue)
+        }, { error ->
+          Timber.e(error.localizedMessage)
         })
     disposables?.add(disposable)
   }
