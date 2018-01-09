@@ -23,6 +23,10 @@ interface ChartsContract {
     fun showDateQuestionnairesResult(dateRowsList: List<DateRow>)
 
     fun showVenueQuestionnairesResult(venueRowsList: List<VenueRow>)
+
+    fun showNoDateVotes()
+
+    fun showNoVenueVotes()
   }
 
   interface Presenter : MvpPresenter {

@@ -57,6 +57,16 @@ class ChartsDialogFragment : BaseFragmentDialog<ChartsContract.Presenter>(), Cha
     venuesChartProgressBar.visibility = View.INVISIBLE
   }
 
+  override fun showNoDateVotes() {
+    dateChartProgressBar.visibility = View.INVISIBLE
+    noDateVotesImageView.visibility = View.VISIBLE
+  }
+
+  override fun showNoVenueVotes() {
+    venuesChartProgressBar.visibility = View.INVISIBLE
+    noVenueVotesImageView.visibility = View.VISIBLE
+  }
+
   override fun showDateQuestionnairesResult(dateRowsList: List<DateRow>) {
     dateQuestionnaireAdapter.initChartRowsList(dateRowsList)
   }

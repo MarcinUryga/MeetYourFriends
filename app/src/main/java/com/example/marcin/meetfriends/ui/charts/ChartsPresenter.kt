@@ -6,7 +6,6 @@ import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.ui.common.EventIdParams
 import com.example.marcin.meetfriends.ui.common.GetFilledQuestionnairesUseCase
 import com.example.marcin.meetfriends.ui.common.GetFriendsFromFirebase
-import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -19,25 +18,49 @@ class ChartsPresenter @Inject constructor(
     private val getFilledQuestionnairesUseCase: GetFilledQuestionnairesUseCase,
     private val getFriendsFromFirebase: GetFriendsFromFirebase,
     private val getEventVenuesUseCase: GetEventVenuesUseCase,
-    private val firebaseDatabase: FirebaseDatabase,
     private val eventIdParams: EventIdParams
 ) : BasePresenter<ChartsContract.View>(), ChartsContract.Presenter {
 
   override fun resume() {
     super.resume()
+    tryToLoadAllQuestionnaires()
+  }
+
+  private fun tryToLoadAllQuestionnaires() {
     val disposable = getFilledQuestionnairesUseCase.get(eventIdParams.eventId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ questionnaires ->
           if (questionnaires != -1) {
-            getDateQuestionnaires((questionnaires as Questionnaire).dateQuestionnaire?.mapNotNull { it.value }?.sortedBy { it.timestamp }.let { it!! })
-            getVenueQuestionnaires(questionnaires.venueQuestionnaire?.mapNotNull { it.value }?.sortedBy { it.venueId }.let { it!! })
+            tryToLoadDateQuestionnaires(questionnaires as Questionnaire)
+            tryToLoadVenueQuestionnaires(questionnaires)
+          } else {
+            view.showNoDateVotes()
+            view.showNoVenueVotes()
           }
         })
     disposables?.add(disposable)
   }
 
-  private fun getDateQuestionnaires(dateVotes: List<DateVote>) {
+  private fun tryToLoadDateQuestionnaires(questionnaires: Questionnaire) {
+    val dateQuestionnaires = questionnaires.dateQuestionnaire
+    if (dateQuestionnaires != null) {
+      createDateRowsByVotes(dateQuestionnaires.mapNotNull { it.value }.sortedBy { it.timestamp })
+    } else {
+      view.showNoDateVotes()
+    }
+  }
+
+  private fun tryToLoadVenueQuestionnaires(questionnaires: Questionnaire) {
+    val venueQuestionnaires = (questionnaires as Questionnaire).venueQuestionnaire
+    if (venueQuestionnaires != null) {
+      createVenueRowsByVotes(venueVotes = venueQuestionnaires.mapNotNull { it.value }.sortedBy { it.venueId })
+    } else {
+      view.showNoVenueVotes()
+    }
+  }
+
+  private fun createDateRowsByVotes(dateVotes: List<DateVote>) {
     val chartRows = mutableListOf<DateRow>()
     var users = mutableListOf<Voter>()
     var chartRow = DateRow("", emptyList())
@@ -50,14 +73,14 @@ class ChartsPresenter @Inject constructor(
         chartRows.add(chartRow)
       }
     }
-    getDateVotersData(chartRows.sortedBy { it.timestamp })
+    getDateVoters(chartRows.sortedBy { it.timestamp })
   }
 
   private fun isTheSameDateInVoting(dateRow: DateRow, dateVote: DateVote) = dateRow.timestamp == dateVote.timestamp
 
   private fun isRightDateRow(dateRow: DateRow, chartRow: DateRow) = dateRow.timestamp == chartRow.timestamp
 
-  private fun getDateVotersData(dateRows: List<DateRow>) {
+  private fun getDateVoters(dateRows: List<DateRow>) {
     val disposable = getFriendsFromFirebase.get()
         .doFinally { view.hideDateQuestionnaireProgressBar() }
         .subscribe({ users ->
@@ -72,7 +95,7 @@ class ChartsPresenter @Inject constructor(
     disposables?.add(disposable)
   }
 
-  private fun getVenueQuestionnaires(venueVotes: List<VenueVote>) {
+  private fun createVenueRowsByVotes(venueVotes: List<VenueVote>) {
     val chartRows = mutableListOf<VenueRow>()
     var users = mutableListOf<Voter>()
     var chartRow = VenueRow(FirebasePlace(), emptyList())
