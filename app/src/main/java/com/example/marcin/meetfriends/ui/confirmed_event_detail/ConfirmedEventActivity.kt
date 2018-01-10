@@ -15,9 +15,9 @@ import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.ChatActivity
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.common.EventIdParams
-import com.example.marcin.meetfriends.ui.common.PlaceIdParams
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.params.EventIdParams
+import com.example.marcin.meetfriends.ui.common.params.PlaceIdParams
 import com.example.marcin.meetfriends.ui.confirmed_event_detail.adapter.ParticipantsAdapter
 import com.example.marcin.meetfriends.ui.main.MainActivity
 import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsActivity

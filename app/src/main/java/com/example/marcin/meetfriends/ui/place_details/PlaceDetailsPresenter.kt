@@ -3,8 +3,8 @@ package com.example.marcin.meetfriends.ui.place_details
 import com.example.marci.googlemaps.pojo.Location
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.ui.common.GetPlaceDetailsUseCase
-import com.example.marcin.meetfriends.ui.common.PlaceIdParams
+import com.example.marcin.meetfriends.ui.common.use_cases.GetPlaceDetailsUseCase
+import com.example.marcin.meetfriends.ui.common.params.PlaceIdParams
 import com.example.marcin.meetfriends.ui.place_details.viewmodel.PlaceDetails
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

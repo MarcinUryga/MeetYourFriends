@@ -3,7 +3,7 @@ package com.example.marcin.meetfriends.ui.confirmed_event_detail;
 import android.content.Context;
 import android.location.LocationManager;
 
-import com.example.marcin.meetfriends.ui.common.EventIdParams;
+import com.example.marcin.meetfriends.ui.common.params.EventIdParams;
 
 import dagger.Binds;
 import dagger.Module;

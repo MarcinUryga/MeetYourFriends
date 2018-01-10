@@ -8,7 +8,12 @@ import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.ui.common.*
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.params.EventIdParams
+import com.example.marcin.meetfriends.ui.common.params.PlaceIdParams
+import com.example.marcin.meetfriends.ui.common.use_cases.GetDeviceLocationUseCase
+import com.example.marcin.meetfriends.ui.common.use_cases.GetNearbyPlacesUseCase
+import com.example.marcin.meetfriends.ui.common.use_cases.GetParticipantsUseCase
 import com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel.EventBasicInfo
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -44,6 +49,10 @@ class ConfirmedEventPresenter @Inject constructor(
   override fun onViewCreated() {
     super.onViewCreated()
     getCurrentLocation()
+    loadEvent()
+  }
+
+  private fun loadEvent() {
     val disposable = getConfirmedEventUseCase.get(eventIdParams.eventId)
         .observeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

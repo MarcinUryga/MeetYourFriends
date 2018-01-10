@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.common
+package com.example.marcin.meetfriends.ui.common.use_cases
 
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.utils.Constants
@@ -10,7 +10,7 @@ import javax.inject.Inject
 /**
  * Created by marci on 2017-11-17.
  */
-class GetFriendsFromFirebase @Inject constructor(
+class GetFriendsFromFirebaseUseCase @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) {
 

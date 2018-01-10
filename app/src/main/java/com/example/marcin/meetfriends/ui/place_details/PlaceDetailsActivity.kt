@@ -11,7 +11,7 @@ import android.view.View
 import com.example.marci.googlemaps.pojo.Location
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseActivity
-import com.example.marcin.meetfriends.ui.common.PlaceIdParams
+import com.example.marcin.meetfriends.ui.common.params.PlaceIdParams
 import com.example.marcin.meetfriends.ui.place_details.adapters.review_adapter.ReviewAdapter
 import com.example.marcin.meetfriends.ui.place_details.viewmodel.PlaceDetails
 import com.squareup.picasso.Picasso

@@ -6,9 +6,9 @@ import com.example.marci.googlemaps.pojo.Location
 import com.example.marci.googlemaps.pojo.Place
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.ui.common.GetDeviceLocationUseCase
-import com.example.marcin.meetfriends.ui.common.GetNearbyPlacesUseCase
-import com.example.marcin.meetfriends.ui.common.PlaceIdParams
+import com.example.marcin.meetfriends.ui.common.use_cases.GetDeviceLocationUseCase
+import com.example.marcin.meetfriends.ui.common.use_cases.GetNearbyPlacesUseCase
+import com.example.marcin.meetfriends.ui.common.params.PlaceIdParams
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

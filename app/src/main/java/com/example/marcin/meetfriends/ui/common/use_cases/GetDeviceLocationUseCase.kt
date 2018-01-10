@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.common
+package com.example.marcin.meetfriends.ui.common.use_cases
 
 import android.app.Activity
 import android.content.Context

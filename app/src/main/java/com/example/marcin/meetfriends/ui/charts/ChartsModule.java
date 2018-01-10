@@ -1,6 +1,6 @@
 package com.example.marcin.meetfriends.ui.charts;
 
-import com.example.marcin.meetfriends.ui.common.EventIdParams;
+import com.example.marcin.meetfriends.ui.common.params.EventIdParams;
 
 import dagger.Binds;
 import dagger.Module;

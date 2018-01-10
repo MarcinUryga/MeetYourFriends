@@ -17,8 +17,8 @@ import com.example.marcin.meetfriends.extensions.transformDistance
 import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.mvp.BaseFragment
 import com.example.marcin.meetfriends.ui.charts.ChartsDialogFragment
-import com.example.marcin.meetfriends.ui.common.EventIdParams
-import com.example.marcin.meetfriends.ui.common.PlaceIdParams
+import com.example.marcin.meetfriends.ui.common.params.EventIdParams
+import com.example.marcin.meetfriends.ui.common.params.PlaceIdParams
 import com.example.marcin.meetfriends.ui.planned_event_detail.event_questionnaire.adapter.VenuesAdapter
 import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsActivity
 import com.example.marcin.meetfriends.utils.DateTimeFormatters

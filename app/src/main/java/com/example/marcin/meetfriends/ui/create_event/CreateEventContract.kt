@@ -3,7 +3,7 @@ package com.example.marcin.meetfriends.ui.create_event
 import com.example.marcin.meetfriends.models.Place
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
 import io.reactivex.Observable
 
 /**

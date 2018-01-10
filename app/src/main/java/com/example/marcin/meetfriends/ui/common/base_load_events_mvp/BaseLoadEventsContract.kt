@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.my_schedule
+package com.example.marcin.meetfriends.ui.common.base_load_events_mvp
 
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.MvpPresenter
@@ -10,13 +10,11 @@ import io.reactivex.Observable
 /**
  * Created by marci on 2018-01-03.
  */
-interface BaseMyScheduleContract {
+interface BaseLoadEventsContract {
 
   interface View : MvpView {
 
     fun getEventItemsSizeFromAdapter(): Int
-
-    fun showLoadingProgressBar()
 
     fun hideLoadingProgressBar()
 

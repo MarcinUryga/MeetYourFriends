@@ -1,4 +1,4 @@
-package com.example.marcin.meetfriends.ui.common
+package com.example.marcin.meetfriends.ui.common.params
 
 import android.os.Bundle
 import com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel.EventBasicInfo

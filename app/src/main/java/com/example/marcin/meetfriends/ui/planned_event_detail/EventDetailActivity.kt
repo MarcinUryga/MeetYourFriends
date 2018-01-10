@@ -14,8 +14,8 @@ import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.ChatActivity
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.common.EventIdParams
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.params.EventIdParams
 import com.example.marcin.meetfriends.ui.confirmed_event_detail.ConfirmedEventActivity
 import com.example.marcin.meetfriends.ui.main.MainActivity
 import com.example.marcin.meetfriends.ui.planned_event_detail.event_description.EventDescriptionFragment

@@ -4,8 +4,8 @@ import android.content.res.Resources
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.common.EventIdParams
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.params.EventIdParams
 
 /**
  * Created by marci on 2017-11-28.

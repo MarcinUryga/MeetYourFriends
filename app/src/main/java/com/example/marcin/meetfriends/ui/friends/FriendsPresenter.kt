@@ -2,8 +2,8 @@ package com.example.marcin.meetfriends.ui.friends
 
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.ui.common.EventIdParams
-import com.example.marcin.meetfriends.ui.common.GetFriendsFromFirebase
+import com.example.marcin.meetfriends.ui.common.params.EventIdParams
+import com.example.marcin.meetfriends.ui.common.use_cases.GetFriendsFromFirebaseUseCase
 import com.example.marcin.meetfriends.ui.friends.viewmodel.Friend
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.database.DataSnapshot
@@ -25,7 +25,7 @@ import javax.inject.Inject
 class FriendsPresenter @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
     private val getFriendsFromFacebook: GetFriendsFromFacebook,
-    private val getFriendsFromFirebase: GetFriendsFromFirebase,
+    private val getFriendsFromFirebaseUseCase: GetFriendsFromFirebaseUseCase,
     private val participantsListParams: ParticipantsListParams,
     private val eventIdParams: EventIdParams
 ) : BasePresenter<FriendsContract.View>(), FriendsContract.Presenter {
@@ -41,7 +41,7 @@ class FriendsPresenter @Inject constructor(
     }
     val disposable = getFriendsFromFacebook.getFriends()
         .subscribe({ profiles ->
-          val disposable = getFriendsFromFirebase.get()
+          val disposable = getFriendsFromFirebaseUseCase.get()
               .subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread())
               .doOnSubscribe { view.showLoading() }

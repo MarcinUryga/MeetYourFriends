@@ -7,8 +7,8 @@ import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.MvpPresenter
 import com.example.marcin.meetfriends.mvp.MvpView
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.common.PlaceIdParams
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.params.PlaceIdParams
 
 /**
  * Created by marci on 2018-01-03.
@@ -47,7 +47,7 @@ interface ConfirmedEventContract {
 
     fun startEventChatActivity(eventBasicInfoParams: EventBasicInfoParams)
 
-    fun openDeleteButtonDialog(string: String)
+    fun openDeleteButtonDialog(message: String)
 
     fun startMainActivity()
   }

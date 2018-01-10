@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseFragment
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.planned_event_detail.EventDetailActivity
 import com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel.FragmentsItems
 import com.example.marcin.meetfriends.ui.questionnaires.adapter.QuestionnaireAdapter
@@ -41,10 +41,10 @@ class QuestionnairesFragment : BaseFragment<QuestionairesContract.Presenter>(), 
     return inflater.inflate(R.layout.fragment_events_rooms, container, false)
   }
 
-  override fun manageEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
+  override fun manageEvent(rxFirebaseChildEvent: RxFirebaseChildEvent<DataSnapshot>) {
     emptyEventItemsLayout.visibility = View.INVISIBLE
-    postAdapter.manageChildItem(dataSnapshot)
-    presenter.handleChosenEventRoom(postAdapter.getClickEvent())
+    postAdapter.manageChildItem(rxFirebaseChildEvent)
+    presenter.handleChosenEvent(postAdapter.getClickEvent())
   }
 
   override fun getEventItemsSizeFromAdapter() = postAdapter.itemCount
@@ -53,21 +53,22 @@ class QuestionnairesFragment : BaseFragment<QuestionairesContract.Presenter>(), 
     startActivity(EventDetailActivity.newIntent(context, eventBasicInfoParams, FragmentsItems.QUESTIONNAIRES))
   }
 
-  override fun showLoading() {
+  override fun showLoadingProgressBar() {
     progressBar.visibility = View.VISIBLE
   }
 
-  override fun hideLoading() {
+  override fun hideLoadingProgressBar() {
     progressBar.visibility = View.INVISIBLE
   }
 
-  override fun showEmptyQuestionnairesToFillScreen() {
+  override fun showNoEventsView() {
+    progressBar.visibility = View.INVISIBLE
     emptyEventItemsLayout.visibility = View.VISIBLE
     noItemsImageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.circle_chart_green_icon))
     noItemsTextView.text = getString(R.string.you_have_any_questionnaires_to_fill)
   }
 
-  override fun hideEmptyQuestionnairesToFillScreen() {
+  override fun hideNoEventsLayout() {
     emptyEventItemsLayout.visibility = View.INVISIBLE
   }
 }

@@ -8,7 +8,12 @@ import com.example.marcin.meetfriends.models.FirebasePlace
 import com.example.marcin.meetfriends.models.Questionnaire
 import com.example.marcin.meetfriends.models.VenueVote
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.ui.common.*
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.params.EventIdParams
+import com.example.marcin.meetfriends.ui.common.params.PlaceIdParams
+import com.example.marcin.meetfriends.ui.common.use_cases.GetDeviceLocationUseCase
+import com.example.marcin.meetfriends.ui.common.use_cases.GetFilledQuestionnairesUseCase
+import com.example.marcin.meetfriends.ui.common.use_cases.GetNearbyPlacesUseCase
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -83,7 +88,7 @@ class EventQuestionnairePresenter @Inject constructor(
   private fun checkVenueQuestionnaire(questionnaires: Any) {
     val currentUserVenueVote = (questionnaires as Questionnaire).venueQuestionnaire?.values?.firstOrNull { it.userId == auth.currentUser?.uid }
     if (currentUserVenueVote != null) {
-      view.showFilledVenueQuestionnaire(venuesList.first { it.id == currentUserVenueVote?.venueId })
+      view.showFilledVenueQuestionnaire(venuesList.first { it.id == currentUserVenueVote.venueId })
     } else {
       view.showVenueChoserLayout()
     }

@@ -55,7 +55,7 @@ class LoginPresenter @Inject constructor(
           )
           saveUser(user)
         }, { error ->
-
+          Timber.d(error.localizedMessage)
         })
     disposables?.add(disposable)
   }

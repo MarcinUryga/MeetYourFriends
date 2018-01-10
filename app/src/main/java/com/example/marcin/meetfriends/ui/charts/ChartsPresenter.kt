@@ -3,9 +3,9 @@ package com.example.marcin.meetfriends.ui.charts
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.*
 import com.example.marcin.meetfriends.mvp.BasePresenter
-import com.example.marcin.meetfriends.ui.common.EventIdParams
-import com.example.marcin.meetfriends.ui.common.GetFilledQuestionnairesUseCase
-import com.example.marcin.meetfriends.ui.common.GetFriendsFromFirebase
+import com.example.marcin.meetfriends.ui.common.params.EventIdParams
+import com.example.marcin.meetfriends.ui.common.use_cases.GetFilledQuestionnairesUseCase
+import com.example.marcin.meetfriends.ui.common.use_cases.GetFriendsFromFirebaseUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @ScreenScope
 class ChartsPresenter @Inject constructor(
     private val getFilledQuestionnairesUseCase: GetFilledQuestionnairesUseCase,
-    private val getFriendsFromFirebase: GetFriendsFromFirebase,
+    private val getFriendsFromFirebaseUseCase: GetFriendsFromFirebaseUseCase,
     private val getEventVenuesUseCase: GetEventVenuesUseCase,
     private val eventIdParams: EventIdParams
 ) : BasePresenter<ChartsContract.View>(), ChartsContract.Presenter {
@@ -52,7 +52,7 @@ class ChartsPresenter @Inject constructor(
   }
 
   private fun tryToLoadVenueQuestionnaires(questionnaires: Questionnaire) {
-    val venueQuestionnaires = (questionnaires as Questionnaire).venueQuestionnaire
+    val venueQuestionnaires = questionnaires.venueQuestionnaire
     if (venueQuestionnaires != null) {
       createVenueRowsByVotes(venueVotes = venueQuestionnaires.mapNotNull { it.value }.sortedBy { it.venueId })
     } else {
@@ -81,7 +81,7 @@ class ChartsPresenter @Inject constructor(
   private fun isRightDateRow(dateRow: DateRow, chartRow: DateRow) = dateRow.timestamp == chartRow.timestamp
 
   private fun getDateVoters(dateRows: List<DateRow>) {
-    val disposable = getFriendsFromFirebase.get()
+    val disposable = getFriendsFromFirebaseUseCase.get()
         .doFinally { view.hideDateQuestionnaireProgressBar() }
         .subscribe({ users ->
           dateRows.forEach { rows ->
@@ -116,7 +116,7 @@ class ChartsPresenter @Inject constructor(
   private fun isRightVenueRow(venueRow: VenueRow, chartRow: VenueRow) = venueRow.venue.id == chartRow.venue.id
 
   private fun getVenueVotersData(venueRows: List<VenueRow>) {
-    val disposable = getFriendsFromFirebase.get()
+    val disposable = getFriendsFromFirebaseUseCase.get()
         .subscribe({ users ->
           venueRows.forEach { rows ->
             val voters = users.filter { user -> rows.voters.any { it.userId == user.uid } }

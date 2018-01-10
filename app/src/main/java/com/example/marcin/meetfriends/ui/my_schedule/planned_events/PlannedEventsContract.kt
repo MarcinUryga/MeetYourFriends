@@ -1,7 +1,7 @@
 package com.example.marcin.meetfriends.ui.my_schedule.planned_events
 
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.example.marcin.meetfriends.ui.my_schedule.BaseMyScheduleContract
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.base_load_events_mvp.BaseLoadEventsContract
 
 /**
  * Created by marci on 2018-01-04.
@@ -9,10 +9,10 @@ import com.example.marcin.meetfriends.ui.my_schedule.BaseMyScheduleContract
 
 interface PlannedEventsContract {
 
-  interface View : BaseMyScheduleContract.View {
+  interface View : BaseLoadEventsContract.View {
 
     fun startEventDetailActivity(eventBasicInfoParams: EventBasicInfoParams)
   }
 
-  interface Presenter : BaseMyScheduleContract.Presenter
+  interface Presenter : BaseLoadEventsContract.Presenter
 }

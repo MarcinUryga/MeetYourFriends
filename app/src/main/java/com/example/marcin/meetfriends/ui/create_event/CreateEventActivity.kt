@@ -14,7 +14,7 @@ import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.choose_event_icon.ChooseEventIconDialogFragment
 import com.example.marcin.meetfriends.ui.choose_event_icon.OnIconSelectedListener
 import com.example.marcin.meetfriends.ui.choose_event_icon.viewmodel.EventIconEnum
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.common.places_adapter.PlacesAdapter
 import com.example.marcin.meetfriends.ui.planned_event_detail.EventDetailActivity
 import com.example.marcin.meetfriends.ui.search_venues.SearchVenuesActivity

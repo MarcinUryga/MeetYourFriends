@@ -1,37 +1,19 @@
 package com.example.marcin.meetfriends.ui.questionnaires
 
-import com.example.marcin.meetfriends.models.Event
-import com.example.marcin.meetfriends.mvp.MvpPresenter
-import com.example.marcin.meetfriends.mvp.MvpView
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
-import com.google.firebase.database.DataSnapshot
-import durdinapps.rxfirebase2.RxFirebaseChildEvent
-import io.reactivex.Observable
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.base_load_events_mvp.BaseLoadEventsContract
 
 /**
  * Created by marci on 2017-12-12.
  */
 interface QuestionairesContract {
 
-  interface View : MvpView {
+  interface View : BaseLoadEventsContract.View {
 
-    fun showLoading()
-
-    fun hideLoading()
-
-    fun showEmptyQuestionnairesToFillScreen()
-
-    fun manageEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>)
-
-    fun hideEmptyQuestionnairesToFillScreen()
-
-    fun getEventItemsSizeFromAdapter(): Int
+    fun showLoadingProgressBar()
 
     fun startEventQuestionnaireFragment(eventBasicInfoParams: EventBasicInfoParams)
   }
 
-  interface Presenter : MvpPresenter {
-
-    fun handleChosenEventRoom(chosenEventRoom: Observable<Event>) {}
-  }
+  interface Presenter : BaseLoadEventsContract.Presenter
 }

@@ -11,7 +11,7 @@ import android.widget.Toast
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.models.Place
 import com.example.marcin.meetfriends.mvp.BaseActivity
-import com.example.marcin.meetfriends.ui.common.PlaceIdParams
+import com.example.marcin.meetfriends.ui.common.params.PlaceIdParams
 import com.example.marcin.meetfriends.ui.common.places_adapter.PlacesAdapter
 import com.example.marcin.meetfriends.ui.place_details.PlaceDetailsActivity
 import com.example.marcin.meetfriends.utils.KeyboardUtils

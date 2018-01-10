@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseActivity
-import com.example.marcin.meetfriends.ui.common.EventIdParams
+import com.example.marcin.meetfriends.ui.common.params.EventIdParams
 import com.example.marcin.meetfriends.ui.friends.adapter.FriendsAdapter
 import com.example.marcin.meetfriends.ui.friends.viewmodel.Friend
 import dagger.android.AndroidInjection

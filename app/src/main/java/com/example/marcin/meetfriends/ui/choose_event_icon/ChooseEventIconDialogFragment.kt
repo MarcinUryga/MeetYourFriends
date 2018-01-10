@@ -43,6 +43,5 @@ class ChooseEventIconDialogFragment : BaseFragmentDialog<ChooseEventIconContract
       listener.onIconSelected(adapterView.adapter.getItem(position) as EventIconEnum)
       dismiss()
     }
-//    eventIconsGridView.onItemClickListener = OnItemClickListener { adapterView, view, i, l ->  }
   }
 }

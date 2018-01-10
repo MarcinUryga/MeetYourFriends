@@ -9,7 +9,7 @@ import com.example.marcin.meetfriends.R
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.chat.adapter.ChatAdapter
 import com.example.marcin.meetfriends.ui.chat.viewmodel.Message
-import com.example.marcin.meetfriends.ui.common.EventBasicInfoParams
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
 import com.example.marcin.meetfriends.utils.DateTimeFormatters
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_chat_room.*

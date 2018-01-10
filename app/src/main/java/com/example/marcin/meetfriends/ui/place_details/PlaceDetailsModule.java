@@ -1,6 +1,6 @@
 package com.example.marcin.meetfriends.ui.place_details;
 
-import com.example.marcin.meetfriends.ui.common.PlaceIdParams;
+import com.example.marcin.meetfriends.ui.common.params.PlaceIdParams;
 
 import dagger.Binds;
 import dagger.Module;
