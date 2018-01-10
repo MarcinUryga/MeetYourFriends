@@ -26,7 +26,7 @@ class ConfirmedEventsPresenter @Inject constructor(
   }
 
   override fun manageEventItem(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
-    if (isFinishedVoting(dataSnapshot)) {
+    if (isFinishedVoting(dataSnapshot) || dataSnapshot.eventType == RxFirebaseChildEvent.EventType.REMOVED) {
       removeEvent(dataSnapshot)
     } else if (!isFinishedVoting(dataSnapshot)) {
       addEvent(dataSnapshot)
@@ -38,7 +38,6 @@ class ConfirmedEventsPresenter @Inject constructor(
     }
     view.hideLoadingProgressBar()
   }
-
   override fun handleChosenEvent(clickEvent: Observable<Event>) {
     val disposable = clickEvent.subscribe({ event ->
       view.startConfirmedEventActivity(EventIdParams(eventId = event.id.let { it!! }))

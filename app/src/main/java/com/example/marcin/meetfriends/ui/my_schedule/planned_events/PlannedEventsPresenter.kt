@@ -2,8 +2,8 @@ package com.example.marcin.meetfriends.ui.my_schedule.planned_events
 
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
-import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.common.base_load_events_mvp.BaseLoadEventsPresenter
+import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel.EventBasicInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -27,7 +27,7 @@ class PlannedEventsPresenter @Inject constructor(
   }
 
   override fun manageEventItem(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
-    if (isFinishedVoting(dataSnapshot)) {
+    if (isFinishedVoting(dataSnapshot) || dataSnapshot.eventType == RxFirebaseChildEvent.EventType.REMOVED) {
       removeEvent(dataSnapshot)
     } else if (!isFinishedVoting(dataSnapshot)) {
       addEvent(dataSnapshot)

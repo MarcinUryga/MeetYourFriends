@@ -30,6 +30,7 @@ class PlannedEventsAdapter : RxFirebaseRecyclerAdapter<PlannedEventsViewHolder, 
   override fun itemAdded(item: Event, key: String, position: Int) {
     //Add the refs if you need them later
 //    item.setRef(key)
+    notifyDataSetChanged()
     Timber.d("Added a new item to the adapter.")
   }
 

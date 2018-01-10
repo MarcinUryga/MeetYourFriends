@@ -3,7 +3,6 @@ package com.example.marcin.meetfriends.di
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.beltaief.reactivefb.ReactiveFB
 import com.beltaief.reactivefb.SimpleFacebookConfiguration
 import com.beltaief.reactivefb.util.PermissionHelper
 import com.example.marcin.meetfriends.MeetFriendsApplication
@@ -28,6 +27,7 @@ import javax.inject.Singleton
 class ApplicationModule {
 
   @Provides
+  @Singleton
   @ApplicationContext
   fun provideAppContext(meetFriendsApplication: MeetFriendsApplication): Context {
     return meetFriendsApplication

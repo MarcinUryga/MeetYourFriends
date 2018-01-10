@@ -36,8 +36,6 @@ import com.example.marcin.meetfriends.ui.questionnaires.QuestionnairesFragment
 import com.example.marcin.meetfriends.ui.questionnaires.QuestionnairesModule
 import com.example.marcin.meetfriends.ui.search_venues.SearchVenuesActivity
 import com.example.marcin.meetfriends.ui.search_venues.SearchVenuesModule
-import com.example.marcin.meetfriends.ui.venues.VenuesFragment
-import com.example.marcin.meetfriends.ui.venues.VenuesModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -71,10 +69,6 @@ abstract class InjectorsModule {
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(FriendsModule::class))
   abstract fun friendsActivity(): FriendsActivity
-
-  @ScreenScope
-  @ContributesAndroidInjector(modules = arrayOf(VenuesModule::class))
-  abstract fun venuesFragment(): VenuesFragment
 
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(ChatRoomsModule::class))

@@ -1,5 +1,6 @@
 package com.example.marcin.meetfriends.ui.common.base_load_events_mvp
 
+import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -21,37 +22,32 @@ abstract class BaseLoadEventsPresenter<T : BaseLoadEventsContract.View>(
 
   protected fun loadEvents() {
     val disposable = RxFirebaseDatabase
-        .observeChildEvent(databaseReferencePath())
+        .observeChildEvent(databaseEventsPath())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ dataSnapshot ->
-          val organizerIdPath = dataSnapshot.value.child(databaseEventOrganizerPath())
-          if (isOrganizerEvent(organizerIdPath)) {
+          val eventData = dataSnapshot.value.getValue(Event::class.java)
+          if (isOrganizerEvent(eventData?.organizerId.let { it!! })) {
             manageEventItem(dataSnapshot)
-          } else {
-            loadEventsForParticipants(dataSnapshot)
+          } else if (isParticipantEvent(eventData)) {
+            manageEventItem(dataSnapshot)
           }
-          if (isEmptyEventsList()) {
-            view.showNoEventsView()
-          } else {
-            view.hideNoEventsLayout()
-          }
+          manageEmptyEventsLayout()
         }, { error ->
           Timber.e(error.localizedMessage)
         })
     disposables?.add(disposable)
   }
 
-  private fun loadEventsForParticipants(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
-    val disposable = RxFirebaseDatabase
-        .observeChildEvent(databaseEventParticipantsPath(dataSnapshot.key))
-        .subscribe({ participantsIdDataSnapshot ->
-          val participantsIdPath = participantsIdDataSnapshot.value
-          if (participantsIdPath.value == auth.uid) {
-            manageEventItem(dataSnapshot)
-          }
-        })
-    disposables?.add(disposable)
+  private fun isParticipantEvent(eventData: Event?) =
+      eventData?.participants?.any { it.value == auth.currentUser?.uid }!!
+
+  private fun manageEmptyEventsLayout() {
+    if (isEmptyEventsList()) {
+      view.showNoEventsView()
+    } else {
+      view.hideNoEventsLayout()
+    }
   }
 
   protected fun removeEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
@@ -74,17 +70,26 @@ abstract class BaseLoadEventsPresenter<T : BaseLoadEventsContract.View>(
     ))
   }
 
+  protected fun changeEvent(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>) {
+    view.manageEvent(RxFirebaseChildEvent(
+        dataSnapshot.key,
+        dataSnapshot.value,
+        dataSnapshot.previousChildName,
+        RxFirebaseChildEvent.EventType.CHANGED
+    ))
+  }
+
   abstract fun manageEventItem(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>)
 
   abstract fun isFinishedVoting(dataSnapshot: RxFirebaseChildEvent<DataSnapshot>): Boolean
 
-  private fun databaseReferencePath() = firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS)
+  private fun databaseEventsPath() = firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS)
 
   private fun databaseEventOrganizerPath() = Constants.FIREBASE_ORGANIZER_ID
 
-  private fun isOrganizerEvent(organizerIdPath: DataSnapshot) = (organizerIdPath.getValue(String::class.java) == auth.uid)
+  private fun isOrganizerEvent(organizerId: String) = organizerId == auth.uid
 
-  private fun databaseEventParticipantsPath(eventKey: String) = databaseReferencePath().child(eventKey).child(Constants.FIREBASE_PARTICIPANTS)
+  private fun databaseEventParticipantsPath(eventKey: String) = databaseEventsPath().child(eventKey).child(Constants.FIREBASE_PARTICIPANTS)
 
   private fun isEmptyEventsList() = view.getEventItemsSizeFromAdapter() == 0
 }

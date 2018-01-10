@@ -160,7 +160,7 @@ class EventDetailPresenter @Inject constructor(
   override fun deleteEvent() {
     view.startMainActivity()
     if (auth.currentUser?.uid == organizerId) {
-      firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(eventId).removeValue()
+      firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS).child(eventId).setValue(null)
     } else {
       firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS)
           .child(eventInfoParams.event.id.let { it!! })
