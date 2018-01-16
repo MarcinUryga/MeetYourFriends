@@ -15,6 +15,5 @@ interface LaunchContract {
     fun startMainActivity()
   }
 
-  interface Presenter : MvpPresenter {
-  }
+  interface Presenter : MvpPresenter
 }

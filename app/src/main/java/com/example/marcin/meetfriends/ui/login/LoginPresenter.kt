@@ -27,13 +27,13 @@ class LoginPresenter @Inject constructor(
 ) : BasePresenter<LoginContract.View>(), LoginContract.Presenter {
 
   override fun registerlogin(observableLoginRsult: Observable<LoginResult>) {
-    val disposableObserver = observableLoginRsult
+    val disposable = observableLoginRsult
         .subscribe({ loginResult ->
           handleFacebookAccessToken(loginResult.accessToken)
         }, { error ->
           Timber.e(error.localizedMessage)
         })
-    disposables?.add(disposableObserver)
+    disposables?.add(disposable)
   }
 
   private fun handleFacebookAccessToken(accesToken: AccessToken) {
@@ -63,7 +63,8 @@ class LoginPresenter @Inject constructor(
   private fun saveUser(user: User) {
     val disposable = RxFirebaseDatabase
         .setValue(firebaseDatabase.reference.child(Constants.FIREBASE_USERS).child(user.uid), user)
-        .doFinally { view.showToast("Data saved!") }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe()
     disposables?.add(disposable)
   }

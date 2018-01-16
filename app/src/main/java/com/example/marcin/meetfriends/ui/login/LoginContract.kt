@@ -17,8 +17,6 @@ interface LoginContract {
     fun hideProgressBar()
 
     fun startMainActivity()
-
-    fun showToast(msg: String)
   }
 
   interface Presenter : MvpPresenter {

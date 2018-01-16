@@ -33,6 +33,5 @@ class LaunchPresenter @Inject constructor(
     } else {
       view.startMainActivity()
     }
-
   }
 }

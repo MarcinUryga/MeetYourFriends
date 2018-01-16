@@ -1,14 +1,11 @@
 package com.example.marcin.meetfriends.ui.launch
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import com.example.marcin.meetfriends.mvp.BaseActivity
 import com.example.marcin.meetfriends.ui.login.LoginActivity
 import com.example.marcin.meetfriends.ui.main.MainActivity
 import dagger.android.AndroidInjection
 
-
-@SuppressLint("CheckResult")
 class LaunchActivity : BaseActivity<LaunchContract.Presenter>(), LaunchContract.View {
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,10 +14,12 @@ class LaunchActivity : BaseActivity<LaunchContract.Presenter>(), LaunchContract.
   }
 
   override fun startLoginAcivity() {
+    finish()
     startActivity(LoginActivity.newIntent(this))
   }
 
   override fun startMainActivity() {
+    finish()
     startActivity(MainActivity.newIntent(this))
   }
 }
