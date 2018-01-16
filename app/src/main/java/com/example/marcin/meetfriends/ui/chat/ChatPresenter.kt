@@ -9,10 +9,7 @@ import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.common.use_cases.GetParticipantsUseCase
 import com.example.marcin.meetfriends.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -25,10 +22,9 @@ import javax.inject.Inject
  */
 @ScreenScope
 class ChatPresenter @Inject constructor(
-    private val getUserUseCase: GetUserUseCase,
+    private val getParticipantsUseCase: GetParticipantsUseCase,
     private val firebaseDatabase: FirebaseDatabase,
     private val getEventBasicInfoParams: EventBasicInfoParams,
-    private val getParticipantsUseCase: GetParticipantsUseCase,
     private val auth: FirebaseAuth
 ) : BasePresenter<ChatContract.View>(), ChatContract.Presenter {
 
@@ -38,12 +34,42 @@ class ChatPresenter @Inject constructor(
     getMessages()
   }
 
+  override fun sendMessage(text: String) {
+    if (text.isNotEmpty()) {
+      val chat = createMessageModel(text)
+      val disposable = RxFirebaseDatabase
+          .setValue(getEventChatFirebasePath().child(chat.id), chat)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .doOnComplete {
+            val message = Message(
+                user = User(uid = auth.uid, displayName = auth.currentUser?.displayName),
+                ifMine = true,
+                message = text
+            )
+            if(message.ifContainsDate()){
+              sendDateVote(message.transformDateHandlerToJodaTime())
+            }
+          }
+          .subscribe()
+      disposables?.add(disposable)
+    }
+  }
+
+  private fun createMessageModel(text: String): Chat {
+    return Chat(
+        id = firebaseDatabase.reference.push().key,
+        userId = auth.currentUser?.uid,
+        message = text,
+        timestamp = DateTime().millis
+    )
+  }
+
   private fun getMessages() {
     val disposable = RxFirebaseDatabase
-        .observeChildEvent(firebaseDatabase.reference
-            .child(Constants.FIREBASE_EVENTS)
-            .child(getEventBasicInfoParams.event.id)
-            .child(Constants.FIREBASE_CHAT))
+        .observeChildEvent(getEventChatFirebasePath())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
         .subscribe({ dataSnapshot ->
           val chatMessages = mutableListOf<Chat>()
           chatMessages.add(dataSnapshot.value.getValue(Chat::class.java).let { it!! })
@@ -60,49 +86,25 @@ class ChatPresenter @Inject constructor(
   }
 
   private fun createMessage(chat: Chat) {
-    val disposable = getUserUseCase.get(chat.userId.let { it!! })
+    val disposable = getParticipantsUseCase.getUserById(chat.userId.let { it!! })
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
         .subscribe { user ->
           view.addMessage(Message(
               user = user,
               message = chat.message,
-              ifMine = chat.ifMine
+              ifMine = chat.ifMine,
+              timestamp = chat.timestamp
           ))
         }
     disposables?.add(disposable)
   }
 
-  override fun sendMessage(text: String) {
-    if (text.isNotEmpty()) {
-      val chatId = firebaseDatabase.reference.push().key
-      val chat = Chat(
-          id = chatId,
-          userId = auth.currentUser?.uid,
-          message = text
-      )
-      val disposable = RxFirebaseDatabase
-          .setValue(
-              firebaseDatabase.reference
-                  .child(Constants.FIREBASE_EVENTS)
-                  .child(getEventBasicInfoParams.event.id)
-                  .child(Constants.FIREBASE_CHAT)
-                  .child(chatId), chat)
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .doOnComplete {
-            view.tryToVoteOnEventDate(Message(
-                User(
-                    uid = auth.uid,
-                    displayName = auth.currentUser?.displayName
-                ),
-                ifMine = true,
-                message = text
-            ))
-          }
-          .subscribe()
-      disposables?.add(disposable)
-    }
+  private fun getEventChatFirebasePath(): DatabaseReference {
+    return firebaseDatabase.reference
+        .child(Constants.FIREBASE_EVENTS)
+        .child(getEventBasicInfoParams.event.id)
+        .child(Constants.FIREBASE_CHAT)
   }
 
   override fun sendDateVote(selectedDate: DateTime) {
@@ -113,6 +115,8 @@ class ChatPresenter @Inject constructor(
             .child(Constants.FIREBASE_QUESTIONNAIRE)
             .child(Constants.FIREBASE_DATE_QUESTIONNAIRE)
             .child(auth.currentUser?.uid.let { it!! }), selectedDate.millis.toString())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
         .doFinally { view.showChosenDateSnackBar(selectedDate, auth.uid!!) }
         .subscribe()
     disposables?.add(disposable)

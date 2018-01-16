@@ -14,12 +14,9 @@ interface ChatContract {
 
     fun addMessage(message: Message)
 
-    fun tryToVoteOnEventDate(message: Message)
-
     fun showChosenDateSnackBar(selectedDate: DateTime, userId: String)
 
     fun setUpActionBarTitle(title: String)
-//    fun startUpdateDateTimeService(params: EventBasicInfoParams)
   }
 
   interface Presenter : MvpPresenter {

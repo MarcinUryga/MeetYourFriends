@@ -65,7 +65,7 @@ class EventDetailPresenter @Inject constructor(
   }
 
   private fun getEventOrganizer(organizerId: String) {
-    val disposable = getParticipantsUseCase.getOrganizer(organizerId)
+    val disposable = getParticipantsUseCase.getUserById(organizerId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ organizer ->

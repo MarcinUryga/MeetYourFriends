@@ -10,7 +10,7 @@ import java.util.regex.Pattern
 data class Message(
     val user: User,
     val message: String? = null,
-    val timestamp: String? = null,
+    val timestamp: Long? = null,
     var ifMine: Boolean = false,
     var isDateInMessage: Boolean = false) {
 
@@ -21,7 +21,6 @@ data class Message(
   private val datesAsWordPattern: Pattern
 
   var dateHandler: String? = null
-    get() = field
 
   init {
     FULL_PL_DATES_DOT_SEPARATE_REGEX.toRegex()
@@ -38,11 +37,11 @@ data class Message(
   }
 
   fun ifContainsDate(): Boolean {
-    val fullDatesDotMatcher = fullDatesDotPattern.matcher(message)
-    val fullDatesSlashMatcher = fullDatesSlashPattern.matcher(message)
-    val fullDatesDashMatcher = fullDatesDashPattern.matcher(message)
-    val fullDatesWhitespaceMatcher = fullDatesWhitespacePattern.matcher(message)
-    val datesAsWordMatcher = datesAsWordPattern.matcher(message)
+    val fullDatesDotMatcher = fullDatesDotPattern.matcher(" $message")
+    val fullDatesSlashMatcher = fullDatesSlashPattern.matcher(" $message")
+    val fullDatesDashMatcher = fullDatesDashPattern.matcher(" $message")
+    val fullDatesWhitespaceMatcher = fullDatesWhitespacePattern.matcher(" $message")
+    val datesAsWordMatcher = datesAsWordPattern.matcher(" $message")
     when {
       fullDatesDotMatcher.matches() -> dateHandler = fullDatesDotMatcher.group(1)
       fullDatesSlashMatcher.matches() -> dateHandler = fullDatesSlashMatcher.group(1)
@@ -67,11 +66,11 @@ data class Message(
   }
 
   companion object {
-    private val FULL_PL_DATES_DOT_SEPARATE_REGEX: String = ".*((\\d|([0-1]\\d)|(2[0-4])):(\\d|([0-5]\\d)) (((([1-9]|([0-2]\\d)|3[01])).((([sS]tycz(e[nń]|nia))|([mM]ar(zec|ca))|([mM]aj(a|))|([lL]ip(iec|ca))|([sS]ierp(ie[nń]|nia))|([pP]a[zź]dziernik(a|))|([gG]rud(zie[nń]|nia)))|([13578]|10|12)))|((([1-9]|([0-2]\\d)|30)).((([kK]wie(cie[nń]|tnia))|([cC]zerw(iec|ca))|([wW]rze(sie[nń]|[sś]nia))|([lL]istopad(a|)))|([469]|11)))|((([1-9]|([0-2][0-8])))).((([lL]ut(y|ego)))|2))((.((20\\d\\d)))|)).*"
-    private val FULL_PL_DATES_SLASH_SEPARATE_REGEX: String = ".*((\\d|([0-1]\\d)|(2[0-4])):(\\d|([0-5]\\d)) (((([1-9]|([0-2]\\d)|3[01]))/((([sS]tycz(e[nń]|nia))|([mM]ar(zec|ca))|([mM]aj(a|))|([lL]ip(iec|ca))|([sS]ierp(ie[nń]|nia))|([pP]a[zź]dziernik(a|))|([gG]rud(zie[nń]|nia)))|([13578]|10|12)))|((([1-9]|([0-2]\\d)|30))/((([kK]wie(cie[nń]|tnia))|([cC]zerw(iec|ca))|([wW]rze(sie[nń]|[sś]nia))|([lL]istopad(a|)))|([469]|11)))|((([1-9]|([0-2][0-8]))))/((([lL]ut(y|ego)))|2))((/((20\\d\\d)))|)).*"
-    private val FULL_PL_DATES_DASH_SEPARATE_REGEX: String = ".*((\\d|([0-1]\\d)|(2[0-4])):(\\d|([0-5]\\d)) (((([1-9]|([0-2]\\d)|3[01]))-((([sS]tycz(e[nń]|nia))|([mM]ar(zec|ca))|([mM]aj(a|))|([lL]ip(iec|ca))|([sS]ierp(ie[nń]|nia))|([pP]a[zź]dziernik(a|))|([gG]rud(zie[nń]|nia)))|([13578]|10|12)))|((([1-9]|([0-2]\\d)|30))-((([kK]wie(cie[nń]|tnia))|([cC]zerw(iec|ca))|([wW]rze(sie[nń]|[sś]nia))|([lL]istopad(a|)))|([469]|11)))|((([1-9]|([0-2][0-8]))))-((([lL]ut(y|ego)))|2))((-((20\\d\\d)))|)).*"
-    private val FULL_PL_DATES_WHITESPACE_SEPARATE_REGEX: String = ".*((\\d|([0-1]\\d)|(2[0-4])):(\\d|([0-5]\\d)) (((([1-9]|([0-2]\\d)|3[01])) ((([sS]tycz(e[nń]|nia))|([mM]ar(zec|ca))|([mM]aj(a|))|([lL]ip(iec|ca))|([sS]ierp(ie[nń]|nia))|([pP]a[zź]dziernik(a|))|([gG]rud(zie[nń]|nia)))|([13578]|10|12)))|((([1-9]|([0-2]\\d)|30)) ((([kK]wie(cie[nń]|tnia))|([cC]zerw(iec|ca))|([wW]rze(sie[nń]|[sś]nia))|([lL]istopad(a|)))|([469]|11)))|((([1-9]|([0-2][0-8])))) ((([lL]ut(y|ego)))|2))(( ((20\\d\\d)))|)).*"
+    private val FULL_PL_DATES_DOT_SEPARATE_REGEX: String = ".* ((\\d|([0-1]\\d)|(2[0-4])):(\\d|([0-5]\\d)) (((([1-9]|([0-2]\\d)|3[01])).((([sS]tycz(e[nń]|nia))|([mM]ar(zec|ca))|([mM]aj(a|))|([lL]ip(iec|ca))|([sS]ierp(ie[nń]|nia))|([pP]a[zź]dziernik(a|))|([gG]rud(zie[nń]|nia)))|([13578]|10|12)))|((([1-9]|([0-2]\\d)|30)).((([kK]wie(cie[nń]|tnia))|([cC]zerw(iec|ca))|([wW]rze(sie[nń]|[sś]nia))|([lL]istopad(a|)))|([469]|11)))|((([1-9]|([0-2][0-8])))).((([lL]ut(y|ego)))|2))((.((20\\d\\d)))|)).*"
+    private val FULL_PL_DATES_SLASH_SEPARATE_REGEX: String = ".* ((\\d|([0-1]\\d)|(2[0-4])):(\\d|([0-5]\\d)) (((([1-9]|([0-2]\\d)|3[01]))/((([sS]tycz(e[nń]|nia))|([mM]ar(zec|ca))|([mM]aj(a|))|([lL]ip(iec|ca))|([sS]ierp(ie[nń]|nia))|([pP]a[zź]dziernik(a|))|([gG]rud(zie[nń]|nia)))|([13578]|10|12)))|((([1-9]|([0-2]\\d)|30))/((([kK]wie(cie[nń]|tnia))|([cC]zerw(iec|ca))|([wW]rze(sie[nń]|[sś]nia))|([lL]istopad(a|)))|([469]|11)))|((([1-9]|([0-2][0-8]))))/((([lL]ut(y|ego)))|2))((/((20\\d\\d)))|)).*"
+    private val FULL_PL_DATES_DASH_SEPARATE_REGEX: String = ".* ((\\d|([0-1]\\d)|(2[0-4])):(\\d|([0-5]\\d)) (((([1-9]|([0-2]\\d)|3[01]))-((([sS]tycz(e[nń]|nia))|([mM]ar(zec|ca))|([mM]aj(a|))|([lL]ip(iec|ca))|([sS]ierp(ie[nń]|nia))|([pP]a[zź]dziernik(a|))|([gG]rud(zie[nń]|nia)))|([13578]|10|12)))|((([1-9]|([0-2]\\d)|30))-((([kK]wie(cie[nń]|tnia))|([cC]zerw(iec|ca))|([wW]rze(sie[nń]|[sś]nia))|([lL]istopad(a|)))|([469]|11)))|((([1-9]|([0-2][0-8]))))-((([lL]ut(y|ego)))|2))((-((20\\d\\d)))|)).*"
+    private val FULL_PL_DATES_WHITESPACE_SEPARATE_REGEX: String = ".* ((\\d|([0-1]\\d)|(2[0-4])):(\\d|([0-5]\\d)) (((([1-9]|([0-2]\\d)|3[01])) ((([sS]tycz(e[nń]|nia))|([mM]ar(zec|ca))|([mM]aj(a|))|([lL]ip(iec|ca))|([sS]ierp(ie[nń]|nia))|([pP]a[zź]dziernik(a|))|([gG]rud(zie[nń]|nia)))|([13578]|10|12)))|((([1-9]|([0-2]\\d)|30)) ((([kK]wie(cie[nń]|tnia))|([cC]zerw(iec|ca))|([wW]rze(sie[nń]|[sś]nia))|([lL]istopad(a|)))|([469]|11)))|((([1-9]|([0-2][0-8])))) ((([lL]ut(y|ego)))|2))(( ((20\\d\\d)))|)).*"
 
-    private val DATES_AS_WORDS_REGEX: String = ".*((([0-1]\\d)|(2[0-4])):(\\d|([0-5]\\d)) (([dD]zi[sś](|iaj))|([jJ]utro)|([Pp]ojutrze)|([zZ]a tydzie[ńn])|([zZ]a miesi[ąa]c))).*"
+    private val DATES_AS_WORDS_REGEX: String = ".* ((\\d|([0-1]\\d)|(2[0-4])):(\\d|([0-5]\\d)) (([dD]zi[sś](|iaj))|([jJ]utro)|([Pp]ojutrze)|([zZ]a tydzie[ńn])|([zZ]a miesi[ąa]c))).*"
   }
 }

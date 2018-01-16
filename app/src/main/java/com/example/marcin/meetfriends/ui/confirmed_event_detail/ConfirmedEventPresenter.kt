@@ -122,7 +122,7 @@ class ConfirmedEventPresenter @Inject constructor(
   }
 
   private fun loadAllEventData(event: Event) {
-    val disposable = getParticipantsUseCase.getOrganizer(event.organizerId.let { it!! })
+    val disposable = getParticipantsUseCase.getUserById(event.organizerId.let { it!! })
         .mergeWith { getEventParticipants(event.participants.map { it.value }) }
         .mergeWith { getEventVenue(event) }
         .subscribe({ organizer ->
@@ -159,7 +159,7 @@ class ConfirmedEventPresenter @Inject constructor(
   }
 
   private fun getEventParticipants(participantsIds: List<String>) {
-    val disposable = getParticipantsUseCase.getParticipantsIds(participantsIds)
+    val disposable = getParticipantsUseCase.getParticipantsByIds(participantsIds)
         .doOnSubscribe { view.showParticipantsProgressBar() }
         .doFinally { view.hideParticipantsProgressBar() }
         .subscribe({ participants ->

@@ -23,11 +23,15 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_chat_room)
+    setUpSendMessageButton()
+    setUpRecyclerView()
+  }
+
+  private fun setUpSendMessageButton() {
     sendMessageButton.setOnClickListener {
       presenter.sendMessage(inputMessageEditText.text.toString())
-      inputMessageEditText.text = null
+      inputMessageEditText.text.clear()
     }
-    setUpRecyclerView()
   }
 
   override fun setUpActionBarTitle(title: String) {
@@ -43,12 +47,6 @@ class ChatActivity : BaseActivity<ChatContract.Presenter>(), ChatContract.View {
     chatAdapter.addMessage(message)
     chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
 
-  }
-
-  override fun tryToVoteOnEventDate(message: Message) {
-    if (message.ifContainsDate()) {
-      presenter.sendDateVote(message.transformDateHandlerToJodaTime())
-    }
   }
 
   override fun showChosenDateSnackBar(selectedDate: DateTime, userId: String) {

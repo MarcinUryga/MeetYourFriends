@@ -7,6 +7,6 @@ data class Chat(
     val id: String? = null,
     val userId: String? = null,
     val message: String? = null,
-    val timestamp: String? = null,
+    val timestamp: Long? = null,
     var ifMine: Boolean = false
 )

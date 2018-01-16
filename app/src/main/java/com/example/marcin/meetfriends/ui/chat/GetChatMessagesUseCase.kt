@@ -23,7 +23,6 @@ class GetChatMessagesUseCase @Inject constructor(
             .child(Constants.FIREBASE_CHAT)) { dataSnapshot ->
       val chatMessages = mutableListOf<Chat>()
       dataSnapshot.children.forEach {
-        Timber.d(it.toString())
         chatMessages.add(it.getValue(Chat::class.java).let { it!! })
       }
       return@observeSingleValueEvent chatMessages

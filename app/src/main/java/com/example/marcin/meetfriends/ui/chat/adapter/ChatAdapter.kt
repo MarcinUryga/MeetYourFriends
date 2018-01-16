@@ -19,6 +19,7 @@ class ChatAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
   fun addMessage(message: Message) {
     chatMessagesList.add(message)
+    chatMessagesList.sortBy { it.timestamp }
     notifyDataSetChanged()
   }
 

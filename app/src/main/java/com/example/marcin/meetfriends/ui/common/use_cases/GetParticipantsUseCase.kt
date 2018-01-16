@@ -14,7 +14,7 @@ class GetParticipantsUseCase @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) {
 
-  fun getParticipantsIds(participantsIds: List<String>): Maybe<List<User>> {
+  fun getParticipantsByIds(participantsIds: List<String>): Maybe<List<User>> {
     return RxFirebaseDatabase.observeSingleValueEvent(
         firebaseDatabase.reference
             .child(Constants.FIREBASE_USERS))
@@ -31,11 +31,11 @@ class GetParticipantsUseCase @Inject constructor(
     }
   }
 
-  fun getOrganizer(organizerId: String): Maybe<User> {
+  fun getUserById(userId: String): Maybe<User> {
     return RxFirebaseDatabase.observeSingleValueEvent(
         firebaseDatabase.reference
             .child(Constants.FIREBASE_USERS)
-            .child(organizerId))
+            .child(userId))
     { dataSnapshot ->
       return@observeSingleValueEvent dataSnapshot.getValue(User::class.java).let { it!! }
     }
