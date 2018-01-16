@@ -3,9 +3,9 @@ package com.example.marcin.meetfriends.ui.questionnaires
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Event
 import com.example.marcin.meetfriends.models.Questionnaire
+import com.example.marcin.meetfriends.ui.common.base_load_events_mvp.BaseLoadEventsPresenter
 import com.example.marcin.meetfriends.ui.common.params.EventBasicInfoParams
 import com.example.marcin.meetfriends.ui.common.use_cases.GetFilledQuestionnairesUseCase
-import com.example.marcin.meetfriends.ui.common.base_load_events_mvp.BaseLoadEventsPresenter
 import com.example.marcin.meetfriends.ui.planned_event_detail.viewmodel.EventBasicInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -54,14 +54,8 @@ class QuestionnairesPresenter @Inject constructor(
         .doOnSubscribe { view.hideNoEventsLayout() }
         .doFinally { view.hideLoadingProgressBar() }
         .subscribe({ questionnaires ->
-          if (!isQuestionnaireExisting(questionnaires)) {
+          if (!isQuestionnaireExisting(questionnaires) || !isVotingFinishedForCurrentUser(questionnaires as Questionnaire)) {
             manageEvent(dataSnapshot)
-          } else {
-            if (!isVotingFinishedForCurrentUser(questionnaires as Questionnaire)) {
-              manageEvent(dataSnapshot)
-            } else if (view.getEventItemsSizeFromAdapter() == 0) {
-              view.showNoEventsView()
-            }
           }
         }, { error ->
           Timber.d(error.localizedMessage)

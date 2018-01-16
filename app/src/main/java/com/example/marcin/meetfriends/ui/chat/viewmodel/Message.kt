@@ -53,7 +53,7 @@ data class Message(
   }
 
   fun transformDateHandlerToJodaTime(): DateTime {
-    var dateTab = dateHandler?.split(" ").let { it!! }
+    val dateTab = dateHandler?.split(" ").let { it!! }
     val timeTab = dateTab[0].split(":")
     return when {
       dateTab[1].contains("/") -> DateItems.convertToDateTime("/", dateTab, timeTab)

@@ -2,6 +2,7 @@ package com.example.marcin.meetfriends.ui.chat
 
 import com.example.marcin.meetfriends.di.ScreenScope
 import com.example.marcin.meetfriends.models.Chat
+import com.example.marcin.meetfriends.models.DateVote
 import com.example.marcin.meetfriends.models.User
 import com.example.marcin.meetfriends.mvp.BasePresenter
 import com.example.marcin.meetfriends.ui.chat.viewmodel.Message
@@ -47,7 +48,7 @@ class ChatPresenter @Inject constructor(
                 ifMine = true,
                 message = text
             )
-            if(message.ifContainsDate()){
+            if (message.ifContainsDate()) {
               sendDateVote(message.transformDateHandlerToJodaTime())
             }
           }
@@ -109,25 +110,21 @@ class ChatPresenter @Inject constructor(
 
   override fun sendDateVote(selectedDate: DateTime) {
     val disposable = RxFirebaseDatabase
-        .setValue(firebaseDatabase.reference
-            .child(Constants.FIREBASE_EVENTS)
-            .child(getEventBasicInfoParams.event.id)
-            .child(Constants.FIREBASE_QUESTIONNAIRE)
-            .child(Constants.FIREBASE_DATE_QUESTIONNAIRE)
-            .child(auth.currentUser?.uid.let { it!! }), selectedDate.millis.toString())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeOn(Schedulers.io())
-        .doFinally { view.showChosenDateSnackBar(selectedDate, auth.uid!!) }
+        .setValue(getEventQuestionnairePath()
+            .child(auth.currentUser?.uid.let { it!! }),
+            DateVote(
+                userId = auth.currentUser?.uid,
+                timestamp = selectedDate.millis.toString())
+        )
+        .doFinally {
+          view.showChosenDateSnackBar(selectedDate, auth.uid!!)
+        }
         .subscribe()
     disposables?.add(disposable)
   }
 
   override fun removeChosenDateFromEvent(selectedDate: DateTime, userId: String) {
-    firebaseDatabase.reference.child(Constants.FIREBASE_EVENTS)
-        .child(getEventBasicInfoParams.event.id)
-        .child(Constants.FIREBASE_QUESTIONNAIRE)
-        .child(Constants.FIREBASE_DATE_QUESTIONNAIRE)
-        .orderByValue()
+    getEventQuestionnairePath().orderByValue()
         .addListenerForSingleValueEvent(object : ValueEventListener {
           override fun onDataChange(dataSnapshot: DataSnapshot) {
             dataSnapshot.ref.child(dataSnapshot.children.firstOrNull { it.key == userId }?.key.toString()).removeValue()
@@ -137,5 +134,13 @@ class ChatPresenter @Inject constructor(
             Timber.d("Canncelled remove participant with id $userId")
           }
         })
+  }
+
+  private fun getEventQuestionnairePath(): DatabaseReference {
+    return firebaseDatabase.reference
+        .child(Constants.FIREBASE_EVENTS)
+        .child(getEventBasicInfoParams.event.id)
+        .child(Constants.FIREBASE_QUESTIONNAIRE)
+        .child(Constants.FIREBASE_DATE_QUESTIONNAIRE)
   }
 }
