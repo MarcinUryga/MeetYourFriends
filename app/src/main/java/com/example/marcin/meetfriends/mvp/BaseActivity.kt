@@ -3,6 +3,7 @@ package com.example.marcin.meetfriends.mvp
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.example.marcin.meetfriends.MeetFriendsApplication
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
@@ -43,6 +44,7 @@ abstract class BaseActivity<P : MvpPresenter> : AppCompatActivity(), HasSupportF
   override fun onDestroy() {
     super.onDestroy()
     presenter.destroy()
+    MeetFriendsApplication.getRefWatcher(this).watch(this)
   }
 
   override fun supportFragmentInjector() = fragmentInjector

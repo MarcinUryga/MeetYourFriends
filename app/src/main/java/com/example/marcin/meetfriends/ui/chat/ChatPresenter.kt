@@ -88,8 +88,6 @@ class ChatPresenter @Inject constructor(
 
   private fun createMessage(chat: Chat) {
     val disposable = getParticipantsUseCase.getUserById(chat.userId.let { it!! })
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeOn(Schedulers.io())
         .subscribe { user ->
           view.addMessage(Message(
               user = user,
@@ -110,8 +108,7 @@ class ChatPresenter @Inject constructor(
 
   override fun sendDateVote(selectedDate: DateTime) {
     val disposable = RxFirebaseDatabase
-        .setValue(getEventQuestionnairePath()
-            .child(auth.currentUser?.uid.let { it!! }),
+        .setValue(getEventQuestionnairePath().child(auth.currentUser?.uid.let { it!! }),
             DateVote(
                 userId = auth.currentUser?.uid,
                 timestamp = selectedDate.millis.toString())
@@ -121,6 +118,14 @@ class ChatPresenter @Inject constructor(
         }
         .subscribe()
     disposables?.add(disposable)
+  }
+
+  private fun getEventQuestionnairePath(): DatabaseReference {
+    return firebaseDatabase.reference
+        .child(Constants.FIREBASE_EVENTS)
+        .child(getEventBasicInfoParams.event.id)
+        .child(Constants.FIREBASE_QUESTIONNAIRE)
+        .child(Constants.FIREBASE_DATE_QUESTIONNAIRE)
   }
 
   override fun removeChosenDateFromEvent(selectedDate: DateTime, userId: String) {
@@ -134,13 +139,5 @@ class ChatPresenter @Inject constructor(
             Timber.d("Canncelled remove participant with id $userId")
           }
         })
-  }
-
-  private fun getEventQuestionnairePath(): DatabaseReference {
-    return firebaseDatabase.reference
-        .child(Constants.FIREBASE_EVENTS)
-        .child(getEventBasicInfoParams.event.id)
-        .child(Constants.FIREBASE_QUESTIONNAIRE)
-        .child(Constants.FIREBASE_DATE_QUESTIONNAIRE)
   }
 }

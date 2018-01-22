@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.example.marcin.meetfriends.MeetFriendsApplication
 import javax.inject.Inject
 
 /**
@@ -41,6 +42,7 @@ abstract class BaseFragment<P : MvpPresenter> : Fragment() {
   override fun onDestroy() {
     super.onDestroy()
     presenter.destroy()
+    MeetFriendsApplication.getRefWatcher(activity).watch(this)
   }
 
   fun setActionBarTitle(title: String) {
