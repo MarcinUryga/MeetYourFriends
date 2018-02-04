@@ -47,7 +47,7 @@ abstract class BaseFragmentDialog<P : MvpPresenter> : DialogFragment() {
   override fun onDestroy() {
     super.onDestroy()
     presenter.destroy()
-    MeetFriendsApplication.getRefWatcher(activity).watch(this)
+//    MeetFriendsApplication.getRefWatcher(activity).watch(this)
 
   }
 

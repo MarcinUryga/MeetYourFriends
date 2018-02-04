@@ -42,7 +42,7 @@ abstract class BaseFragment<P : MvpPresenter> : Fragment() {
   override fun onDestroy() {
     super.onDestroy()
     presenter.destroy()
-    MeetFriendsApplication.getRefWatcher(activity).watch(this)
+//    MeetFriendsApplication.getRefWatcher(activity).watch(this)
   }
 
   fun setActionBarTitle(title: String) {

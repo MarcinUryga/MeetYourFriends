@@ -44,7 +44,7 @@ abstract class BaseActivity<P : MvpPresenter> : AppCompatActivity(), HasSupportF
   override fun onDestroy() {
     super.onDestroy()
     presenter.destroy()
-    MeetFriendsApplication.getRefWatcher(this).watch(this)
+//    MeetFriendsApplication.getRefWatcher(this).watch(this)
   }
 
   override fun supportFragmentInjector() = fragmentInjector
