@@ -23,7 +23,7 @@ class PlannedEventsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         R.string.date,
         itemView.resources.getQuantityString(R.plurals.date, event.date?.first()?.toInt() ?: 1, DateTimeFormatters.formatToShortTimeDate(DateTime(event.date?.toLong())))
     )
-//    itemView.amountOfParticipantsTextView.text = itemView.context.getString(R.string.amount_of_participants, event.participants.size)
+    itemView.amountOfParticipantsTextView.text = itemView.context.getString(R.string.amount_of_participants, event.participants.size)
   }
 
   companion object {
