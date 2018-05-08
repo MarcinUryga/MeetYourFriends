@@ -57,19 +57,18 @@ class ApplicationModule {
   @Singleton
   fun provideFacebookPermissionHelper(): Array<PermissionHelper> {
     return arrayOf(
-        PermissionHelper.USER_ABOUT_ME,
+//        PermissionHelper.USER_ABOUT_ME,
         PermissionHelper.USER_PHOTOS,
         PermissionHelper.USER_EVENTS,
-        PermissionHelper.USER_ACTIONS_MUSIC,
+//        PermissionHelper.USER_ACTIONS_MUSIC,
         PermissionHelper.USER_FRIENDS,
-        PermissionHelper.USER_GAMES_ACTIVITY,
+//        PermissionHelper.USER_GAMES_ACTIVITY,
         PermissionHelper.USER_BIRTHDAY,
         PermissionHelper.USER_TAGGED_PLACES,
         PermissionHelper.USER_MANAGED_GROUPS,
         PermissionHelper.PUBLISH_ACTION
     )
   }
-
 
   @Provides
   @Singleton

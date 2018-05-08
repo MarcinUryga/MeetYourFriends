@@ -16,7 +16,7 @@ class GetFriendsFromFacebook @Inject constructor(
 
 ) {
   fun getFriends(): Single<List<Profile>> {
-    val bundleAsString = "picture.width(147).height(147),name,first_name"
+    val bundleAsString = "picture.width(550).height(550),name,first_name"
 
     return ReactiveRequest.getFriends(bundleAsString)
         .map({ transform(it) })
